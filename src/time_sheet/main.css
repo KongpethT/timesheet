@@ -1,0 +1,51 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  background-color: rgb(15, 36, 66);
+  color: white;
+}
+
+.alert {
+  color: yellow;
+}
+
+.page {
+  width: 100%;
+  margin: 0 auto;
+  height: calc(100vh - 200px);
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  width: 18px;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(15, 36, 66);
+
+}
+
+/*
+::-webkit-scrollbar-thumb:hover {
+  background: whitesmoke;
+}
+
+::-webkit-scrollbar-button {
+ background-color: yellowgreen;
+}
+*/
+.alert-A {
+  color: white;
+}
+
+.alert-B {
+  color: tomato;
+}

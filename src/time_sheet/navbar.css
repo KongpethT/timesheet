@@ -1,0 +1,30 @@
+.header {
+    padding-top: 10px;
+    height     : 150px;
+}
+
+.nav-bar {
+    margin-top      : 20px;
+    height          : 60px;
+    background-color: indianred;
+    display         : flex;
+    flex-direction  : row;
+    justify-content : right;
+    align-items     : center;
+    padding-right   : 2%;
+}
+
+.nav-bar ul {
+    display   : flex;
+    list-style: none;
+}
+
+.nav-bar ul li {
+    margin-right: 10px;
+    cursor      : pointer;
+}
+
+.nav-bar ul li:hover {
+    transition: 0.1s ease-in-out;
+    opacity   : 0.9;
+}

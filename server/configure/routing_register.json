@@ -1,0 +1,30 @@
+{
+    "routing": [
+        {
+            "name": "./route/messaged_route"
+        },
+        {
+            "name": "./route/register_route"
+        },
+        {
+            "name": "./route/signin_route"
+        },
+        {
+            "name": "./route/timeline_route"
+        },
+        {
+            "name": "./route/company_route"
+        },
+        {
+            "name": "./route/client_type_route"
+        }
+        ,
+        {
+            "name": "./route/ae_route"
+        }
+        ,
+        {
+            "name": "./route/view_count_route"
+        }
+    ]
+}
