@@ -26,7 +26,7 @@ export default function Dashboard(props) {
         axios.get(api.count_activity + `/${account.userCode}`).then((brick) => {
             const obj = Object.assign(brick.data)
             setActivityCount(Object.assign(obj[0]))
-            console.log(getRefHome);
+            //console.log(getRefHome);
         })
     }, [getRefHome])
 

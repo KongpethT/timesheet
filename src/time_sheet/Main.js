@@ -20,7 +20,7 @@ function Main() {
   let dashboardElement = null
   let newTimelineElement = null
   let updateTimelineElement = null
-
+  
   const clickUpdateTimeline = (row) => {
     setUpdateTimeline(true)
     setDashboard(null)

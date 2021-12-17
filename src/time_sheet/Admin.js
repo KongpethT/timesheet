@@ -11,7 +11,7 @@ const Admin = () => {
 
 
     useEffect(() => {
-        const value = { state: 'state' }
+        //const value = { state: 'state' }
         const key = JSON.stringify({ code: acc.userCode, state: 'read' })
         axios.get(`${api.ae}?key=${key}`).then((brick) => {
             setAccount(brick.data)

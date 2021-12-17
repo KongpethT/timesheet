@@ -26,14 +26,7 @@ export default function SignIn() {
       localStorage.setItem('accessToken', result.token)
       localStorage.setItem('accessFullName', result.result[0].fullName)
       localStorage.setItem('accessCode', result.result[0].userCode)
-      if (result.result[0].password === '1234') {
-        console.log('True',result.result[0]);
-        //window.location.href = "/change_password"
-      } else {
-
-        console.log(result.result[0]);
-        //window.location.href = "/profile"
-      }
+      window.location.href = "/profile"
     }
     return () => { }
   }, [result])
