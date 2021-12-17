@@ -30,7 +30,9 @@
     width: auto;
     white-space: nowrap;
 }
-
+#admin-page thead th {
+    border-bottom: 20px solid transparent;
+}
 #admin-page td {
     width: auto;
     padding: 0 20px;

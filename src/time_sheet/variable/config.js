@@ -1,16 +1,21 @@
+const host = 'http://localhost:3001'
+//const host = 'http://58.82.141.196:3001'
+
+
 const api = {
-    company: "http://localhost:3001/company",
-    client_type: "http://localhost:3001/client_type",
-    timeline: "http://localhost:3001/timeline",
-    update_timeline: "http://localhost:3001/update_timeline",
-    ae: "http://localhost:3001/ae",
-    count_activity: "http://localhost:3001/count_activity",
+    company: host + "/company",
+    client_type: host + "/client_type",
+    timeline: host + "/timeline",
+    update_timeline: host + "/update_timeline",
+    ae: host + "/ae",
+    count_activity: host + "/count_activity",
+    signin: host + "/signin",
 
     //end-time-sheet
 
     dataBlogs: "http://localhost:3001/blogs",
     dataPosts: "http://localhost:3001/post",
-    message: "http://localhost:3001/message",
+    message: host + "/message",
     upload: "http://localhost:3001/upload",
     debugs: "http://localhost:3001/debugs"
     // end-other share all project

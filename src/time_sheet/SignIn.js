@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Input from './components/Input'
 import './SignIn.css'
 import Axios from 'axios'
+import { api } from './variable/config'
 
 export default function SignIn() {
   //const { isLogged } = props
@@ -25,13 +26,20 @@ export default function SignIn() {
       localStorage.setItem('accessToken', result.token)
       localStorage.setItem('accessFullName', result.result[0].fullName)
       localStorage.setItem('accessCode', result.result[0].userCode)
-      window.location.href = "/profile"
+      if (result.result[0].password === '1234') {
+        console.log('True',result.result[0]);
+        //window.location.href = "/change_password"
+      } else {
+
+        console.log(result.result[0]);
+        //window.location.href = "/profile"
+      }
     }
     return () => { }
   }, [result])
 
   const isChecked = () => {
-    Axios.post('http://localhost:3001/signin', {
+    Axios.post(api.signin, {
       userCode: username,
       password: password
     }).then((response) => { setResult(response.data) })
@@ -48,7 +56,7 @@ export default function SignIn() {
   // view a webpage
   return (
     <div className='container'>
-      <div className='sign-in'> 
+      <div className='sign-in'>
         <div className="header-point">
           <h1>Welcome to Timesheet Activity</h1>
           <h3 className="message-error">{message}</h3>

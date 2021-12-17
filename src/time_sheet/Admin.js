@@ -2,7 +2,7 @@ import './admin.css'
 import Input from './components/Input'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { api } from './variable/config'
+import { api, account as acc } from './variable/config'
 
 const Admin = () => {
     const [account, setAccount] = useState([])
@@ -10,19 +10,46 @@ const Admin = () => {
     const [getValue, setValue] = useState({ code: '', firstName: '', lastName: '', password: '1234', state: 'user' })
 
 
-
     useEffect(() => {
-        axios.get(api.ae).then((brick) => {
+        const value = { state: 'state' }
+        const key = JSON.stringify({ code: acc.userCode, state: 'read' })
+        axios.get(`${api.ae}?key=${key}`).then((brick) => {
             setAccount(brick.data)
 
         })
     }, [count])
 
     const new_account = async () => {
-        await axios.post(api.ae, { getValue })
+        const key = JSON.stringify({ code: acc.userCode, state: 'create' })
+        await axios.post(`${api.ae}?key=${key}`, { getValue })
         await setValue({ code: '', firstName: '', lastName: '', password: '1234', state: getValue.state })
         setCount(count + 1)
     }
+
+    const reset_password = async (id) => {
+        var answer = window.confirm("Confirm reset a password");
+        if (answer) {
+            const key = JSON.stringify({ code: acc.userCode, state: 'update' })
+            await axios.post(`${api.ae}?key=${key}`, { id })
+        }
+        else {
+            //some code
+        }
+
+    }
+    const set_null_state = async (ID) => {
+        var answer = window.confirm(`Confirm delete " ${ID.fullName} " account`);
+        if (answer) {
+            const id = ID.id
+            const key = JSON.stringify({ code: acc.userCode, state: 'disable' })
+            await axios.post(`${api.ae}?key=${key}`, { id })
+            setCount(count + 1)
+        }
+        else {
+            //some code
+        }
+    }
+
 
     return (
         <div id='admin-page'>
@@ -93,7 +120,7 @@ const Admin = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>code</th>
+                            <th>ID</th>
                             <th>name</th>
                             <th>status</th>
                             <th></th>
@@ -103,10 +130,13 @@ const Admin = () => {
                         {account.map((row, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{row.userCode}</td>
+                                    <td>{index + 1}</td>
                                     <td>{row.fullName}</td>
                                     <td>{row.state}</td>
-                                    <td><button>reset password</button> | <button>delete</button></td>
+                                    <td>
+                                        <button onClick={() => { reset_password(row.id) }}>reset password</button>
+                                        |
+                                        <button onClick={() => { set_null_state({ id: row.id, fullName: row.fullName }) }}>delete</button></td>
                                 </tr>
                             )
                         })}

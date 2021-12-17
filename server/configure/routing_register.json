@@ -26,5 +26,13 @@
         {
             "name": "./route/view_count_route"
         }
+        ,
+        {
+            "name": "./route/change_password_route"
+        }
+        ,
+        {
+            "name": "./route/signin_route"
+        }
     ]
 }
