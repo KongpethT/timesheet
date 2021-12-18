@@ -1,0 +1,20 @@
+.form {
+    width : 60%;
+    margin: 0 auto;
+}
+
+
+input[type="button"]:hover {
+    cursor    : pointer;
+    opacity   : 0.6;
+    transition: .3s ease-in-out;
+}
+
+input[type="button"]:active {
+    opacity   : 0.9;
+    transition: .3s ease-in-out;
+}
+
+.group {
+    margin-top: 4px;
+}

@@ -1,80 +1,68 @@
-import React, { useEffect, useState } from 'react'
-import Input from './components/Input'
-import './SignIn.css'
+import React, { useState } from 'react'
+import logo from '../image/JCDecaux_logo.png'
 import Axios from 'axios'
 import { api } from './variable/config'
 
+
+
+
 export default function SignIn() {
-  //const { isLogged } = props
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [result, setResult] = useState([])
-  const [message, setMessage] = useState(null)
-  const [warning, setWarning] = useState(null)
+  const [getAccount, setAccount] = useState({ username: null, password: null })
+  const [getResult, setResult] = useState([])
 
-  //1. give a data Username & Password and update useState (setUsername || setPassword)
-  const isUsername = (e) => {
-    setUsername(e.target.value)
-  }
-  const isPassword = (e) => {
-    setPassword(e.target.value)
-  }
-
-  //2. checked a data login 
-  useEffect(() => {
-    if (result.count === 1) {
-      localStorage.setItem('accessToken', result.token)
-      localStorage.setItem('accessFullName', result.result[0].fullName)
-      localStorage.setItem('accessCode', result.result[0].userCode)
-      window.location.href = "/profile"
+  const next_page = () => {
+    console.log(getResult.length);
+    if (getResult.length !== 0) {
+      localStorage.setItem('accessToken', getResult.token)
+      localStorage.setItem('accessFullName', getResult[0].fullName)
+      localStorage.setItem('accessCode', getResult[0].userCode)
+      window.location.href = "/timeline/view"
     }
-    return () => { }
-  }, [result])
-
-  const isChecked = () => {
-    Axios.post(api.signin, {
-      userCode: username,
-      password: password
-    }).then((response) => { setResult(response.data) })
-    //##########################
-    setPassword('')
-    setUsername('')
-    setTimeout(() => {
-      setMessage('Login Failed : "one more time to login"')
-      setWarning('If you sure an account please contact to "Admin page"')
-    }, 1000)
-
   }
 
-  // view a webpage
+  const isLogged = async () => {
+    if (!!getAccount.username & !!getAccount.password) {
+      await Axios.post(api.signin, { getAccount }).then((resporn) => { setResult(resporn.data) })
+    }
+  }
+
   return (
-    <div className='container'>
-      <div className='sign-in'>
-        <div className="header-point">
-          <h1>Welcome to Timesheet Activity</h1>
-          <h3 className="message-error">{message}</h3>
-          <h4 className="message-warning">{warning}</h4>
+    <div style={{
+      height: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyItems: "center",
+      paddingTop: "40px",
+      paddingBottom: "40px",
+    }}>
+      <div style={{
+        margin: "0 auto",
+        textAlign: "center"
+      }}>
+        <img src={logo} className="img-fluid" alt="logo" />
+        <div className="mb-3">
+          <label className="form-label text-light">Username</label>
+          <input
+            type="text"
+            className="form-control text-center"
+            id="username"
+            onChange={(e) => { setAccount({ ...getAccount, username: e.target.value }) }}
+          />
+          <div id="usernameHelp" className="form-text">We'll never share your username with anyone else.</div>
         </div>
 
-        <div>
-          <Input
-            width="60%"
-            title="Username"
-            type="text"
-            value={username}
-            onChange={isUsername}
-          />
-          <Input
-            width="60%"
-            title="Password"
+        <div className="mb-3">
+          <label className="form-label text-light">Password</label>
+          <input
             type="password"
-            value={password}
-            onChange={isPassword}
+            className="form-control text-center"
+            id="password"
+            onChange={(e) => { setAccount({ ...getAccount, password: e.target.value }) }}
           />
-          <Input width="80px" type="button" value="Login" onClick={isChecked} />
         </div>
+        <button type="button" className="btn btn-primary" onMouseDown={isLogged} onMouseUp={next_page}>Login</button>
       </div>
-    </div>
+    </div >
   )
 }
 

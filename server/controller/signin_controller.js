@@ -1,24 +1,27 @@
-//const config = require("../configure/env")
-const { connect } = require("../server")
 
 exports.signin = (req, res) => {
-    const { userCode, password } = req.body
-    conn.query(`select * from ae where userCode ='${userCode}' and password='${password}'`, (error, result) => {
+    const isAccount = req.body.getAccount
+
+    conn.query(`select * from ae where userCode ='${isAccount.username}' and password='${isAccount.password}'`, (error, result) => {
         if (error) {
-            res.send({
-                message: error
-            })
+            const text = { user: isAccount.username, type: 'login', error: error.sqlMessage }
+            save_log_file('login', text)
         } else {
-            const length = [result]
             const token = jwt.sign({
-                id: userCode
+                id: isAccount.username
             }, config.secretKey, { expiresIn: config.expires_in }) //{ expiresIn: 3600 })
-            const data = {
-                result,
-                token,
-                count: length[0].length
+            if (JSON.stringify(result).length > 2) {
+                brick = { ...result, token }
+                const text = { user: isAccount.username, type: 'login successfully' }
+                save_log_file('login', text)
+                console.log(brick);
+                res.send(brick)
+            } else {
+                const text = { user: isAccount.username, type: 'login unsuccessfully' }
+                save_log_file('login', text)
             }
-            res.send(data)
+
         }
     })
+
 }
