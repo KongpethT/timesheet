@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
-import { IoLogIn, IoLogOut, IoCreate, IoFolderOpen } from "react-icons/io5";
+import { IoLogIn, IoLogOut, IoMenu, IoCreate, IoFolderOpen, IoCalendar, IoBusiness, IoConstruct, IoKey, IoBarChart, IoPerson } from "react-icons/io5";
 import { account } from "./variable/config"
 
-export default function Navbar(props) {
-
-
-    //const { clickDashboard, clickCreateTimeline } = props
+export default function Navbar() {
     const isSwitch = (key) => {
         switch (key) {
             case 'profile':
@@ -54,16 +51,33 @@ export default function Navbar(props) {
                             {(!account.token) ? null :
                                 <li className="nav-item dropdown fs-5">
                                     <a className="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Dropdown menu
+                                        <IoMenu /> Dropdown menu
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+                                        <li>
+                                            <IoCalendar /> Timeline
+                                        </li>
                                         <li><Link to="/timeline/new" className="dropdown-item"><IoCreate /> Create</Link></li>
                                         <li><Link to="/timeline/view" className="dropdown-item"><IoFolderOpen /> View</Link></li>
-                                        <li><a className="dropdown-item" href="#">Another action</a></li>
+
                                         <li>
                                             <hr className="dropdown-divider" />
+                                            <IoBusiness /> Company
                                         </li>
-                                        <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                        <li><Link to="/company/new" className="dropdown-item"><IoCreate /> Create</Link></li>
+                                        <li><Link to="/company/view" className="dropdown-item"><IoFolderOpen /> View</Link></li>
+                                        <li>
+                                            <hr className="dropdown-divider" />
+                                            <IoPerson /> persons
+                                        </li>
+                                        <li><Link to="/person/new" className="dropdown-item"><IoCreate /> Create</Link></li>
+                                        <li><Link to="/person/view" className="dropdown-item"><IoFolderOpen /> View</Link></li>
+                                        <li><Link to="/person/change_password" className="dropdown-item"><IoKey /> Change password</Link></li>
+                                        <li>
+                                            <hr className="dropdown-divider" />
+                                            <IoConstruct /> Tools
+                                        </li>
+                                        <li><Link to="/tools/dashboard" className="dropdown-item"><IoBarChart /> Dashboard</Link></li>
                                     </ul>
                                 </li>
                             }
@@ -77,21 +91,6 @@ export default function Navbar(props) {
                     </div>
                 </div>
             </div>
-            {/*
-            <div classNameName='header'>
-                <div>
-                    <h4>Wellcome {localStorage.getItem('accessFullName')}</h4>
-                </div>
-                <div classNameName='nav-bar'>
-                    <ul>
-                        <li onClick={clickDashboard}>Dashboard</li>
-                        <li onClick={() => { isSwitch('profile') }}><span>|</span> Timeline</li>
-                        <li onClick={clickCreateTimeline}><span>|</span> New</li>
-                        <li onClick={() => { isSwitch('logout') }}><span>|</span> Logout</li>
-                    </ul>
-                </div>
-            </div>
-            */}
         </nav >
     )
 }

@@ -30,6 +30,9 @@
     width: auto;
     white-space: nowrap;
 }
+#admin-page button {
+   margin: 1px;
+}
 #admin-page thead th {
     border-bottom: 20px solid transparent;
 }
