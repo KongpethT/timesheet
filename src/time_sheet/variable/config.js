@@ -10,7 +10,7 @@ const api = {
     ae: host + "/ae",
     count_activity: host + "/count_activity",
     signin: host + "/signin",
-    
+
 
     //end-time-sheet
 
@@ -27,7 +27,12 @@ const account = {
     fullUser: localStorage.getItem('accessFullName'),
     userCode: localStorage.getItem('accessCode')
 }
+const keys = {
+    get_token: localStorage.getItem('accessToken'),
+    get_key: 3003003000,
+    get_default_password: '1234',
+}
 
-export { api, account }
+export { api, account, keys }
 
 //

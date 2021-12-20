@@ -1,5 +1,3 @@
-//import './css_person.css'
-//import Input from './components/Input'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { api, account as acc } from './variable/config'
