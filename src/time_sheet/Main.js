@@ -5,6 +5,7 @@ import Timeline from './ViewTimeline'
 import UpdateTimeline from "./UpdateTimeline"
 import NewPerson from "./NewPerson"
 import Person from './ViewPerson'
+import ChangePassword from './ChangePassword'
 import UpdatePerson from './UpdatePerson'
 import Dashboard from './ViewDashboard'
 //import Copyright from './Copyright'
@@ -22,6 +23,7 @@ function Main() {
         <Navbar isLogged={localStorage.getItem('accessToken')} />
         <div style={{ marginTop: '54px', }}></div>
         <Switch>
+          <Route exact path="/"><SignIn /></Route>
           <Route exact path="/signin"><SignIn /></Route>
           <Route exact path="/timeline/new"><NewTimeline /></Route>
           <Route exact path="/timeline/view"><Timeline /></Route>
@@ -29,6 +31,7 @@ function Main() {
           <Route exact path="/person/new"><NewPerson /></Route>
           <Route exact path="/person/view"><Person /></Route>
           <Route exact path="/person/edit"><UpdatePerson /></Route>
+          <Route exact path="/person/change_password"><ChangePassword /></Route>
           <Route exact path="/tools/dashboard"><Dashboard /></Route>
         </Switch>
       </BrowserRouter >
