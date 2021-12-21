@@ -9,9 +9,12 @@ import UpdatePerson from './UpdatePerson'
 import Dashboard from './ViewDashboard'
 //import Copyright from './Copyright'
 
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { keys } from './variable/config'
+import { useEffect, useState } from 'react'
 
 function Main() {
+
 
   return (
     <div className='container'>

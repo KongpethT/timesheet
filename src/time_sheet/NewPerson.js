@@ -1,64 +1,60 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { api, account as acc, keys } from './variable/config'
+import { api, account, keys } from './variable/config'
 
 
 const NewPerson = () => {
-   
-
-    //const [account, setAccount] = useState([])
-
-
-    const [getValue, setValue] = useState({ code: '', firstName: '', lastName: '', password: '1234', state: 'user' })
+    const [getValue, setValue] = useState({ code: '', firstName: '', lastName: '', password: keys.get_default_password, state: 'user' })
 
     const new_account = async () => {
-        const key = JSON.stringify({ code: acc.userCode, state: 'create' })
-        await axios.post(`${api.ae}?key=${key}`, { getValue })
-        //await setValue({ code: '', firstName: '', lastName: '', password: '1234', state: getValue.state })
-        window.location.href = '/person/view'
+        if (!getValue.code, !getValue.firstName, !getValue.lastName) { } else {
+            const key = JSON.stringify({ code: account.userCode, state: 'create' })
+            await axios.post(`${api.ae}?key=${key}`, { getValue })
+            window.location.href = '/person/view'
+        }
     }
-
-    return (
-        <div className='container'>
-            <h1>Edit persons</h1>
-            <hr />
-            <div className="mb-3">
-                <label className="form-check-label">Authorization</label>
-            </div>
-
-            <div className="mb-3">
-                <div className="form-check form-check-inline">
-                    <input
-                        className="form-check-input"
-                        type="radio"
-                        name="state"
-                        defaultValue="admin"
-                        onClick={(e) => { setValue({ ...getValue, state: e.target.value }) }} />
-                    <label className="form-check-label" for="admin">Admin</label>
+    if (keys.get_token === null) { window.location.href = "/signin" }
+    else {
+        return (
+            <div className='container'>
+                <h1>Edit persons</h1>
+                <hr />
+                <div className="mb-3">
+                    <label className="form-check-label">Authorization</label>
                 </div>
-                <div className="form-check form-check-inline">
-                    <input
-                        className="form-check-input"
-                        type="radio"
-                        name="state"
-                        defaultValue="analyze"
-                        onClick={(e) => { setValue({ ...getValue, state: e.target.value }) }} />
-                    <label class="form-check-label" for="analyze">Analyze</label>
-                </div>
-                <div className="form-check form-check-inline">
-                    <input
-                        className="form-check-input"
-                        type="radio"
-                        name="state"
-                        defaultValue="user"
-                        onClick={(e) => { setValue({ ...getValue, state: e.target.value }) }}
-                        defaultChecked="checked" />
 
-                    <label class="form-check-label" for="user">User</label>
-                </div>
-            </div>
+                <div className="mb-3">
+                    <div className="form-check form-check-inline">
+                        <input
+                            className="form-check-input"
+                            type="radio"
+                            name="state"
+                            defaultValue="admin"
+                            onClick={(e) => { setValue({ ...getValue, state: e.target.value }) }} />
+                        <label className="form-check-label" for="admin">Admin</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                        <input
+                            className="form-check-input"
+                            type="radio"
+                            name="state"
+                            defaultValue="analyze"
+                            onClick={(e) => { setValue({ ...getValue, state: e.target.value }) }} />
+                        <label class="form-check-label" for="analyze">Analyze</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                        <input
+                            className="form-check-input"
+                            type="radio"
+                            name="state"
+                            defaultValue="user"
+                            onClick={(e) => { setValue({ ...getValue, state: e.target.value }) }}
+                            defaultChecked="checked" />
 
-            <form>
+                        <label class="form-check-label" for="user">User</label>
+                    </div>
+                </div>
+
                 <div className="mb-3">
                     <label for="code" className="form-label">Staff code</label>
                     <input
@@ -91,9 +87,9 @@ const NewPerson = () => {
                     />
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={new_account}>OK</button>
-            </form>
-        </div>
-    )
+            </div>
+        )
+    }
 }
 
 export default NewPerson

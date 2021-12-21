@@ -11,12 +11,13 @@ export default function SignIn() {
   const [getResult, setResult] = useState([])
 
   const next_page = () => {
-    console.log(getResult.length);
     if (getResult.length !== 0) {
       localStorage.setItem('accessToken', getResult.token)
       localStorage.setItem('accessFullName', getResult[0].fullName)
       localStorage.setItem('accessCode', getResult[0].userCode)
       window.location.href = "/timeline/view"
+    } else {
+      window.location.href = "/signin"
     }
   }
 
@@ -28,7 +29,7 @@ export default function SignIn() {
 
   return (
     <div style={{
-      height: "100vh",
+      height: "calc(100vh - 120px)",
       display: "flex",
       alignItems: "center",
       justifyItems: "center",
@@ -40,27 +41,29 @@ export default function SignIn() {
         textAlign: "center"
       }}>
         <img src={logo} className="img-fluid" alt="logo" />
-        <div className="mb-3">
-          <label className="form-label text-light">Username</label>
-          <input
-            type="text"
-            className="form-control text-center"
-            id="username"
-            onChange={(e) => { setAccount({ ...getAccount, username: e.target.value }) }}
-          />
-          <div id="usernameHelp" className="form-text">We'll never share your username with anyone else.</div>
-        </div>
+        <form className='form'>
+          <div className="mb-3">
+            <label className="form-label text-light">Username</label>
+            <input
+              type="text"
+              className="form-control text-center"
+              id="username"
+              onChange={(e) => { setAccount({ ...getAccount, username: e.target.value }) }}
+            />
+            <div id="usernameHelp" className="form-text">We'll never share your username with anyone else.</div>
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label text-light">Password</label>
-          <input
-            type="password"
-            className="form-control text-center"
-            id="password"
-            onChange={(e) => { setAccount({ ...getAccount, password: e.target.value }) }}
-          />
-        </div>
-        <button type="button" className="btn btn-primary" onMouseDown={isLogged} onMouseUp={next_page}>Login</button>
+          <div className="mb-3">
+            <label className="form-label text-light">Password</label>
+            <input
+              type="password"
+              className="form-control text-center"
+              id="password"
+              onChange={(e) => { setAccount({ ...getAccount, password: e.target.value }) }}
+            />
+          </div>
+          <button type="button" className="btn btn-primary" onMouseDown={isLogged} onMouseUp={next_page}>Login</button>
+        </form>
       </div>
     </div >
   )

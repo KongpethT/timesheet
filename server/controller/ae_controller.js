@@ -1,3 +1,4 @@
+const { myEncrypt, myDecrypt } = require('../configure/crypto')
 
 //method get
 exports.ae = (req, res, next) => {

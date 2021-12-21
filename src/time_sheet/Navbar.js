@@ -10,9 +10,7 @@ export default function Navbar() {
                 break;
 
             case 'logout':
-                localStorage.removeItem('accessToken')
-                localStorage.removeItem('accessCode')
-                localStorage.removeItem('accessFullName')
+                localStorage.clear()
                 window.location.href = "/"
                 break;
 

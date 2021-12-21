@@ -14,23 +14,26 @@ const api = {
 
     //end-time-sheet
 
-    dataBlogs: "http://localhost:3001/blogs",
-    dataPosts: "http://localhost:3001/post",
+    //dataBlogs: "http://localhost:3001/blogs",
+    //dataPosts: "http://localhost:3001/post",
     message: host + "/message",
-    upload: "http://localhost:3001/upload",
-    debugs: "http://localhost:3001/debugs"
+    //upload: "http://localhost:3001/upload",
+    //debugs: "http://localhost:3001/debugs"
     // end-other share all project
 }
 
 const account = {
     token: localStorage.getItem('accessToken'),
     fullUser: localStorage.getItem('accessFullName'),
-    userCode: localStorage.getItem('accessCode')
+    userCode: localStorage.getItem('accessCode'),
+    get_full_name: localStorage.getItem('accessFullName'),
+    get_staff_code: localStorage.getItem('accessCode')
 }
+
 const keys = {
     get_token: localStorage.getItem('accessToken'),
-    get_key: 3003003000,
-    get_default_password: '1234',
+    get_key: '3003003000',
+    get_default_password: 'U2FsdGVkX182CTZzfU1xfr37Ys3ApUI5x3oHLu7I9tM=',
 }
 
 export { api, account, keys }
