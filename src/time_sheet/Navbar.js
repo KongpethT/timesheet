@@ -23,7 +23,7 @@ export default function Navbar() {
     return (
         <nav className="navbar navbar-light bg-light fixed-top">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">Wellcome {localStorage.getItem('accessFullName')}</a>
+                <Link className="navbar-brand" to="#">Wellcome {localStorage.getItem('accessFullName')}</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -34,9 +34,6 @@ export default function Navbar() {
                     </div>
                     <div className="offcanvas-body">
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="#">Home</a>
-                            </li>
                             {(!account.token) ?
                                 <li className="nav-item fs-5">
                                     <Link to="/signin" className="nav-link"><IoLogIn /> Sign In</Link>
@@ -48,9 +45,9 @@ export default function Navbar() {
                             }
                             {(!account.token) ? null :
                                 <li className="nav-item dropdown fs-5">
-                                    <a className="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <Link className="nav-link dropdown-toggle" to="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <IoMenu /> Dropdown menu
-                                    </a>
+                                    </Link>
                                     <ul className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
                                         <li>
                                             <IoCalendar /> Timeline

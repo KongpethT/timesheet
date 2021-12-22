@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { api, account, keys } from './variable/config'
 
 
@@ -7,7 +7,7 @@ const NewPerson = () => {
     const [getValue, setValue] = useState({ code: '', firstName: '', lastName: '', password: keys.get_default_password, state: 'user' })
 
     const new_account = async () => {
-        if (!getValue.code, !getValue.firstName, !getValue.lastName) { } else {
+        if (!getValue.code & !getValue.firstName & !getValue.lastName) { } else {
             const key = JSON.stringify({ code: account.userCode, state: 'create' })
             await axios.post(`${api.ae}?key=${key}`, { getValue })
             window.location.href = '/person/view'

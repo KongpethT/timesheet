@@ -5,9 +5,6 @@ exports.signin = (req, res) => {
     const value = req.body.getAccount
     const isUsername = value.username
     const isPassword = value.password
-    //console.log(isPassword);
-    //const password = myDecrypt(isUsername.password)
-
 
     conn.query(`select * from ae where email ='${isUsername}'`,
         (error, result) => {

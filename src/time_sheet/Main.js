@@ -10,13 +10,9 @@ import UpdatePerson from './UpdatePerson'
 import Dashboard from './ViewDashboard'
 //import Copyright from './Copyright'
 
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { keys } from './variable/config'
-import { useEffect, useState } from 'react'
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function Main() {
-
-
   return (
     <div className='container'>
       <BrowserRouter>

@@ -10,8 +10,8 @@ export default function UpdateTimeline() {
   const brickRow = JSON.parse(localStorage.getItem('dr'))
   const [company, setCompany] = useState([])
   const [clientType, setClientType] = useState([])
-  const [getColorMessage, setColorMessage] = useState('alert-B')
-  const [getAlert, setAlert] = useState('')
+  //const [getColorMessage, setColorMessage] = useState('alert-B')
+  //const [getAlert, setAlert] = useState('')
   const [value, setValue] = useState({
     row_id: brickRow.id,
     code: account.userCode,
@@ -158,7 +158,6 @@ export default function UpdateTimeline() {
             onMouseDown={update_timeline}
             onMouseUp={isChecked}
           />
-          <h5 className={getColorMessage}>{getAlert}</h5>
           <br />
         </div>
       </div>
