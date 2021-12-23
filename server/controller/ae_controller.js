@@ -42,12 +42,12 @@ exports.ae_ = (req, res, next) => {
                         if (error) {
                             alert_message = 'Unsuccessfully: ' + error.sqlMessage
                             const text = { code, type: 'create', error: error.sqlMessage }
-                            save_log_file('ae', text)
+                            save_log_file('person', text)
                         } else {
                             res.send(result)
                             alert_message = 'successfully'
                             const text = { code, info: 'create successfully' }
-                            save_log_file('ae', text)
+                            save_log_file('person', text)
                         }
                     })
             } catch (error) {
@@ -55,20 +55,21 @@ exports.ae_ = (req, res, next) => {
             }
 
             break;
-        case 'update_password':
+        case 'reset_password':
             try {
                 const id = req.body.id
-                conn.query(`update ae set password = "1234" where id="${id}"`,
+                const isPassword = 'U2FsdGVkX182CTZzfU1xfr37Ys3ApUI5x3oHLu7I9tM='
+                conn.query(`update ae set password = "${isPassword}" where id="${id}"`,
                     (error, result) => {
                         if (error) {
                             alert_message = 'Unsuccessfully: ' + error.sqlMessage
                             const text = { code, type: 'reset password', error: error.sqlMessage }
-                            save_log_file('ae', text)
+                            save_log_file('person', text)
                         } else {
-                            res.send(result)
                             alert_message = 'successfully'
                             const text = { code, info: 'reset password successfully' }
-                            save_log_file('ae', text)
+                            save_log_file('person', text)
+                            res.send(result)
                         }
                     })
 
@@ -84,11 +85,11 @@ exports.ae_ = (req, res, next) => {
                         if (error) {
                             alert_message = 'Unsuccessfully: ' + error.sqlMessage
                             const text = { code, type: 'disable account', error: error.sqlMessage }
-                            save_log_file('ae', text)
+                            save_log_file('person', text)
                         } else {
                             alert_message = 'successfully'
                             const text = { code, info: 'disable account successfully' }
-                            save_log_file('ae', text)
+                            save_log_file('person', text)
                             res.send(result)
                         }
                     })
@@ -105,11 +106,11 @@ exports.ae_ = (req, res, next) => {
                     if (error) {
                         alert_message = 'Unsuccessfully: ' + error.sqlMessage
                         const text = { code, type: 'upgrade row', error: error.sqlMessage }
-                        save_log_file('ae', text)
+                        save_log_file('person', text)
                     } else {
                         alert_message = 'successfully'
                         const text = { code, info: 'upgrade row successfully' }
-                        save_log_file('ae', text)
+                        save_log_file('person', text)
                         res.send(result)
                     }
                 })

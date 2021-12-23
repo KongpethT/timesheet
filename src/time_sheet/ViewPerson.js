@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { api, account as acc, keys } from './variable/config'
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Person = () => {
     const [account, setAccount] = useState([])
@@ -18,7 +19,7 @@ const Person = () => {
     const reset_password = async (id) => {
         var answer = window.confirm("Confirm reset a password");
         if (answer) {
-            const key = JSON.stringify({ code: acc.userCode, state: 'update_password' })
+            const key = JSON.stringify({ code: acc.userCode, state: 'reset_password' })
             await axios.post(`${api.ae}?key=${key}`, { id })
         }
         else {
@@ -48,6 +49,7 @@ const Person = () => {
     else {
         return (
             <div className='container'>
+                
                 <h1>View persons</h1>
                 <hr />
                 <table className='table table-striped table-hover bg-light'>
@@ -67,7 +69,13 @@ const Person = () => {
                                     <td>{row.fullName}</td>
                                     <td>{row.state}</td>
                                     <td style={{ width: "30px" }}>
-                                        <button onClick={() => { reset_password(row.id) }} className='btn btn-warning btn-sm'>reset</button>
+                                        <button
+                                            //onClick={() => { reset_password(row.id) }}
+                                            className='btn btn-warning btn-sm'
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop"
+                                        >
+                                            reset</button>
                                     </td>
                                     <td style={{ width: "30px" }}>
                                         <button onClick={() => { set_null_state({ id: row.id, fullName: row.fullName }) }} className='btn btn-danger btn-sm'>disable</button>
@@ -95,6 +103,28 @@ const Person = () => {
                         })}
                     </tbody>
                 </table>
+
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Launch static backdrop modal
+                </button>
+                {/**Popup model */}
+                <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                ...
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
