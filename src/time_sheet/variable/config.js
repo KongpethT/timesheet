@@ -11,6 +11,7 @@ const api = {
     signin: host + "/signin",
     change_password: host + "/change_password",
     message: host + "/message",
+    sales: host + "/sales",
 }
 
 const account = {

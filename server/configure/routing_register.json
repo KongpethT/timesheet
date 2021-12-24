@@ -34,5 +34,9 @@
         {
             "name": "./route/signin_route"
         }
+        ,
+        {
+            "name": "./route/sales_route"
+        }
     ]
 }

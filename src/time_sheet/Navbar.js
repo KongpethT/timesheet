@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
-import { IoLogIn, IoLogOut, IoMenu, IoCreate, IoFolderOpen, IoCalendar, IoBusiness, IoConstruct, IoKey, IoBarChart, IoPerson } from "react-icons/io5";
+import {
+    IoLogIn, IoLogOut, IoMenu, IoCreate,
+    IoFolderOpen, IoCalendar, IoBusiness,
+    IoConstruct, IoKey, IoBarChart, IoPerson,
+    IoRibbon, IoTrendingUp, IoAddCircle,IoSync
+} from "react-icons/io5";
 import { account } from "./variable/config"
 
 export default function Navbar() {
@@ -54,6 +59,14 @@ export default function Navbar() {
                                         </li>
                                         <li><Link to="/timeline/new" className="dropdown-item"><IoCreate /> Create</Link></li>
                                         <li><Link to="/timeline/view" className="dropdown-item"><IoFolderOpen /> View</Link></li>
+
+                                        <li>
+                                            <hr className="dropdown-divider" />
+                                            <IoTrendingUp /> sales activity
+                                        </li>
+                                        <li><Link to="/sales/new" className="dropdown-item"><IoAddCircle /> Open sales</Link></li>
+                                        <li><Link to="/sales/update" className="dropdown-item"><IoSync /> Update sales</Link></li>
+                                        <li><Link to="/sales/view" className="dropdown-item"><IoRibbon />View sales activity</Link></li>
 
                                         <li>
                                             <hr className="dropdown-divider" />
