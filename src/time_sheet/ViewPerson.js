@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { api, account as acc, keys } from './variable/config'
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const Person = () => {
     const [account, setAccount] = useState([])
