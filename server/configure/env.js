@@ -6,4 +6,5 @@ const config = {
     default_password: '1234',
 }
 
+
 module.exports = config

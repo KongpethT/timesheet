@@ -19,8 +19,9 @@ function Main() {
   return (
     <div className='container'>
       <BrowserRouter>
-        <Navbar isLogged={localStorage.getItem('accessToken')} />
+        <Navbar />
         <div style={{ marginTop: '54px', }}></div>
+
         <Switch>
           <Route exact path="/"><SignIn /></Route>
           <Route exact path="/signin"><SignIn /></Route>
@@ -36,9 +37,7 @@ function Main() {
           <Route exact path="/sales/update"><UpdateSales /></Route>
           <Route exact path="/sales/view"><ViewSales /></Route>
         </Switch>
-      </BrowserRouter >
-
-
+      </BrowserRouter>
     </div >
   )
 }

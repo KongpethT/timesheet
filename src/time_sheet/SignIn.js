@@ -12,6 +12,7 @@ export default function SignIn() {
       localStorage.setItem('accessToken', getResult.token)
       localStorage.setItem('accessFullName', getResult[0].fullName)
       localStorage.setItem('accessCode', getResult[0].userCode)
+      localStorage.setItem('accessState', getResult[0].state)
       window.location.href = "/timeline/view"
     } else {
       window.location.href = "/signin"

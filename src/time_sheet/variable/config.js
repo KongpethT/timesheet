@@ -1,5 +1,8 @@
 const host = 'http://localhost:3001'
 //const host = 'http://58.82.141.196:3001'
+const date = new Date()
+const name_month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+    'August', 'September', 'October', 'November', 'December']
 
 const api = {
     company: host + "/company",
@@ -19,7 +22,8 @@ const account = {
     fullUser: localStorage.getItem('accessFullName'),
     userCode: localStorage.getItem('accessCode'),
     get_full_name: localStorage.getItem('accessFullName'),
-    get_staff_code: localStorage.getItem('accessCode')
+    get_staff_code: localStorage.getItem('accessCode'),
+    get_state_code: localStorage.getItem('accessState')
 }
 
 const keys = {
@@ -28,6 +32,19 @@ const keys = {
     get_default_password: 'U2FsdGVkX182CTZzfU1xfr37Ys3ApUI5x3oHLu7I9tM=',
 }
 
-export { api, account, keys }
+const forms = {
+    placeholder_warning: 'please fill out this field',
+}
+
+const dates = {
+    name_month: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+        'August', 'September', 'October', 'November', 'December'],
+    get_date: date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear(),
+    get_time: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds(),
+    get_year: JSON.stringify(date.getFullYear()),
+    get_month: name_month[date.getMonth()]
+}
+
+export { api, account, keys, forms, dates }
 
 //

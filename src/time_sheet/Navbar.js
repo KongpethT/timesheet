@@ -3,26 +3,15 @@ import {
     IoLogIn, IoLogOut, IoMenu, IoCreate,
     IoFolderOpen, IoCalendar, IoBusiness,
     IoConstruct, IoKey, IoBarChart, IoPerson,
-    IoRibbon, IoTrendingUp, IoAddCircle,IoSync
+    IoRibbon, IoTrendingUp, IoAddCircle, IoSync
 } from "react-icons/io5";
 import { account } from "./variable/config"
 
 export default function Navbar() {
-    const isSwitch = (key) => {
-        switch (key) {
-            case 'profile':
-                window.location.href = '/'
-                break;
-
-            case 'logout':
-                localStorage.clear()
-                window.location.href = "/"
-                break;
-
-            default:
-                break;
-        }
-
+    
+    const signout = () => {
+        localStorage.clear()
+        window.location.href = "/"
     }
 
     return (
@@ -45,7 +34,7 @@ export default function Navbar() {
                                 </li>
                                 :
                                 <li className="nav-item fs-5">
-                                    <Link className="nav-link" onClick={() => { isSwitch('logout') }}>Sign Out <IoLogOut /></Link>
+                                    <Link className="nav-link" onClick={signout}>Sign Out <IoLogOut /></Link>
                                 </li>
                             }
                             {(!account.token) ? null :
