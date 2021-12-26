@@ -18,7 +18,7 @@ export default function Timeline() {
     if (keys.get_token === null) { window.location.href = "/signin" }
     else {
         return (
-            <div className='container' >
+            <div>
                 <h1>View timeline</h1>
                 <hr />
                 <table className="table table-striped table-hover bg-light">

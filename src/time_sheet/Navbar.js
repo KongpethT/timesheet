@@ -8,7 +8,7 @@ import {
 import { account } from "./variable/config"
 
 export default function Navbar() {
-    
+
     const signout = () => {
         localStorage.clear()
         window.location.href = "/"
@@ -54,7 +54,7 @@ export default function Navbar() {
                                             <IoTrendingUp /> sales activity
                                         </li>
                                         <li><Link to="/sales/new" className="dropdown-item"><IoAddCircle /> Open sales</Link></li>
-                                        <li><Link to="/sales/update" className="dropdown-item"><IoSync /> Update sales</Link></li>
+                                        {/*<li><Link to="/sales/update" className="dropdown-item"><IoSync /> Update sales</Link></li>*/}
                                         <li><Link to="/sales/view" className="dropdown-item"><IoRibbon />View sales activity</Link></li>
 
                                         <li>

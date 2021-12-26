@@ -1,33 +1,21 @@
 const { get_error, get_success } = require('../configure/sql_message')
 const isTable = 'forecast_monitoring'
-const state = ['gm', 'admin', 'analyze', 'user']
+const state = ['gm', 'user']
 name_month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
     'August', 'September', 'October', 'November', 'December']
 
+//params:userCode, params:state_code[gm,user]
 exports.sales_read = (req, res) => {
     const brick = req.params
     const state_code = brick.state_code
     const user_code = brick.user_code
+    const sqlString = req.query.sqlString
     const option = req.query.option
- 
+    console.log(req.query);
     switch (state_code) {
         case state[0]:
             if (true) {
-                conn.query(`select * from ${isTable} ${option}`,
-                    (error, result) => {
-                        if (error) {
-                            alert_message = get_error(error)
-                        } else {
-                            alert_message = get_success(result)
-                            res.send(result)
-                        }
-                    }
-                )
-            }
-            break;
-        case state[1]:
-            if (true) {
-                conn.query(`select * from ${isTable} where not in ('${user_code}')`,
+                conn.query(`select ${sqlString} from ${isTable} where name_of_agency like'${option}%' order by name_of_agency `,
                     (error, result) => {
                         if (error) {
                             alert_message = get_error(error)
@@ -40,20 +28,6 @@ exports.sales_read = (req, res) => {
             }
             break;
 
-        case state[2]:
-            if (true) {
-                conn.query(`select * from ${isTable} where not in ('${user_code}')`,
-                    (error, result) => {
-                        if (error) {
-                            alert_message = get_error(error)
-                        } else {
-                            alert_message = get_success(result)
-                            res.send(result)
-                        }
-                    }
-                )
-            }
-            break;
         case state[3]:
             if (true) {
                 conn.query(`select * from ${isTable} where userCode='${user_code}'`,
@@ -97,7 +71,19 @@ exports.sales_create = (req, res) => {
 }
 
 exports.sales_update = (req, res) => {
-    res.send()
+    console.log(req.body);
+    const row_id = req.body.id
+    const row_update = req.body.row
+    const value = req.body.value
+    console.log(row_id, row_update, value);
+    conn.query(`update ${isTable} set ${row_update} = '${value}' where id='${row_id}'`,
+        (error, result) => {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log(result);
+            }
+        })
 }
 
 exports.sales_delete = (req, res) => {
