@@ -11,7 +11,6 @@ exports.sales_read = (req, res) => {
     const user_code = brick.user_code
     const sqlString = req.query.sqlString
     const option = req.query.option
-    console.log(req.query);
     switch (state_code) {
         case state[0]:
             if (true) {
@@ -59,11 +58,9 @@ exports.sales_create = (req, res) => {
             [value], (error, result) => {
                 if (error) {
                     alert_message = get_error(error)
-                    //console.log(error);
                 } else {
                     alert_message = get_success(result)
                     res.send(result)
-                    //console.log(result)
                 }
 
             })
@@ -71,17 +68,16 @@ exports.sales_create = (req, res) => {
 }
 
 exports.sales_update = (req, res) => {
-    console.log(req.body);
     const row_id = req.body.id
     const row_update = req.body.row
     const value = req.body.value
-    console.log(row_id, row_update, value);
     conn.query(`update ${isTable} set ${row_update} = '${value}' where id='${row_id}'`,
         (error, result) => {
             if (error) {
-                console.log(error);
+                alert_message = get_error(error)
             } else {
-                console.log(result);
+                alert_message = get_success(result)
+                res.send(result)
             }
         })
 }

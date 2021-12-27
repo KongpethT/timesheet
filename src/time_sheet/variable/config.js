@@ -34,6 +34,8 @@ const keys = {
 
 const forms = {
     placeholder_warning: 'please fill out this field',
+    massage_success: 'successfully',
+    message_warning: 'unsuccessfully'
 }
 
 const dates = {

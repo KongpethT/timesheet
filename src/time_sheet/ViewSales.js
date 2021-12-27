@@ -1,7 +1,8 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { api, account } from "./variable/config"
+import { api, account, forms } from "./variable/config"
 const ViewSales = () => {
+    const [getAlert, setAlert] = useState('')
     const [getID, setID] = useState(null)
     const [getActive, setActive] = useState('disable')
     const [getAgencyName, setAgencyName] = useState('')
@@ -41,11 +42,21 @@ const ViewSales = () => {
         const lock = document.getElementById(e.currentTarget.id)
         if (lock.hasAttribute('readOnly')) { lock.removeAttribute('readOnly') }
         lock.addEventListener("keyup", (e) => {
-            //console.log(e.target);
-            //console.log(e.target.value);
             if (e.key === 'Enter') {
                 lock.setAttribute('readOnly', '')
                 axios.put(api.sales, { id: getID, row: e.target.name, value: e.target.value })
+                    .then((brick) => {
+                        const data = brick.data
+                        if (data.affectedRows === 1) {
+                            setAlert(forms.massage_success)
+                            setTimeout(() => {
+                                setAlert('')
+                            }, 3000)
+                        }else{
+                            setAlert(forms.message_warning)
+                        }
+                    })
+
             }
         })
 
@@ -53,7 +64,7 @@ const ViewSales = () => {
 
     return (
         <div className="table-responsive">
-            <h1>View sales activity</h1>
+            <h1>View sales activity <span className="fs-6 text-primary">{getAlert}</span></h1>
             <hr />
             <div class="mb-3">
                 <input
