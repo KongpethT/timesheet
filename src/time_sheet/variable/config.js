@@ -1,11 +1,10 @@
-const host = 'http://localhost:3001'
-//const host = 'http://58.82.141.196:3001'
+const host = 'https://localhost:3001'
+//const host = 'https://58.82.141.196:3001'
 const date = new Date()
 const name_month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
     'August', 'September', 'October', 'November', 'December']
 
 const api = {
-    company: host + "/company",
     client_type: host + "/client_type",
     timeline: host + "/timeline",
     update_timeline: host + "/update_timeline",
@@ -15,6 +14,7 @@ const api = {
     change_password: host + "/change_password",
     message: host + "/message",
     sales: host + "/sales",
+    customer: host + "/customer",
 }
 
 const account = {
@@ -47,6 +47,31 @@ const dates = {
     get_month: name_month[date.getMonth()]
 }
 
+function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const item = {
+        value: value,
+        expiry: now.getTime() + ttl,
+    }
+
+    localStorage.setItem(key, JSON.stringify(item))
+}
+
 export { api, account, keys, forms, dates }
 
 //
+
+/**
+ * 
+ * function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+
+    // `item` is an object which contains the original value
+    // as well as the time when it's supposed to expire
+    const item = {
+        value: value,
+        expiry: now.getTime() + ttl,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+}
+ */

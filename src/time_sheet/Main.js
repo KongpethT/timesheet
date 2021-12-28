@@ -10,7 +10,9 @@ import UpdatePerson from './UpdatePerson'
 import Dashboard from './ViewDashboard'
 import NewSales from './NewSales'
 import ViewSales from './ViewSales'
-import UpdateSales from './UpdateSales'
+import NewCustomer from './NewCustomer'
+import ViewCustomer from './ViewCustomer'
+
 //import Copyright from './Copyright'
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -33,8 +35,9 @@ function Main() {
         <Route exact path="/person/change_password"><ChangePassword /></Route>
         <Route exact path="/tools/dashboard"><Dashboard /></Route>
         <Route exact path="/sales/new"><NewSales /></Route>
-        <Route exact path="/sales/update"><UpdateSales /></Route>
         <Route exact path="/sales/view"><ViewSales /></Route>
+        <Route exact path="/customer/new"><NewCustomer /></Route>
+        <Route exact path="/customer/view"><ViewCustomer /></Route>
       </Switch>
     </BrowserRouter>
   )

@@ -21,9 +21,6 @@ const Person = () => {
             const key = JSON.stringify({ code: acc.userCode, state: 'reset_password' })
             await axios.post(`${api.ae}?key=${key}`, { id })
         }
-        else {
-            //some code
-        }
     }
 
     const set_null_state = async (ID) => {

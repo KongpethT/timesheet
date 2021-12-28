@@ -1,30 +1,37 @@
 import React, { useState } from 'react'
 import logo from '../image/JCDecaux_logo.png'
 import Axios from 'axios'
-import { api, keys } from './variable/config'
+import { api, memory, storage } from './config/env'
 
 export default function SignIn() {
   const [getAccount, setAccount] = useState({ username: null, password: null })
-  const [getResult, setResult] = useState([])
-
-  const next_page = () => {
-    if (getResult.length !== 0) {
-      localStorage.setItem('accessToken', getResult.token)
-      localStorage.setItem('accessFullName', getResult[0].fullName)
-      localStorage.setItem('accessCode', getResult[0].userCode)
-      localStorage.setItem('accessState', getResult[0].state)
-      window.location.href = "/timeline/view"
-    } else {
-      window.location.href = "/signin"
-    }
-  }
-
-  const isLogged = async () => {
+  const isLogged = () => {
     if (!!getAccount.username & !!getAccount.password) {
-      await Axios.post(api.signin, { getAccount }).then((resporn) => { setResult(resporn.data) })
+      Axios.post(api.signin, { getAccount })
+        .then((brick) => {
+          const data = brick.data
+          const private_id = data.data
+          const token = data.token
+          const obj = {
+            token: token,
+            email: private_id.email_id,
+            full_name: private_id.full_name,
+            user_code: private_id.user_code,
+            state_code: private_id.state_code
+          }
+
+          for (let key in obj) {
+            storage(obj[key], key)
+            //console.log('key: ', key);
+            //console.log('value:', obj[key]);
+          }
+
+        })
     }
   }
-  if (keys.get_token !== null) {
+
+
+  if (memory.get_token !== null) {
     window.location.href = '/timeline/view'
   } else {
     return (
@@ -62,7 +69,7 @@ export default function SignIn() {
                 onChange={(e) => { setAccount({ ...getAccount, password: e.target.value }) }}
               />
             </div>
-            <button type="button" className="btn btn-primary" onMouseDown={isLogged} onMouseUp={next_page}>Login</button>
+            <button type="button" className="btn btn-primary" onMouseUp={isLogged} >Login</button>
           </form>
         </div>
       </div >

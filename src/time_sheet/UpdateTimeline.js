@@ -1,7 +1,7 @@
 import "./newTimeline.css"
 import Input from "./components/Input"
 import Select from "./components/Select"
-import { api, account, keys } from "./variable/config"
+import { api, memory} from "./config/env"
 import { useEffect, useState } from "react"
 import axios from "axios"
 
@@ -10,11 +10,9 @@ export default function UpdateTimeline() {
   const brickRow = JSON.parse(localStorage.getItem('dr'))
   const [company, setCompany] = useState([])
   const [clientType, setClientType] = useState([])
-  //const [getColorMessage, setColorMessage] = useState('alert-B')
-  //const [getAlert, setAlert] = useState('')
   const [value, setValue] = useState({
     row_id: brickRow.id,
-    code: account.userCode,
+    code: memory.get_user_code,
     date: brickRow.timeline,
     client_name: brickRow.clientName,
     company: brickRow.company,
@@ -47,14 +45,14 @@ export default function UpdateTimeline() {
   }
 
   useEffect(() => {
-    axios.get(api.company + "?id=" + account.userCode).then((brick) => { setCompany(brick.data) })
+    axios.get(api.company + "?id=" + memory.get_user_code).then((brick) => { setCompany(brick.data) })
   }, [])
 
   useEffect(() => {
     axios.get(api.client_type).then((brick) => { setClientType(brick.data) })
   }, [])
 
-  if (keys.get_token === null) { window.location.href = "/signin" }
+  if (memory.get_token === null) { window.location.href = "/signin" }
   else {
     return (
       <div className="container page">

@@ -1,12 +1,12 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { api, account, keys } from './variable/config'
+import { api, memory } from './config/env'
 
 export default function Timeline() {
     const [timeline, setTimeline] = useState([])
     const [getRow, setRow] = useState(null)
     useEffect(() => {
-        Axios.get(api.timeline + '?id=' + account.userCode).then((brick) => {
+        Axios.get(api.timeline + '?id=' + memory.get_user_code).then((brick) => {
             setTimeline(brick.data)
         })
     }, [])
@@ -15,7 +15,7 @@ export default function Timeline() {
         localStorage.setItem('dr', JSON.stringify(getRow))
         window.location.href = "/timeline/edit"
     }
-    if (keys.get_token === null) { window.location.href = "/signin" }
+    if (memory.get_token === null) { window.location.href = "/signin" }
     else {
         return (
             <div>

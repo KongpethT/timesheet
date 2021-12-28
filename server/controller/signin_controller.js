@@ -1,34 +1,34 @@
-const { myDecrypt } = require('../configure/crypto');
+global.jwt = require('jsonwebtoken')
+const { config } = require("../configure/env");
 
-require('../configure/crypto')
 exports.signin = (req, res) => {
     const value = req.body.getAccount
     const isUsername = value.username
     const isPassword = value.password
 
-    console.log(value);
-    conn.query(`select * from ae where email ='${isUsername}'`,
+    config.get_connect.query(`select user_code, user_state, fullName, email, password from account where email ='${isUsername}'`,
         (error, result) => {
             if (error) {
-                alert_message = { true: false, message: 'unsuccessfully', error }
-                const text = { user: isUsername, type: 'login successfully' }
-                save_log_file('login', text)
+                alert_message = config.get_sql_err_message(error)
                 res.send(error)
             } else {
+                alert_message = config.get_sql_res_message()
                 const brick = result[0];
-                const password = myDecrypt(brick.password)
+                const data = {
+                    user_code: brick.user_code,
+                    user_state: brick.user_state,
+                    full_name: brick.fullName,
+                    email_id: brick.email
+                }
+                const password = config.get_decrypt(brick.password)
                 if (password === isPassword) {
-                    const token = jwt.sign({
-                        id: isUsername
-                    }, config.secretKey, { expiresIn: config.expires_in }) //{ expiresIn: 3600 })
-                    const brick = { ...result, token }
-                    const text = { user: isUsername, type: 'login successfully' }
-                    save_log_file('login', text)
-                    res.send(brick)
-                } else {
-                    const text = { user: isUsername, type: 'login unsuccessfully' }
-                    save_log_file('login', text)
+                    let token = jwt.sign(data, config.get_key_encrypt, {
+                        expiresIn: '8h' // expires in 8 hours
+                    });
+                    const obj = { data, token }
+                    res.send(obj)
                 }
             }
-        })
+        }
+    )
 }

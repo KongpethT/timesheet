@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
 import {
-    IoLogIn, IoLogOut, IoMenu, IoCreate,
-    IoFolderOpen, IoCalendar, IoBusiness,
-    IoConstruct, IoKey, IoBarChart, IoPerson,
-    IoRibbon, IoTrendingUp, IoAddCircle, IoSync
+    IoLogIn, IoLogOut, IoMenu, IoCreate, IoFolderOpen, IoKey, IoBarChart, IoRibbon, IoAddCircle
 } from "react-icons/io5";
-import { account } from "./variable/config"
+import { FcAssistant, FcBullish, FcPlanner, FcBusinessman, FcServices } from "react-icons/fc";
+import { memory } from "./config/env"
 
 export default function Navbar() {
 
@@ -28,7 +26,7 @@ export default function Navbar() {
                     </div>
                     <div className="offcanvas-body">
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            {(!account.token) ?
+                            {(!memory.get_token) ?
                                 <li className="nav-item fs-5">
                                     <Link to="/signin" className="nav-link"><IoLogIn /> Sign In</Link>
                                 </li>
@@ -37,54 +35,47 @@ export default function Navbar() {
                                     <Link className="nav-link" onClick={signout}>Sign Out <IoLogOut /></Link>
                                 </li>
                             }
-                            {(!account.token) ? null :
+                            {(!memory.get_token) ? null :
                                 <li className="nav-item dropdown fs-5">
                                     <Link className="nav-link dropdown-toggle" to="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <IoMenu /> Dropdown menu
+                                        <IoMenu className="fs-2" /> Dropdown menu
                                     </Link>
                                     <ul className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
                                         <li>
-                                            <IoCalendar /> Timeline
+                                            <FcPlanner className="fs-2" /> Timelines
                                         </li>
-                                        <li><Link to="/timeline/new" className="dropdown-item"><IoCreate /> Create</Link></li>
-                                        <li><Link to="/timeline/view" className="dropdown-item"><IoFolderOpen /> View</Link></li>
+                                        <li><Link to="/timeline/new" className="dropdown-item"><IoCreate className="fs-4 text-info" /> Create</Link></li>
+                                        <li><Link to="/timeline/view" className="dropdown-item"><IoFolderOpen className="fs-4 text-info" /> View</Link></li>
 
                                         <li>
                                             <hr className="dropdown-divider" />
-                                            <IoTrendingUp /> sales activity
+                                            <FcBullish className="fs-2" /> sales activity
                                         </li>
-                                        <li><Link to="/sales/new" className="dropdown-item"><IoAddCircle /> Open sales</Link></li>
-                                        {/*<li><Link to="/sales/update" className="dropdown-item"><IoSync /> Update sales</Link></li>*/}
-                                        <li><Link to="/sales/view" className="dropdown-item"><IoRibbon />View sales activity</Link></li>
+                                        <li><Link to="/sales/new" className="dropdown-item"><IoAddCircle className="fs-4 text-info" /> Open sales</Link></li>
+                                        <li><Link to="/sales/view" className="dropdown-item"><IoRibbon className="fs-4 text-info" /> View sales activity</Link></li>
 
                                         <li>
                                             <hr className="dropdown-divider" />
-                                            <IoBusiness /> Company
+                                            <FcAssistant className="fs-2" /> Customers
                                         </li>
-                                        <li><Link to="/company/new" className="dropdown-item"><IoCreate /> Create</Link></li>
-                                        <li><Link to="/company/view" className="dropdown-item"><IoFolderOpen /> View</Link></li>
+                                        <li><Link to="/customer/new" className="dropdown-item"><IoCreate className="fs-4 text-info" /> Create</Link></li>
+                                        <li><Link to="/customer/view" className="dropdown-item"><IoFolderOpen className="fs-4 text-info" /> View</Link></li>
                                         <li>
                                             <hr className="dropdown-divider" />
-                                            <IoPerson /> persons
+                                            <FcBusinessman className="fs-2" /> persons
                                         </li>
-                                        <li><Link to="/person/new" className="dropdown-item"><IoCreate /> Create</Link></li>
-                                        <li><Link to="/person/view" className="dropdown-item"><IoFolderOpen /> View</Link></li>
-                                        <li><Link to="/person/change_password" className="dropdown-item"><IoKey /> Change password</Link></li>
+                                        <li><Link to="/person/new" className="dropdown-item"><IoCreate className="fs-4 text-info" /> Create</Link></li>
+                                        <li><Link to="/person/view" className="dropdown-item"><IoFolderOpen className="fs-4 text-info" /> View</Link></li>
+                                        <li><Link to="/person/change_password" className="dropdown-item"><IoKey className="fs-4 text-warning" /> Change password</Link></li>
                                         <li>
                                             <hr className="dropdown-divider" />
-                                            <IoConstruct /> Tools
+                                            <FcServices className="fs-2" /> Tools
                                         </li>
-                                        <li><Link to="/tools/dashboard" className="dropdown-item"><IoBarChart /> Dashboard</Link></li>
+                                        <li><Link to="/tools/dashboard" className="dropdown-item"><IoBarChart className="fs-4 text-success" /> Dashboard</Link></li>
                                     </ul>
                                 </li>
                             }
                         </ul>
-                        {/*
-                        <form className="d-flex">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button className="btn btn-outline-success" type="submit">Search</button>
-                        </form>
-                        */}
                     </div>
                 </div>
             </div>
