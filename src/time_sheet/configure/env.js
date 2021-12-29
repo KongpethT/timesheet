@@ -10,7 +10,7 @@ const api = {
     update_timeline: host + "/update_timeline",
     ae: host + "/ae",
     count_activity: host + "/count_activity",
-    signin: host + "/signin",
+    signin: host + "/api/signin",
     change_password: host + "/change_password",
     message: host + "/message",
     sales: host + "/sales",
@@ -44,7 +44,7 @@ const dates = {
     get_time: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds(),
     get_year: JSON.stringify(date.getFullYear()),
     get_month: name_month[date.getMonth()],
-    get_time_expired: '28800',
+    get_time_expired: (60000 * 60), // 1 housr
 }
 
 const storage = (value, key) => {
@@ -57,11 +57,34 @@ const storage = (value, key) => {
     localStorage.setItem(key, JSON.stringify(item))
 }
 
-export { api, memory, keys, forms, dates, storage }
+const storege_exp = (key) => {
+    const itemStr = localStorage.getItem(key)
+    // if the item doesn't exist, return null
+    if (!itemStr) {
+        return null
+    }
+
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+    //console.log(item.expiry);
+    //console.log(now.getTime() > item.expiry);
+    // compare the expiry time of the item with the current time
+    if (now.getTime() > item.expiry) {
+        // If the item is expired, delete the item from storage
+        // and return null
+        //localStorage.removeItem(key)
+        localStorage.clear()
+        //console.log('get-time: ', now.getTime());
+        //164071030582228800
+        return null
+    }
+    return item.value
+}
+
+export { api, memory, keys, forms, dates, storage, storege_exp }
 
 //
 
 /**
- * 
- * 
+ 
  */

@@ -1,28 +1,34 @@
-const { message } = require("./messaged_controller");
+const { config } = require('../configure/env')
+const { message } = require('./messaged_controller');
 
 exports.timeline = (req, res) => {
-  const id = req.query.id;
-  conn.query(
+  const brick = JSON.parse(req.query.id)
+  const id = brick.id
+
+  config.get_connect.query(
     `select 
-    id, 
-    userCode,
-    DATE_FORMAT(timeline, "%Y-%m-%d") as timeline,
-    clientName,
-    company,
-    clientType,
-    visitCall,visitAM,visitPM,siteTourAM,siteTourPM,lunch,dinner,others
-    from timeline where userCode='${id}' order by id desc`,
+      id, 
+      user_code,
+      DATE_FORMAT(timeline, "%Y-%m-%d") as timeline,
+      client_name,
+      company,
+      client_type,
+      visit_call,visit_AM,visit_PM,site_tour_AM,site_tour_PM,lunch,dinner,others
+      from timeline where user_code='${id}' order by id desc`,
     (error, result) => {
       if (error) {
-        res.send({
-          error: error
-        });
+        alert_message = message(error)
       } else {
         res.send(result);
       }
     }
-  );
-};
+  )
+
+}
+
+
+
+
 
 //insert
 exports.setTimeline = (req, res) => {

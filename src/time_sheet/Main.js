@@ -1,7 +1,7 @@
 import SignIn from './SignIn'
 import Navbar from './Navbar'
 import NewTimeline from './NewTimeline'
-import Timeline from './ViewTimeline'
+import ViewTimeline from './ViewTimeline'
 import UpdateTimeline from "./UpdateTimeline"
 import NewPerson from "./NewPerson"
 import Person from './ViewPerson'
@@ -12,12 +12,13 @@ import NewSales from './NewSales'
 import ViewSales from './ViewSales'
 import NewCustomer from './NewCustomer'
 import ViewCustomer from './ViewCustomer'
-
-//import Copyright from './Copyright'
-
+import { storege_exp } from './configure/env'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function Main() {
+  console.log(process.env.NODE_ENV);
+  storege_exp('token')
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -27,7 +28,7 @@ function Main() {
         <Route exact path="/"><SignIn /></Route>
         <Route exact path="/signin"><SignIn /></Route>
         <Route exact path="/timeline/new"><NewTimeline /></Route>
-        <Route exact path="/timeline/view"><Timeline /></Route>
+        <Route exact path="/timeline/view"><ViewTimeline /></Route>
         <Route exact path="/timeline/edit"><UpdateTimeline /></Route>
         <Route exact path="/person/new"><NewPerson /></Route>
         <Route exact path="/person/view"><Person /></Route>

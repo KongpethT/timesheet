@@ -3,10 +3,9 @@ import {
     IoLogIn, IoLogOut, IoMenu, IoCreate, IoFolderOpen, IoKey, IoBarChart, IoRibbon, IoAddCircle
 } from "react-icons/io5";
 import { FcAssistant, FcBullish, FcPlanner, FcBusinessman, FcServices } from "react-icons/fc";
-import { memory } from "./config/env"
+import { memory } from "./configure/env"
 
 export default function Navbar() {
-
     const signout = () => {
         localStorage.clear()
         window.location.href = "/"
@@ -15,7 +14,7 @@ export default function Navbar() {
     return (
         <nav className="navbar navbar-light bg-light fixed-top">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="#">Wellcome {localStorage.getItem('accessFullName')}</Link>
+                <Link className="navbar-brand" to="/#">Wellcome {localStorage.getItem('accessFullName')}</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -32,12 +31,12 @@ export default function Navbar() {
                                 </li>
                                 :
                                 <li className="nav-item fs-5">
-                                    <Link className="nav-link" onClick={signout}>Sign Out <IoLogOut /></Link>
+                                    <Link to="/#" className="nav-link" onClick={signout}>Sign Out <IoLogOut /></Link>*/
                                 </li>
                             }
                             {(!memory.get_token) ? null :
                                 <li className="nav-item dropdown fs-5">
-                                    <Link className="nav-link dropdown-toggle" to="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <Link className="nav-link dropdown-toggle" to="/#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <IoMenu className="fs-2" /> Dropdown menu
                                     </Link>
                                     <ul className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">

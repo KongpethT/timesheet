@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import logo from '../image/JCDecaux_logo.png'
-import Axios from 'axios'
-import { api, memory, storage } from './config/env'
+import axios from 'axios'
+import { api, memory, storage } from './configure/env'
 
 export default function SignIn() {
   const [getAccount, setAccount] = useState({ username: null, password: null })
   const isLogged = () => {
+    axios.get(`${api.signin}/${getAccount.username}/${getAccount.password}`)
+
+    /*
     if (!!getAccount.username & !!getAccount.password) {
       Axios.post(api.signin, { getAccount })
         .then((brick) => {
@@ -25,9 +28,10 @@ export default function SignIn() {
             //console.log('key: ', key);
             //console.log('value:', obj[key]);
           }
-
+          window.location.href = '/timeline/view'
         })
     }
+    */
   }
 
 

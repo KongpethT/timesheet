@@ -1,25 +1,38 @@
 import Axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { api, memory } from './config/env'
+import React, { useEffect, useState, useCallback } from 'react'
+import { api, memory } from './configure/env'
 
-export default function Timeline() {
-    const [timeline, setTimeline] = useState([])
+const ViewTimeline = () => {
+
+    const [getTimeline, setgetTimeline] = useState([])
     const [getRow, setRow] = useState(null)
-    useEffect(() => {
-        Axios.get(api.timeline + '?id=' + memory.get_user_code).then((brick) => {
-            setTimeline(brick.data)
+
+    const get_timeline = useCallback(() => {
+        Axios.get(`${api.timeline}/?id=${memory.get_user_code}`).then((brick) => {
+            const data = brick.data
+            if (data.length !== 0) {
+                setgetTimeline(brick.data)
+                
+            }
         })
     }, [])
+
+    useEffect(() => {
+        get_timeline()
+    })
+
+
 
     const row_edit = () => {
         localStorage.setItem('dr', JSON.stringify(getRow))
         window.location.href = "/timeline/edit"
     }
+
     if (memory.get_token === null) { window.location.href = "/signin" }
     else {
         return (
             <div>
-                <h1>View timeline</h1>
+                <h1>View Timeline</h1>
                 <hr />
                 <table className="table table-striped table-hover bg-light">
                     <thead>
@@ -40,11 +53,11 @@ export default function Timeline() {
                         </tr>
                     </thead>
                     <tbody>
-                        {timeline.map((row, index) => {
+                        {getTimeline.map((row, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td>{row.timeline}</td>
+                                    <td>{row.getTimeline}</td>
                                     <td>{row.clientName}</td>
                                     <td>{row.company}</td>
                                     <td>{row.clientType}</td>
@@ -60,7 +73,7 @@ export default function Timeline() {
                                         onMouseDown={() => {
                                             setRow({
                                                 id: row.id,
-                                                timeline: row.timeline,
+                                                getTimeline: row.getTimeline,
                                                 clientName: row.clientName,
                                                 company: row.company,
                                                 clientType: row.clientType,
@@ -85,3 +98,5 @@ export default function Timeline() {
         )
     }
 }
+
+export default ViewTimeline

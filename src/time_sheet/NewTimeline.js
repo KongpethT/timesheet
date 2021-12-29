@@ -1,7 +1,7 @@
 import "./newTimeline.css"
 import Input from "./components/Input"
 import Select from "./components/Select"
-import { api, memory } from "./config/env"
+import { api, memory } from "./configure/env"
 import { useEffect, useState } from "react"
 import axios from "axios"
 
