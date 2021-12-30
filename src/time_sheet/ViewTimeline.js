@@ -1,99 +1,83 @@
-import Axios from 'axios'
+import axios from 'axios'
 import React, { useEffect, useState, useCallback } from 'react'
 import { api, memory } from './configure/env'
 
 const ViewTimeline = () => {
 
-    const [getTimeline, setgetTimeline] = useState([])
-    const [getRow, setRow] = useState(null)
-
+    const [getTimeline, setTimeline] = useState([])
     const get_timeline = useCallback(() => {
-        Axios.get(`${api.timeline}/?id=${memory.get_user_code}`).then((brick) => {
-            const data = brick.data
-            if (data.length !== 0) {
-                setgetTimeline(brick.data)
-                
-            }
-        })
+        axios.get(`${api.timeline}/${memory.get_account_id}`)
+            .then((brick) => {
+                const dr = brick.data
+                setTimeline(dr)
+            })
     }, [])
 
     useEffect(() => {
         get_timeline()
-    })
-
-
-
-    const row_edit = () => {
-        localStorage.setItem('dr', JSON.stringify(getRow))
-        window.location.href = "/timeline/edit"
-    }
+    }, [])
 
     if (memory.get_token === null) { window.location.href = "/signin" }
     else {
         return (
-            <div>
+            <div >
                 <h1>View Timeline</h1>
                 <hr />
-                <table className="table table-striped table-hover bg-light">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Date</th>
-                            <th>Client Name</th>
-                            <th>Company</th>
-                            <th>Client Type</th>
-                            <th>Call</th>
-                            <th>Visit AM</th>
-                            <th>Visit PM</th>
-                            <th>Site Tour AM</th>
-                            <th>Site Tour PM</th>
-                            <th>Lunch</th>
-                            <th>Dinner</th>
-                            <th>Others</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {getTimeline.map((row, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{index + 1}</td>
-                                    <td>{row.getTimeline}</td>
-                                    <td>{row.clientName}</td>
-                                    <td>{row.company}</td>
-                                    <td>{row.clientType}</td>
-                                    <td>{row.visitCall}</td>
-                                    <td>{row.visitAM}</td>
-                                    <td>{row.visitPM}</td>
-                                    <td>{row.siteTourAM}</td>
-                                    <td>{row.siteTourPM}</td>
-                                    <td>{row.lunch}</td>
-                                    <td>{row.dinner}</td>
-                                    <td>{row.others}</td>
-                                    <td><button type="button" className="btn btn-warning btn-sm"
-                                        onMouseDown={() => {
-                                            setRow({
-                                                id: row.id,
-                                                getTimeline: row.getTimeline,
-                                                clientName: row.clientName,
-                                                company: row.company,
-                                                clientType: row.clientType,
-                                                visitCall: row.visitCall,
-                                                visitAM: row.visitAM,
-                                                visitPM: row.visitPM,
-                                                siteTourAM: row.siteTourAM,
-                                                siteTourPM: row.siteTourPM,
-                                                lunch: row.lunch,
-                                                dinner: row.dinner,
-                                                others: row.others
-                                            })
-                                        }}
-                                        onMouseUp={row_edit}
-                                    >Edit</button></td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+                <div class="mb-3">
+                    <input
+                        type="text"
+                        class="form-control"
+                        //onChange={(e) => { setAgencyName(e.target.value) }} /////
+                        placeholder="Search a name of agency" />
+                </div>
+                <div className="table-responsive mb-3">
+                    <table className="table bg-light table-hover text-center table-bordered"
+                        style={{
+                            tableLayout: 'fixed',
+                            marginLeft: 'auto',
+                            marginRight: 'auto'
+                        }}>
+                        <thead>
+                            <tr>
+                                <th style={{ width: '50px' }}>No.</th>
+                                <th style={{ width: '100px' }}>Date</th>
+                                <th style={{ width: '200px' }}>Name of client</th>
+                                <th style={{ width: '250px' }}>Name of agency</th>
+                                <th style={{ width: '250px' }}>Name of client Type</th>
+                                <th style={{ width: '100px' }}>Call</th>
+                                <th style={{ width: '100px' }}>Visit AM</th>
+                                <th style={{ width: '100px' }}>Visit PM</th>
+                                <th style={{ width: '150px' }}>Site Tour AM</th>
+                                <th style={{ width: '150px' }}>Site Tour PM</th>
+                                <th style={{ width: '100px' }}>Lunch</th>
+                                <th style={{ width: '100px' }}>Dinner</th>
+                                <th style={{ width: '250px' }}>Others</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {getTimeline.map((row, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{row.date}</td>
+                                        <td>{row.name_of_client}</td>
+                                        <td>{row.name_of_agency}</td>
+                                        <td>{row.client_type}</td>
+                                        <td>{row.visit_call}</td>
+                                        <td>{row.visit_AM}</td>
+                                        <td>{row.visit_PM}</td>
+                                        <td>{row.site_tour_AM}</td>
+                                        <td>{row.site_tour_PM}</td>
+                                        <td>{row.lunch}</td>
+                                        <td>{row.dinner}</td>
+                                        <td>{row.others}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div >
         )
     }

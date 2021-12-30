@@ -6,7 +6,7 @@ const name_month = ['January', 'February', 'March', 'April', 'May', 'June', 'Jul
 
 const api = {
     client_type: host + "/client_type",
-    timeline: host + "/timeline",
+    timeline: host + "/api/timeline",
     update_timeline: host + "/update_timeline",
     ae: host + "/ae",
     count_activity: host + "/count_activity",
@@ -19,6 +19,7 @@ const api = {
 
 const memory = {
     get_token: localStorage.getItem('token'),
+    get_account_id: localStorage.getItem('account_id'),
     get_full_name: localStorage.getItem('full_name'),
     get_user_code: localStorage.getItem('user_code'),
     get_state_code: localStorage.getItem('state_code'),

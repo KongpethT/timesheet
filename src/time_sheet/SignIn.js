@@ -6,32 +6,27 @@ import { api, memory, storage } from './configure/env'
 export default function SignIn() {
   const [getAccount, setAccount] = useState({ username: null, password: null })
   const isLogged = () => {
-    axios.get(`${api.signin}/${getAccount.username}/${getAccount.password}`)
-
-    /*
     if (!!getAccount.username & !!getAccount.password) {
-      Axios.post(api.signin, { getAccount })
-        .then((brick) => {
-          const data = brick.data
-          const private_id = data.data
-          const token = data.token
-          const obj = {
-            token: token,
-            email: private_id.email_id,
-            full_name: private_id.full_name,
-            user_code: private_id.user_code,
-            state_code: private_id.state_code
-          }
-
-          for (let key in obj) {
-            storage(obj[key], key)
-            //console.log('key: ', key);
-            //console.log('value:', obj[key]);
-          }
-          window.location.href = '/timeline/view'
-        })
+      axios.get(`${api.signin}/${getAccount.username}/${getAccount.password}`).then((brick => {
+        const data = brick.data
+        const private_id = data.values
+        const token = data.token
+        const obj = {
+          token: token,
+          email: private_id.email_id,
+          full_name: private_id.full_name,
+          user_code: private_id.user_code,
+          state_code: private_id.user_state,
+          account_id: private_id.account_id,
+        }
+        for (let key in obj) {
+          storage(obj[key], key)
+          //console.log('key: ', key);
+          //console.log('value:', obj[key]);
+        }
+        window.location.href = '/timeline/view'
+      }))
     }
-    */
   }
 
 

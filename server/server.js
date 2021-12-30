@@ -1,6 +1,5 @@
 const { config } = require('./configure/env')
 global.alert_message = null
-//global.bcrypt = require('bcryptjs')
 
 const express = require("express")
 const https = require('https')
@@ -19,7 +18,6 @@ dotenv.config({ path: './config/.env' });
 const app = express()
 const router = express.Router();
 
-
 if (process.env.NODE_ENV === 'development') {
     app.use(require('morgan')('dev'))
 } else {
@@ -31,23 +29,16 @@ app.use(cors({
 }))
 app.use(helmet())
 
-
-
 app.use(cors())
 app.use(express.json())
-//app.use(bodyParser.urlencoded({ extended: false }))
-//app.use(bodyParser.json())
 
 //middleware
 const notFound = require('./middleware/notFound');
 const errorHandler = require('./middleware/errorHandler');
-/*
-tr.routing.map((row, index) => {
-    require(row.name) //(app)
-})
-*/
+
 // All routes here
-app.use('/api/signin', require('./route/signin_route'));
+app.use('/api/signin', require('./route/signin_route'))
+app.use('/api/timeline', require('./route/timeline_route'))
 
 // Custom middleware here
 app.use(notFound);
@@ -55,11 +46,8 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001
 
-const server = https.createServer(config.get_certificate,app)
+const server = https.createServer(config.get_certificate, app)
 server.listen(PORT, '0.0.0.0', () => {
-    console.log(`server up and running in ${process.env.NODE_ENV} mode on port https://127.0.0.1:${PORT}`.black.bold.bgWhite)
+    console.log(`server up and running in ${process.env.NODE_ENV} mode on port https://127.0.0.1:${PORT}`.yellow.bold)
 })
-
-//module.exports = app
-
 

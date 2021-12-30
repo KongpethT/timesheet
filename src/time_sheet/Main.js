@@ -14,16 +14,16 @@ import NewCustomer from './NewCustomer'
 import ViewCustomer from './ViewCustomer'
 import { storege_exp } from './configure/env'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { useState } from 'react'
 
 function Main() {
-  console.log(process.env.NODE_ENV);
+  if (process.env.NODE_ENV === 'development') { console.log(process.env.NODE_ENV) }
   storege_exp('token')
 
   return (
     <BrowserRouter>
       <Navbar />
       <div style={{ marginTop: '54px', }}></div>
-
       <Switch>
         <Route exact path="/"><SignIn /></Route>
         <Route exact path="/signin"><SignIn /></Route>
