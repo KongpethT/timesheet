@@ -14,7 +14,7 @@ const api = {
     change_password: host + "/change_password",
     message: host + "/message",
     sales: host + "/sales",
-    customer: host + "/customer",
+    customer: host + "/api/customer",
 }
 
 const memory = {
@@ -33,13 +33,13 @@ const keys = {
 }
 
 const forms = {
-    placeholder_warning: 'please fill out this field',
-    massage_success: 'successfully',
-    message_warning: 'unsuccessfully'
+    get_placeholder_warning: 'please fill out this field',
+    get_massage_success: 'successfully',
+    get_message_warning: 'unsuccessfully'
 }
 
 const dates = {
-    name_month: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+    get_name_month: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
         'August', 'September', 'October', 'November', 'December'],
     get_date: date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear(),
     get_time: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds(),

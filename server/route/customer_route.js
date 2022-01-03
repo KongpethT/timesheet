@@ -1,7 +1,15 @@
-module.exports = (app) => {
-    const index = require('../controller/customer_controll')
-    app.get('/customer/:userCode/:stateCode', index.read)
-    app.post('/customer', index.create)
-    app.put('/customer', index.update)
-    app.delete('/customer', index.delete)
-}
+const express = require('express')
+const router = express.Router()
+
+const { getPosts, getPostById, postPostById } = require('../controller/customer_controller')
+
+router.route('/')
+    .get(getPosts)
+
+router.route('/:id')
+    .get(getPostById)
+
+router.route('/:id')
+    .post(postPostById)
+
+module.exports = router

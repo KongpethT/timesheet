@@ -2,14 +2,14 @@ const { config } = require('../configure/env')
 const sql_string = 'select * from timeline'
 const view_string = 'select * from v_timeline'
 
-// @route   GET api/posts
+// @route   GET api/timeline
 // @desc    Get All Posts
 // @access  Public
 exports.getPosts = (req, res) => {
   //console.log('work this here 1');
 }
 
-// @route   GET api/posts /:id
+// @route   GET api/timeline /:id
 // @desc    Gets a post by ID
 // @access  Private
 exports.getPostById = (req, res) => {
@@ -23,4 +23,11 @@ exports.getPostById = (req, res) => {
     })
 }
 
-
+//@route POST api/timeline
+//@desc Posts 
+//@access Private
+exports.postPostByQuery = (req, res) => {
+  const brick = req.body
+  console.log(brick);
+  console.log('run this here');
+}

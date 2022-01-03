@@ -14,7 +14,6 @@ import NewCustomer from './NewCustomer'
 import ViewCustomer from './ViewCustomer'
 import { storege_exp } from './configure/env'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { useState } from 'react'
 
 function Main() {
   if (process.env.NODE_ENV === 'development') { console.log(process.env.NODE_ENV) }
