@@ -11,7 +11,6 @@ const path = require('path')
 
 const bodyParser = require('body-parser')
 const compression = require('compression')
-const tr = require("./configure/routing_register.json")
 
 dotenv.config({ path: './config/.env' });
 
@@ -46,7 +45,6 @@ app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001
-
 const server = https.createServer(config.get_certificate, app)
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`server up and running in ${process.env.NODE_ENV} mode on port https://127.0.0.1:${PORT}`.yellow.bold)

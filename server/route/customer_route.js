@@ -1,13 +1,20 @@
 const express = require('express')
 const router = express.Router()
 
-const { getPosts, getPostById, postPostById } = require('../controller/customer_controller')
+const {
+    getPosts,
+    getPostByIdAgency,
+    getPostByIdClient,
+    postPostById } = require('../controller/customer_controller')
 
 router.route('/')
     .get(getPosts)
 
-router.route('/:id')
-    .get(getPostById)
+router.route('/agency/:id')
+    .get(getPostByIdAgency)
+
+router.route('/client/:id')
+    .get(getPostByIdClient)
 
 router.route('/:id')
     .post(postPostById)
