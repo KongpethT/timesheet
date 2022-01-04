@@ -11,5 +11,4 @@ router.route('/:id')
 
 router.route('/')
     .post(postPostByQuery)
-
 module.exports = router

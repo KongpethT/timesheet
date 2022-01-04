@@ -1,7 +1,16 @@
 const fs = require('fs')
 const mysql = require("mysql2")
 const CryptoJS = require("crypto-js");
-const sql_connect = { host: '58.82.141.196', user: "root", password: "@Ishow2010", database: "timesheet", port: "13306" }
+const sql_connect = {
+    host: '58.82.141.196',
+    user: "root",
+    password: "@Ishow2010",
+    database: "timesheet",
+    port: "13306",
+    waitForConnections: true,
+    connectionLimit: 100,
+    queueLimit: 0
+}
 
 const config = {
     get_process_state: 'development',
@@ -11,7 +20,7 @@ const config = {
         key: fs.readFileSync('./configure/ssl_private.key'),
         cert: fs.readFileSync('./configure/ssl.crt')
     },
-    get_connect: mysql.createConnection(sql_connect),
+    get_connect: mysql.createPool(sql_connect),
     get_sql_err_message: (err) => {
         return set_message = {
             error: true,

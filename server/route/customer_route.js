@@ -5,7 +5,9 @@ const {
     getPosts,
     getPostByIdAgency,
     getPostByIdClient,
-    postPostById } = require('../controller/customer_controller')
+    postPostById,
+    getPostsClientType
+} = require('../controller/customer_controller')
 
 router.route('/')
     .get(getPosts)
@@ -15,6 +17,9 @@ router.route('/agency/:id')
 
 router.route('/client/:id')
     .get(getPostByIdClient)
+
+router.route('/clientType')
+    .get(getPostsClientType)
 
 router.route('/:id')
     .post(postPostById)

@@ -27,7 +27,7 @@ export default function Navbar() {
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                             {(!memory.get_token) ?
                                 <li className="nav-item fs-5">
-                                    <Link to="/signin" className="nav-link"><IoLogIn /> Sign In</Link>
+                                    <Link to="/" className="nav-link"><IoLogIn /> Sign In</Link>
                                 </li>
                                 :
                                 <li className="nav-item fs-5">

@@ -1,22 +1,25 @@
-import { api, memory, forms } from './configure/env'
+import { api, memory } from './configure/env'
 import { useState, useCallback, useEffect } from 'react'
 import axios from 'axios'
 
+
 const NewTimeline = () => {
+    const account_id = JSON.parse(memory.get_account_id).value
     const [getBrick, setBrick] = useState({
-        date: null, clientOfId: 0, agencyOfId: 0,
-        clientOfType: null, call: false, visitAM: false, vistPM: false,
-        siteTourAM: false, siteTourPM: false, lunch: false, dinner: false, other: null
+        account_id: account_id, date: null, client_id: null, agency_id: null,
+        client_type_id: null, visit_call: false, visit_AM: false, visit_PM: false,
+        site_tour_AM: false, site_tour_PM: false, lunch: false, dinner: false, others: null
     })
-    const [getPlaceholder, setPlaceholder] = useState(null)
     const [getAgency, setAgency] = useState([])
     const [getClient, setClient] = useState([])
+    const [getClientType, setClientType] = useState([])
 
     const pushBrick = () => {
-        if (!!getBrick.date & !!getBrick.agencyOfId & !!getBrick.clientOfId & !!getBrick.clientOfIdType) {
-            axios.post(api.timeline, getBrick)
-        } else {
-            setPlaceholder(forms.get_placeholder_warning)
+        if (!!getBrick.date & !!getBrick.agency_id & !!getBrick.client_id & !!getBrick.client_type_id) {
+            axios.post(api.timeline, getBrick).then((brick) => {
+                const result = brick.data
+                if (result.affectedRows === 1) { window.location.href = '/timeline/view' }
+            })
         }
     }
 
@@ -31,16 +34,25 @@ const NewTimeline = () => {
     }, [pullAgency])
 
     const pullClient = useCallback(() => {
-        axios.get(`${api.customer}/client/${getBrick.agencyOfId}`).then((brick) => {
+        axios.get(`${api.customer}/client/${getBrick.agency_id}`).then((brick) => {
             setClient(brick.data)
-            console.log(brick.data);
         })
 
-    }, [getBrick.agencyOfId])
+    }, [getBrick.agency_id])
 
     useEffect(() => {
         pullClient()
     }, [pullClient])
+
+    const pullClientType = useCallback(() => {
+        axios.get(`${api.customer}/clientType`).then((brick) => {
+            setClientType(brick.data)
+        })
+    }, [])
+
+    useEffect(() => {
+        pullClientType()
+    }, [pullClientType])
 
     if (memory.get_token === null) { window.location.href = "/signin" }
     else {
@@ -59,12 +71,12 @@ const NewTimeline = () => {
                 </div>
                 {/**Agency*/}
                 <div className="col-md-8">
-                    <label htmlFor="inputagencyOfId" className="form-label">Name of agency</label>
+                    <label htmlFor="input agency_id" className="form-label">Name of agency</label>
                     <select
                         id='agency'
                         className="form-select"
-                        aria-describedby="agencyOfIdHelp"
-                        onChange={(e) => { setBrick({ ...getBrick, agencyOfId: e.target.value }) }} >
+                        aria-describedby=" agency_idHelp"
+                        onChange={(e) => { setBrick({ ...getBrick, agency_id: e.target.value }) }} >
                         <option>...</option>
                         {getAgency.map((row, index) => {
                             return (
@@ -78,12 +90,12 @@ const NewTimeline = () => {
                 </div>
                 {/**Client */}
                 <div className="col-md-8">
-                    <label htmlFor="inputclientOfId" className="form-label">Name of client</label>
+                    <label htmlFor="inputclient_id" className="form-label">Name of client</label>
                     <select
                         id='client'
                         className="form-select"
-                        aria-describedby="clientOfIdHelp"
-                        onChange={(e) => { setBrick({ ...getBrick, clientOfId: e.target.value }) }} >
+                        aria-describedby="client_idHelp"
+                        onChange={(e) => { setBrick({ ...getBrick, client_id: e.target.value }) }} >
                         <option>...</option>
                         {getClient.map((row, index) => {
                             return (
@@ -95,65 +107,71 @@ const NewTimeline = () => {
                 </div>
                 {/**ClientType */}
                 <div className="col-md-4">
-                    <label htmlFor="inputclientOfType" className="form-label">Name of client type</label>
-                    <input
-                        type="text"
-                        list="clientOfType"
-                        className="form-control"
-                        aria-describedby="NameOfMonthHelp"
-                        id="inputclientOfIdType"
-                        placeholder={getPlaceholder}
-                        onChange={(e) => { setBrick({ ...getBrick, clientOfIdType: e.target.value }) }} />
-                    <datalist id="clientOfIdType">
-                        <option>...Name Of Client Type</option>
-                    </datalist>
+                    <label htmlFor="inputclient_type_id" className="form-label">Name of client type</label>
+                    <select
+                        id='clientType'
+                        className="form-select"
+                        aria-describedby="clientTypeHelp"
+                        onChange={(e) => { setBrick({ ...getBrick, client_type_id: e.target.value }) }} >
+                        <option>...</option>
+                        {getClientType.map((row, index) => {
+                            return (
+                                <option key={index} value={row.id}>{row.name}</option>
+                            )
+                        })}
+
+                    </select>
                 </div>
                 {/**Call */}
                 <div></div><div></div>
                 <div className="row mb-3 offset-sm-1" >
                     <div className=" col-md-4 form-check">
-                        <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="call"
-                            onClick={(e) => { setBrick({ ...getBrick, call: e.target.checked }) }} />
+                        <input type="checkbox" className="form-check-input"
+                            onClick={(e) => { setBrick({ ...getBrick, visit_call: e.target.checked }) }} />
                         <label className="form-check-label" htmlFor="call">call</label>
                     </div>
                     {/**Visit AM */}
                     <div className=" col-md-4 form-check">
-                        <input type="checkbox" className="form-check-input" id="visitAM" />
+                        <input type="checkbox" className="form-check-input" id="visitAM"
+                            onClick={(e) => { setBrick({ ...getBrick, visit_AM: e.target.checked }) }} />
                         <label className="form-check-label" htmlFor="visitAM">visit AM</label>
                     </div>
                     {/**Visit PM */}
                     <div className=" col-md-4 form-check">
-                        <input type="checkbox" className="form-check-input" id="visitPM" />
+                        <input type="checkbox" className="form-check-input" id="visitPM"
+                            onClick={(e) => { setBrick({ ...getBrick, visit_PM: e.target.checked }) }} />
                         <label className="form-check-label" htmlFor="visitPM">visit PM</label>
                     </div>
                     {/**Site tour AM */}
                     <div className=" col-md-4 form-check">
-                        <input type="checkbox" className="form-check-input" id="siteTourAM" />
+                        <input type="checkbox" className="form-check-input" id="siteTourAM"
+                            onClick={(e) => { setBrick({ ...getBrick, site_tour_AM: e.target.checked }) }} />
                         <label className="form-check-label" htmlFor="siteTourAM">site tour AM</label>
                     </div>
                     {/**Site tour PM*/}
                     <div className=" col-md-4 form-check">
-                        <input type="checkbox" className="form-check-input" id="siteTourPM" />
+                        <input type="checkbox" className="form-check-input" id="siteTourPM"
+                            onClick={(e) => { setBrick({ ...getBrick, site_tour_PM: e.target.checked }) }} />
                         <label className="form-check-label" htmlFor="siteTourPM">site tour PM</label>
                     </div>
                     {/**Lunch */}
                     <div className=" col-md-4 form-check">
-                        <input type="checkbox" className="form-check-input" id="lunch" />
+                        <input type="checkbox" className="form-check-input" id="lunch"
+                            onClick={(e) => { setBrick({ ...getBrick, lunch: e.target.checked }) }} />
                         <label className="form-check-label" htmlFor="lunch">lunch</label>
                     </div>
                     {/**Dinner */}
                     <div className=" col-md-4 form-check">
-                        <input type="checkbox" className="form-check-input" id="dinner" />
+                        <input type="checkbox" className="form-check-input" id="dinner"
+                            onClick={(e) => { setBrick({ ...getBrick, dinner: e.target.checked }) }} />
                         <label className="form-check-label" htmlFor="dinner">dinner</label>
                     </div>
                 </div>
                 {/**Other */}
                 <div className="mb-3">
                     <label htmlFor={'other'} className="form-label">Other</label>
-                    <textarea className="form-control" id="other" placeholder="note example textarea" ></textarea>
+                    <textarea className="form-control" id="other" placeholder="note example textarea"
+                        onChange={(e) => { setBrick({ ...getBrick, others: e.target.value }) }}></textarea>
                     <div className="invalid-feedback">
                         Please enter a message in the textarea.
                     </div>
@@ -165,6 +183,7 @@ const NewTimeline = () => {
                         className="btn btn-primary"
                         onClick={pushBrick}>Submit</button>
                 </div>
+                <div></div>
             </div >
         )
     }

@@ -1,0 +1,43 @@
+.form {
+    width : 60%;
+    margin: 0 auto;
+
+}
+
+::placeholder {
+    text-align  : left;
+    padding-left: 10px;
+}
+
+.checkbox {
+    display: flex;
+    border : 1px solid white;
+    padding: 0px 0px 10px 0;
+    margin : 10px 0;
+}
+
+
+input[type="button"]:hover {
+    cursor    : pointer;
+    opacity   : 0.6;
+    transition: .3s ease-in-out;
+}
+
+input[type="button"]:active {
+    opacity   : 0.9;
+    transition: .3s ease-in-out;
+}
+
+.group {
+    margin-top: 4px;
+}
+
+option:first-child {
+    text-align: right;
+}
+
+option {
+    color: blue;
+    /*color     : rgb(15, 36, 66);*/
+    text-align: center;
+}
