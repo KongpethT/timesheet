@@ -3177,6 +3177,11 @@
   "resolved" "https://registry.npmjs.org/collect-v8-coverage/-/collect-v8-coverage-1.0.1.tgz"
   "version" "1.0.1"
 
+"collect.js@^4.30.3":
+  "integrity" "sha512-u/+RntU9wk+B5dBfaZRZ0PsmjzBEd3rPfpB36A45cnjiufNACzFCjAB7D4MuE8fAaayxJbjLnq9ewQtMBTnPiw=="
+  "resolved" "https://registry.npmjs.org/collect.js/-/collect.js-4.30.3.tgz"
+  "version" "4.30.3"
+
 "collection-visit@^1.0.0":
   "integrity" "sha1-S8A3PBZLwykbTTaMgpzxqApZ3KA="
   "resolved" "https://registry.npmjs.org/collection-visit/-/collection-visit-1.0.0.tgz"

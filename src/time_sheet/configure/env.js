@@ -12,9 +12,10 @@ const api = {
     count_activity: host + "/count_activity",
     signin: host + "/api/signin",
     change_password: host + "/change_password",
-    message: host + "/message",
+    //message: host + "/message",
     sales: host + "/sales",
     customer: host + "/api/customer",
+    person: host + "/api/person"
 }
 
 const memory = {
@@ -35,7 +36,9 @@ const keys = {
 const forms = {
     get_placeholder_warning: 'please fill out this field',
     get_massage_success: 'successfully',
-    get_message_warning: 'unsuccessfully'
+    get_message_warning: 'unsuccessfully',
+    get_message_login_error1: 'Login Error',
+    get_message_login_error2: 'An Invalid username or password. Please try logging in again.'
 }
 
 const dates = {

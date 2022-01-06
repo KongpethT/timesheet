@@ -9,7 +9,7 @@ router.route('/')
 router.route('/:id')
     .get(getPostById)
 
-router.route('/:name/:password')
-    .get(getPostByLogin)
+router.route('/')
+    .post(getPostByLogin)
 
 module.exports = router

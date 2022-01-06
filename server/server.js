@@ -39,6 +39,7 @@ const errorHandler = require('./middleware/errorHandler');
 app.use('/api/signin', require('./route/signin_route'))
 app.use('/api/timeline', require('./route/timeline_route'))
 app.use('/api/customer', require('./route/customer_route'))
+app.use('/api/person', require('./route/person_route'))
 
 // Custom middleware here
 app.use(notFound);

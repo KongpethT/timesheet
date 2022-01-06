@@ -2,29 +2,26 @@ const { config } = require('../configure/env')
 
 
 // @route   GET api/timeline
-// @desc    Get All Posts
-// @access  Public
 exports.getPosts = (req, res) => {
   //console.log('work this here 1');
 }
-
-// @route   GET api/timeline /:id
-// @desc    Gets a post by ID
-// @access  Private
+// @route   GET api/timeline /:id/:id1
 exports.getPostById = (req, res) => {
-  const brick = JSON.parse(req.params.id)
-  const account_id = brick.value
-  const sqlString = `select * from v_timeline where account_id = '${account_id}'`
+  const brick = req.params
+  const accountId = JSON.parse(brick.id)
+  let clientType = (brick.id2)
+  if (clientType === 'null') { clientType = '' }
+  const sqlString = `SELECT * FROM v_timeline where account_id = '${accountId.value}' and client_type LIKE '${clientType}%' `
   config.get_connect.query(sqlString,
     (error, result) => {
-      (process.env.NODE_ENV === 'development') ? console.log(error) : null
-      res.send(result)
+      if (error) {
+        (process.env.NODE_ENV === 'development') ? console.log(error) : null
+      } else {
+        res.send(result)
+      }
     })
 }
-
 //@route POST api/timeline/:id
-//@desc Posts 
-//@access Private
 exports.postPostByQuery = (req, res) => {
   const brick = req.body
   const data = Object.keys(brick).map((key) => {
@@ -45,8 +42,50 @@ exports.postPostByQuery = (req, res) => {
     'dinner,' +
     'others) values (?)'
   config.get_connect.query(sqlString, [data], (error, result) => {
-    (process.env.NODE_ENV === 'development') ? console.log(error) : null
-    console.log(result)
-    res.send(result)
+    if (error) {
+      (process.env.NODE_ENV === 'development') ? console.log(error) : null
+    } else {
+      res.send(result)
+    }
+  })
+}
+//@router count activity api/timeline/count/:id/:id2
+exports.getPostCountById = (req, res) => {
+  const brick = req.params
+  const accountId = JSON.parse(brick.id)
+  let clientType = (brick.id2)
+  if (clientType === 'null') { clientType = '' }
+  const sqlString = `SELECT
+  COUNT(client_type) AS ClientTypeId,
+  SUM(visit_call) AS VisitCall,
+  SUM(visit_AM) AS VisitAM,
+  SUM(visit_PM) AS VisitPM,
+  SUM(site_tour_AM) AS SiteTourAM,
+  SUM(site_tour_PM) AS SiteTourPM,
+  SUM(lunch) AS Lunch,
+  SUM(dinner) AS Dinner,
+  COUNT(others) AS Others
+FROM
+ v_timeline where account_id = '${accountId.value}' and client_type LIKE '${clientType}%'`
+  config.get_connect.query(sqlString, (error, result) => {
+    if (error) {
+      (process.env.NODE_ENV === 'development') ? console.log(error) : null
+    } else {
+      res.send(result)
+    }
+
+  })
+}
+//@router DELETE api/timeline/:id
+exports.deletePostById = (req, res) => {
+  const brick = req.params
+  const id = brick.id
+  const sqlString = `delete from timeline where id = '${id}'`
+  config.get_connect.query(sqlString, (error, result) => {
+    if (error) {
+      (process.env.NODE_ENV === 'development') ? console.log(error) : null
+    } else {
+      res.send(result)
+    }
   })
 }

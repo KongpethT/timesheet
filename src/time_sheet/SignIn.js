@@ -1,30 +1,44 @@
 import React, { useState } from 'react'
 import logo from '../image/JCDecaux_logo.png'
 import axios from 'axios'
-import { api, memory, storage } from './configure/env'
+import { api, memory, storage, forms } from './configure/env'
 
 export default function SignIn() {
-  const [getAccount, setAccount] = useState({ username: null, password: null })
+  const [getAccount, setAccount] = useState({ username: '', password: '' })
+  const [getAlert, setAlert] = useState('')
   const isLogged = () => {
     if (!!getAccount.username & !!getAccount.password) {
-      axios.get(`${api.signin}/${getAccount.username}/${getAccount.password}`).then((brick => {
+      axios.post(api.signin, { email: getAccount.username, password: getAccount.password }).then((brick => {
         const data = brick.data
-        const private_id = data.values
-        const token = data.token
-        const obj = {
-          token: token,
-          email: private_id.email_id,
-          full_name: private_id.full_name,
-          user_code: private_id.user_code,
-          state_code: private_id.user_state,
-          account_id: private_id.account_id,
+        if (data.error === 401) {
+          //console.log('error-----401');
+          setAlert(forms.get_message_login_error1 + '\n' + forms.get_message_login_error2)
+          setAccount({ username: '', password: '' })
+          setTimeout(() => { setAlert('') }, 3000)
+        } else {
+          const private_id = data.values
+          const token = data.token
+          const obj = {
+            token: token,
+            email: private_id.email_id,
+            full_name: private_id.full_name,
+            user_code: private_id.user_code,
+            state_code: private_id.user_state,
+            account_id: private_id.account_id,
+          }
+          for (let key in obj) {
+            storage(obj[key], key)
+          }
+          if (private_id.user_state === 'analyze' | private_id.user_state === 'gm') {
+            window.location.href = '/tools/dashboard'
+          }
+          if (private_id.user_state === 'admin') {
+            window.location.href = '/person/view'
+          }
+          if (private_id.user_state === 'user') {
+            window.location.href = '/timeline/view'
+          }
         }
-        for (let key in obj) {
-          storage(obj[key], key)
-          //console.log('key: ', key);
-          //console.log('value:', obj[key]);
-        }
-        window.location.href = '/timeline/view'
       }))
     }
   }
@@ -46,30 +60,37 @@ export default function SignIn() {
           margin: "0 auto",
           textAlign: "center"
         }}>
+          {/**logo */}
           <img src={logo} className="img-fluid" alt="logo" />
-          <form className='form'>
-            <div className="mb-3">
-              <label className="form-label text-light">Username</label>
-              <input
-                type="text"
-                className="form-control text-center"
-                id="username"
-                onChange={(e) => { setAccount({ ...getAccount, username: e.target.value }) }}
-              />
-              <div id="usernameHelp" className="form-text">We'll never share your username with anyone else.</div>
-            </div>
+          {/**alert message */}
+          <div className='mb-3'>
+            <div id="usernameHelp" className="form-text text-warning">{getAlert}</div>
+          </div>
+          {/**username */}
+          <div className="mb-3">
+            <label className="form-label text-light">Username</label>
+            <input
+              type="text"
+              className="form-control text-center"
+              id="username"
+              value={getAccount.username}
+              onChange={(e) => { setAccount({ ...getAccount, username: e.target.value }) }}
+            />
+            <div id="usernameHelp" className="form-text">We'll never share your username with anyone else.</div>
+          </div>
+          {/**password */}
+          <div className="mb-3">
+            <label className="form-label text-light">Password</label>
+            <input
+              type="password"
+              className="form-control text-center"
+              id="password"
+              value={getAccount.password}
+              onChange={(e) => { setAccount({ ...getAccount, password: e.target.value }) }}
+            />
+          </div>
+          <button type="button" className="btn btn-primary" onMouseUp={isLogged} >Login</button>
 
-            <div className="mb-3">
-              <label className="form-label text-light">Password</label>
-              <input
-                type="password"
-                className="form-control text-center"
-                id="password"
-                onChange={(e) => { setAccount({ ...getAccount, password: e.target.value }) }}
-              />
-            </div>
-            <button type="button" className="btn btn-primary" onMouseUp={isLogged} >Login</button>
-          </form>
         </div>
       </div >
     )
