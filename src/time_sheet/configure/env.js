@@ -31,6 +31,14 @@ const keys = {
     get_key: '3003003000',
     get_default_password: 'U2FsdGVkX182CTZzfU1xfr37Ys3ApUI5x3oHLu7I9tM=',
 
+
+}
+const alphabet = {
+    get_capital: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+    get_lowercase: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
+    get_number: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    get_special: ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', ' - ', ' + ', '=']
+
 }
 
 const forms = {
@@ -85,10 +93,22 @@ const storege_exp = (key) => {
     return item.value
 }
 
-export { api, memory, keys, forms, dates, storage, storege_exp }
+const passwordValidity = (para1, para2) => {
+    let isChecked = false
+    for (let i = 0; i < para1.length; i++) {
+        for (let j = 0; j < para2.length; j++) {
+            if (para1[i] === para2[j]) {
+                //console.log(para1[i] + ' = ' + para2[j])
+                isChecked = true
+                break
+            }
+            else {
+                //console.log(para1[i] + ' = ' + para2[j])
+            }
+        }
+        if (isChecked === true) { return isChecked }
+    }
+    return isChecked
+}
 
-//
-
-/**
- 
- */
+export { api, memory, keys, forms, dates, storage, storege_exp, passwordValidity, alphabet }

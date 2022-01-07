@@ -5,6 +5,7 @@ import { memory, keys, api, forms } from './configure/env'
 
 
 const NewPerson = () => {
+    if (memory.get_token === null) { window.location.href = '/' }
     const [getAlert, setAlert] = useState('')
     const [getPlaceholder, setPlaceholder] = useState('')
     const [getValue, setValue] = useState(

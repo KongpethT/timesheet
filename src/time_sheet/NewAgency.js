@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { forms, memory, api } from './configure/env'
 const NewAgency = () => {
+    if (memory.get_token === null) { window.location.href = '/' }
     const [getAlert, setAlert] = useState('')
     const [getAddress, setAddress] = useState(
         {

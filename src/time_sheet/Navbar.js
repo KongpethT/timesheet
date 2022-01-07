@@ -36,8 +36,8 @@ export default function Navbar() {
                                 :
                                 <div>
                                     <li className="nav-item">
-                                        <Link to="/#" className="nav-link" onClick={signout}>Sign Out <IoLogOut className="fs-6 text-primary"/></Link>
-                                        <Link to="/person/change_password" className="nav-link">Change password <IoKey className="fs-6 text-danger" /></Link>
+                                        <Link to="/#" className="nav-link" onClick={signout}>Sign Out <IoLogOut className="fs-6 text-primary" /></Link>
+                                        <Link to="/person/changePassword" className="nav-link">Change password <IoKey className="fs-6 text-danger" /></Link>
                                     </li>
                                 </div>
                             }
@@ -90,7 +90,7 @@ export default function Navbar() {
 
                                                 <li><Link to="/person/new" className="dropdown-item"><IoDuplicate className="fs-6 text-success" /> Create</Link></li>
                                                 <li><Link to="/person/view" className="dropdown-item"><IoLibrary className="fs-6 text-info" /> View</Link></li>
-                                                <li><Link to="/person/change_password" className="dropdown-item"><IoKey className="fs-6 text-warning" /> Change password</Link></li>
+                                                {/*<li><Link to="/person/changePassword" className="dropdown-item"><IoKey className="fs-6 text-warning" /> Change password</Link></li>*/}
                                             </div>
                                         }
                                         <li>

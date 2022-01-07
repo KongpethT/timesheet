@@ -3,6 +3,7 @@ import { useState, useCallback, useEffect } from 'react'
 import axios from 'axios'
 
 const NewClient = () => {
+    if (memory.get_token === null) { window.location.href = '/' }
     const [getAlert, setAlert] = useState('')
     const [getPlaceholder, setPlaceholder] = useState('')
     const [getAgency, setAgency] = useState([])

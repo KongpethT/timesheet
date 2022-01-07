@@ -1,129 +1,76 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { api, account as acc, keys } from './variable/config'
+import { useState, useCallback, useEffect } from 'react'
+import { memory, api } from './configure/env'
 
-const Person = () => {
-    const [account, setAccount] = useState([])
-    const [count, setCount] = useState(0)
-    const [getRow, setRow] = useState({})
-
-    useEffect(() => {
-        const key = JSON.stringify({ code: acc.userCode, state: 'read' })
-        axios.get(`${api.ae}?key=${key}`).then((brick) => {
-            setAccount(brick.data)
+const ViewPerson = () => {
+    if (memory.get_token === null) { window.location.href = '/' }
+    const [getAlert, setAlert] = useState('')
+    const [getPerson, setPerson] = useState([])
+    /**pull table account */
+    const pullAccount = useCallback(() => {
+        axios.get(api.person).then((brick) => {
+            setPerson(brick.data)
         })
-    }, [count])
-
-
-    const reset_password = async (id) => {
-        var answer = window.confirm("Confirm reset a password");
-        if (answer) {
-            const key = JSON.stringify({ code: acc.userCode, state: 'reset_password' })
-            await axios.post(`${api.ae}?key=${key}`, { id })
+    }, [])
+    useEffect(() => { pullAccount() }, [pullAccount])
+    /**reset a password to default */
+    const resetPassword = (id) => {
+        const value = { id, password: '1234' }
+        if (window.confirm("Do you really want to a default password?")) {
+            axios.put(`${api.person}/resetPassword`, { value }).then((brick) => {
+                const data = brick.data
+                if (data.affectedRows === 1) {
+                    setAlert('Password reset successfully.')
+                    setTimeout(() => {
+                        setAlert('')
+                    }, 3000)
+                }
+            })
         }
-    }
 
-    const set_null_state = async (ID) => {
-        var answer = window.confirm(`Confirm delete " ${ID.fullName} " account`);
-        if (answer) {
-            const id = ID.id
-            const key = JSON.stringify({ code: acc.userCode, state: 'disable_state' })
-            await axios.post(`${api.ae}?key=${key}`, { id })
-            setCount(count + 1)
-        }
-        else {
-            //some code
-        }
     }
-
-    const row_edit = (e) => {
-        localStorage.setItem('dr', JSON.stringify(getRow))
-        window.location.href = '/person/edit'
-    }
-
-    if (keys.get_token === null) { window.location.href = "/signin" }
+    /**view */
+    if (memory.get_token === null) { window.location.href = "/" }
     else {
         return (
-            <div className='container'>
-                
-                <h1>View persons</h1>
+            <div >
+                <h1>View person <span className='fs-6 text-primary'>{getAlert}</span></h1>
                 <hr />
-                <table className='table table-striped table-hover bg-light'>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>name</th>
-                            <th>status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {account.map((row, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{index + 1}</td>
-                                    <td>{row.fullName}</td>
-                                    <td>{row.state}</td>
-                                    <td style={{ width: "30px" }}>
-                                        <button
-                                            //onClick={() => { reset_password(row.id) }}
-                                            className='btn btn-warning btn-sm'
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop"
-                                        >
-                                            reset</button>
-                                    </td>
-                                    <td style={{ width: "30px" }}>
-                                        <button onClick={() => { set_null_state({ id: row.id, fullName: row.fullName }) }} className='btn btn-danger btn-sm'>disable</button>
-                                    </td>
-                                    <td style={{ width: "30px" }}>
-                                        <button
-                                            className='btn btn-primary btn-sm'
-                                            onMouseDown={() => {
-                                                setRow(
-                                                    {
-                                                        id: row.id,
-                                                        code: row.userCode,
-                                                        firstname: row.firstName,
-                                                        lastname: row.lastName,
-                                                        state: row.state
-                                                    }
-                                                )
-                                            }}
-                                            onMouseUp={row_edit}
-                                        >
-                                            edit</button>
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
-
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Launch static backdrop modal
-                </button>
-                {/**Popup model */}
-                <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
-                                ...
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
+                <div className="table-responsive mb-3">
+                    <table className="table bg-light table-hover text-center table-bordered"
+                        style={{
+                            tableLayout: 'fixed',
+                            marginLeft: 'auto',
+                            marginRight: 'auto'
+                        }}>
+                        <thead className='bg-light'>
+                            <tr>
+                                <th style={{ width: '50px' }}>#</th>
+                                <th style={{ width: '50px' }}>code</th>
+                                <th style={{ width: '185px' }}>name</th>
+                                <th style={{ width: '185px' }}>email</th>
+                                <th style={{ width: '100px' }}>state</th>
+                                <th style={{ width: '80px' }}></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {getPerson.map((row, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{row.user_code}</td>
+                                        <td>{row.fullName}</td>
+                                        <td>{row.email}</td>
+                                        <td>{row.user_state}</td>
+                                        <td onClick={() => { resetPassword(row.id) }}><button className='btn btn-warning btn-sm'>reset</button></td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         )
     }
 }
-
-export default Person
+export default ViewPerson

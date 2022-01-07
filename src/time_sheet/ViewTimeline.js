@@ -4,6 +4,7 @@ import { api, memory } from './configure/env'
 import { AiOutlineDeleteRow } from "react-icons/ai"
 
 const ViewTimeline = () => {
+    if (memory.get_token === null) { window.location.href = '/' }
     const [getTimeline, setTimeline] = useState([])
     const [getRowId, setRowId] = useState(0)
     const [getClientTypeName, setClientTypeName] = useState('null')
@@ -149,7 +150,7 @@ const ViewTimeline = () => {
                                         <td>{row.site_tour_PM}</td>
                                         <td>{row.lunch}</td>
                                         <td>{row.dinner}</td>
-                                        <td style={{color:'green'}}>{row.others}</td>
+                                        <td style={{ color: 'green' }}>{row.others}</td>
                                     </tr>
                                 )
                             })}

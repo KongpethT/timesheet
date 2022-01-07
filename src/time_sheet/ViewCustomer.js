@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState, useCallback, useEffect } from 'react'
 import { memory, api } from './configure/env'
 const ViewCustomer = () => {
+    if (memory.get_token === null) { window.location.href = '/' }
     const [getAgency, setAgency] = useState([])
     const [getAgencyId, setAgencId] = useState(0)
     const [getClient, setClient] = useState([])

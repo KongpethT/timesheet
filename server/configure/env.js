@@ -34,7 +34,7 @@ const config = {
         }
     },
     set_encrypt: (value) => {
-        var ciphertext = CryptoJS.AES.encrypt(value, config.get_decrypt).toString();
+        var ciphertext = CryptoJS.AES.encrypt(value, config.get_key_encrypt).toString();
         return ciphertext
     },
     get_decrypt: (value) => {

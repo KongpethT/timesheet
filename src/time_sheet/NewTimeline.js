@@ -4,6 +4,7 @@ import axios from 'axios'
 
 
 const NewTimeline = () => {
+    if (memory.get_token === null) { window.location.href = '/' }
     const account_id = JSON.parse(memory.get_account_id).value
     const [getBrick, setBrick] = useState({
         account_id: account_id, date: null, client_id: null, agency_id: null,

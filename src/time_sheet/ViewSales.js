@@ -2,7 +2,7 @@ import axios from "axios"
 import { useState, useEffect, useCallback } from "react"
 import { api, account, forms, keys } from "./variable/config"
 const ViewSales = () => {
-
+    if (memory.get_token === null) { window.location.href = '/' }
     const [getAlert, setAlert] = useState('')
     const [getID, setID] = useState(null)
     const [getAgencyName, setAgencyName] = useState('')

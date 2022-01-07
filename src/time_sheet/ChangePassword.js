@@ -1,87 +1,105 @@
-import { api, account, keys } from './variable/config'
-import { IoPeople, IoCheckmark, IoCheckmarkDone } from "react-icons/io5";
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-
+import axios from 'axios'
+import { useCallback, useState } from 'react'
+import { memory, forms, passwordValidity, alphabet, api } from './configure/env'
 
 const ChangePassword = () => {
-    const [getPassword, setPassword] = useState({ oldPassword: '', newPassword: '', confirmPassword: '', userCode: account.get_staff_code })
-    const [getCount, setCount] = useState(0)
-    const [getAlert, setAlert] = useState(null)
+    if (memory.get_token === null) { window.location.href = '/' }
+    const [getAlert, setAlert] = useState('')
+    const [getBrick, setBrick] = useState({ current: '', new: '', confirm: '', id: JSON.parse(memory.get_account_id).value })
+    const [getPlaceholder, setPlaceholder] = useState('')
+    /**push brick update */
+    const pushPassword = useCallback(() => {
+        if (!getBrick.current | !getBrick.new | !getBrick.confirm) {
+            setPlaceholder(forms.get_placeholder_warning)
+        } else {
+            setPlaceholder('')
+            const isLength = (getBrick.new.length >= 8)
+            const isEqual = (getBrick.new === getBrick.confirm)
+            const brickArray = Array.from(getBrick.new)
+            const isNumber = passwordValidity(Object.assign([], brickArray), alphabet.get_number)
+            const isSpecial = passwordValidity(Object.assign([], brickArray), alphabet.get_special)
+            const isCapital = passwordValidity(Object.assign([], brickArray), alphabet.get_capital)
+            const isLowercase = passwordValidity(Object.assign([], brickArray), alphabet.get_lowercase)
+            //const isCurrentPassword = false
 
-    useEffect(() => {
-        setAlert(localStorage.getItem('message'))
-    }, [getCount])
+            if (isLength) {
+                if (isNumber & isSpecial & isCapital & isLowercase) {
+                    if (isEqual) {
+                        axios.put(`${api.person}/changedPassword`, { getBrick }).then((brick) => {
 
-    const exit = () => {
-        localStorage.removeItem('message')
-        setCount((getCount + 1) % 2)
-        window.location.href = '/person/view'
-    }
-
-    const password_reset = (callback) => {
-        if (getPassword.oldPassword !== '') {
-            if (getPassword.newPassword === getPassword.confirmPassword & getPassword.newPassword.length >= 8) {
-                axios.post(api.change_password, { getPassword }).then((brick) => {
-                    const affectedRows = brick.data
-                    console.log(0 === affectedRows.affectedRows);
-                    if (affectedRows.affectedRows !== 0) {
-
-                        localStorage.setItem('message', 'successfully ')
-                        setCount((getCount + 1) % 2)
+                            if (brick.data === 'change a password successfully') {
+                                setBrick({ current: '', new: '', confirm: '' })
+                                localStorage.clear()
+                                window.location.href = '/'
+                            } else {
+                                setAlert(brick.data)
+                            }
+                        })
                     } else {
-
-                        localStorage.setItem('message', 'unsuccessfully, The old password is invalid.')
-                        setCount((getCount + 1) % 2)
+                        setAlert(' | The passwords do not match')
                     }
-                })
+                } else {
+                    setAlert(' | The password do not compatible. *sample ("!qaz2Wsx")')
 
+                }
             } else {
-                localStorage.setItem('message', 'unsuccessfully, need to new password at least 8 character sample(!Qa4xxxx)')
-                setCount((getCount + 1) % 2)
+                setAlert(' | The system require a password 8 at least alphabet. *sample ("!qaz2Wsx")')
             }
         }
-    }
 
-
-    if (keys.get_token === null) { window.location.href = "/signin" }
+    }, [getBrick])
+    /**view */
+    if (memory.get_token === null) { window.location.href = "/" }
     else {
         return (
-            <div lassName='container'>
-                <h1>Change password</h1>
-                {getAlert}
+            <div >
+                <h1>View person <span className='text-warning' style={{ fontSize: '12px' }}>{getAlert}</span></h1>
                 <hr />
-                <div className="mb-3">
-                    <label for="currentPassword" className="form-label"><IoPeople /> Current Password</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        id="currentPassword"
-                        onChange={(e) => { setPassword({ ...getPassword, oldPassword: e.target.value }) }}
-                    />
+                <div className='row g-3'>
+                    {/**current password */}
+                    <div className="col-md-4">
+                        <label htmlFor="inputOldPassword" className="form-label">Current password</label>
+                        <input
+                            id="inputClient"
+                            type="password"
+                            className="form-control"
+                            placeholder={getPlaceholder}
+                            value={getBrick.current}
+                            onChange={(e) => { setBrick({ ...getBrick, current: e.target.value }) }}
+                        />
+                    </div>
+                    {/**new password */}
+                    <div className="col-md-4">
+                        <label htmlFor="inputNewPassword" className="form-label">New password</label>
+                        <input
+                            id="inputNewPassword"
+                            type="password"
+                            className="form-control"
+                            placeholder={getPlaceholder}
+                            value={getBrick.new}
+                            onChange={(e) => { setBrick({ ...getBrick, new: e.target.value }) }}
+                        />
+                    </div>
+                    {/**confirm password */}
+                    <div className="col-md-4">
+                        <label htmlFor="inputConfirmPassword" className="form-label">Confirm password</label>
+                        <input
+                            id="inputConfirmPassword"
+                            type="password"
+                            className="form-control"
+                            placeholder={getPlaceholder}
+                            value={getBrick.confirm}
+                            onChange={(e) => { setBrick({ ...getBrick, confirm: e.target.value }) }}
+                        />
+                    </div>
+                    {/**submit */}
+                    <div className="col-12">
+                        <button type="submit" className="btn btn-primary" onClick={pushPassword}>Submit</button>
+                    </div>
                 </div>
-                <div className="mb-3">
-                    <label for="newPassword" className="form-label"><IoCheckmark /> New Password</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        id="newPassword"
-                        onChange={(e) => { setPassword({ ...getPassword, newPassword: e.target.value }) }}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label for="confirmPassword" className="form-label"><IoCheckmarkDone /> Confirm Password</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        id="confirmPassword"
-                        onChange={(e) => { setPassword({ ...getPassword, confirmPassword: e.target.value }) }}
-                    />
-                </div>
-                <button type="submit" className="btn btn-primary" onClick={password_reset}>Submit</button>&#160;&#160;
-                <button type="submit" className="btn btn-primary" onClick={exit}>Exit</button>
             </div>
         )
     }
 }
+
 export default ChangePassword
