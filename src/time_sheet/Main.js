@@ -8,6 +8,9 @@ import ViewCustomer from './ViewCustomer'
 import NewPerson from './NewPerson'
 import ViewPerson from './ViewPerson'
 import ChangePassword from './ChangePassword'
+import ViewSales from './ViewSales'
+import NewSales from './NewSales'
+import ViewAdminSales from './ViewAdminSales'
 import { storege_exp } from './configure/env'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
@@ -28,6 +31,9 @@ function Main() {
         <Route exact path="/person/new"><NewPerson /></Route>
         <Route exact path="/person/view"><ViewPerson /></Route>
         <Route exact path="/person/changePassword"><ChangePassword /></Route>
+        <Route exact path="/sales/view"><ViewSales /></Route>
+        <Route exact path="/sales/new"><NewSales /></Route>
+        <Route exact path="/sales/Admin/view"><ViewAdminSales /></Route>
       </Switch>
     </BrowserRouter>
   )

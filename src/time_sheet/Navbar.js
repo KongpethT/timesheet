@@ -68,6 +68,16 @@ export default function Navbar() {
                                                 <li><Link to="/sales/view" className="dropdown-item"><IoRibbon className="fs-6 text-info" /> View sales activity</Link></li>
                                             </div>
                                         }
+                                        {/**sales activity (admin)*/}
+                                        {(userState === 'user') ? null :
+                                            <div>
+                                                <li>
+                                                    <hr className="dropdown-divider" />
+                                                    <FcBullish className="fs-6" /> sales activity (Admin)
+                                                </li>
+                                                <li><Link to="/sales/admin/view" className="dropdown-item"><IoRibbon className="fs-6 text-info" /> View sales activity (Admin)</Link></li>
+                                            </div>
+                                        }
                                         {/**Customer */}
                                         {(userState === 'analyze') ? null :
                                             <div>

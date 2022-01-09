@@ -5,6 +5,7 @@ const name_month = ['January', 'February', 'March', 'April', 'May', 'June', 'Jul
     'August', 'September', 'October', 'November', 'December']
 
 const api = {
+    //message: host + "/message",
     client_type: host + "/client_type",
     timeline: host + "/api/timeline",
     update_timeline: host + "/update_timeline",
@@ -12,8 +13,7 @@ const api = {
     count_activity: host + "/count_activity",
     signin: host + "/api/signin",
     change_password: host + "/change_password",
-    //message: host + "/message",
-    sales: host + "/sales",
+    sales: host + "/api/sales",
     customer: host + "/api/customer",
     person: host + "/api/person"
 }

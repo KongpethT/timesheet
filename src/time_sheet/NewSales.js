@@ -1,138 +1,153 @@
+import { api, memory, dates, forms } from './configure/env'
+import { useState, useCallback, useEffect } from 'react'
 import axios from 'axios'
-import { useState, useEffect } from 'react'
-import { account, api, forms, dates, keys } from './variable/config'
+
 
 const NewSales = () => {
-    const [getOpenSales, setOpenSales] = useState({
-        year: dates.get_year,
-        NameOfAgency: '', NameOfClient: '',
-        PTT: '', userCode: account.get_staff_code,
-        Month: dates.get_month
+    if (memory.get_token === null) { window.location.href = '/' }
+    const account_id = JSON.parse(memory.get_account_id).value
+    const [getPlaceholder, setPlaceholder] = useState('...')
+    const [getAlert, setAlert] = useState('')
+    const [getBrick, setBrick] = useState({
+        account_id: account_id, agency_id: null, client_id: null,
+        client_type_id: null, year: dates.get_year
     })
-    const [getValidate, setValidate] = useState(null)
     const [getAgency, setAgency] = useState([])
-    //const [getClient, setClient] = useState([])
-    const [getSubmit, setSubmit] = useState('')
-
-    useEffect(() => {
-        axios.get(`${api.sales}/${account.get_staff_code}/${account.get_state_code}?option=group by name_of_agency`)
-            .then((brick) => {
-                setAgency(brick.data)
-            })
-    }, [])
-
-    const new_opent_sales = () => {
-        if (
-            !getOpenSales.NameOfAgency |
-            !getOpenSales.NameOfClient |
-            !getOpenSales.PTT
-        ) {
-            setValidate(forms.placeholder_warning)
-
-        } else {
-            axios.post(api.sales, { getOpenSales }).then((brick) => {
-                const data = brick.data.affectedRows
-                if (data === 1) {
-                    window.location.href = "/sales/view"
-                } else {
-                    setSubmit('unsuccessfully')
+    const [getClient, setClient] = useState([])
+    const [getClientType, setClientType] = useState([])
+    /**push table forecase */
+    const pushBrick = () => {
+        if (!!getBrick.year & !!getBrick.agency_id & !!getBrick.client_id & !!getBrick.client_type_id) {
+            axios.post(api.sales, getBrick).then((brick) => {
+                const result = brick.data
+                if (result.affectedRows === 1) {
+                    document.getElementById('default1').setAttribute('selected', 'selected')
+                    document.getElementById('default2').setAttribute('selected', 'selected')
+                    document.getElementById('default3').setAttribute('selected', 'selected')
+                    setAlert(' | ' + forms.get_massage_success)
+                    setTimeout(() => { setAlert('') }, 3000)
                 }
             })
+        } else {
+            setPlaceholder(forms.get_placeholder_warning)
+            setTimeout(() => { (setPlaceholder('...')) }, 3000)
         }
     }
-    if (keys.get_token === null) { window.location.href = "/signin" }
+    /**pull table agency */
+    const pullAgency = useCallback(() => {
+        axios.get(`${api.customer}/agency/${memory.get_account_id}`).then((brick) => {
+            setAgency(brick.data)
+        })
+    }, [])
+    useEffect(() => {
+        pullAgency()
+    }, [pullAgency])
+    /**pull table client */
+    const pullClient = useCallback(() => {
+        axios.get(`${api.customer}/client/${getBrick.agency_id}`).then((brick) => {
+            setClient(brick.data)
+        })
+
+    }, [getBrick.agency_id])
+    useEffect(() => {
+        pullClient()
+    }, [pullClient])
+    /**pull table client type */
+    const pullClientType = useCallback(() => {
+        axios.get(`${api.customer}/clientType`).then((brick) => {
+            setClientType(brick.data)
+        })
+    }, [])
+    useEffect(() => {
+        pullClientType()
+    }, [pullClientType])
+    /**view */
+    if (memory.get_token === null) { window.location.href = "/" }
     else {
         return (
-            <div className="container">
-                <h1>Open sales <span className='fs-6 primary'>{getSubmit}</span></h1>
+            <div>
+                <h1>Open sales <span className='text-success fs-5'>{getAlert}</span></h1>
                 <hr />
-                <div className="mb-3">
-                    <label for="year" class="form-label">Sales year</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        aria-describedby="yearHelp"
-                        defaultValue={dates.get_year}
-                        onChange={(e) => { setOpenSales({ ...getOpenSales, year: e.target.value }) }}
-                    />
+                <div className="row g-3">
+                    {/**Year */}
+                    <div className="col-md-4">
+                        <label htmlFor="inputDate" className="form-label">Year</label>
+                        <select
+                            id='year'
+                            className="form-select"
+                            aria-describedby=" agency_idHelp"
+                            onChange={(e) => { setBrick({ ...getBrick, year: e.target.value }) }} >
+                            <option value={dates.get_year}>{dates.get_year}</option>
+                            <option value={dates.get_year}>{dates.get_year - 1}</option>
+                            <option value={dates.get_year}>{dates.get_year}</option>
+                            <option value={dates.get_year}>{dates.get_year + 1}</option>
+                        </select>
+                    </div>
+                    {/**Agency*/}
+                    <div className="col-md-8">
+                        <label htmlFor="input agency_id" className="form-label">Name of agency</label>
+                        <select
+                            id='agency'
+                            className="form-select"
+                            aria-describedby=" agency_idHelp"
+                            onChange={(e) => { setBrick({ ...getBrick, agency_id: e.target.value }) }} >
+                            <option id='default1'>{getPlaceholder}</option>
+                            {getAgency.map((row, index) => {
+                                return (
+                                    <option
+                                        key={index}
+                                        value={row.id}>
+                                        {row.name}
+                                    </option>)
+                            })}
+                        </select>
+                    </div>
+                    {/**Client */}
+                    <div className="col-md-8">
+                        <label htmlFor="inputclient_id" className="form-label">Name of client</label>
+                        <select
+                            id='client'
+                            className="form-select"
+                            aria-describedby="client_idHelp"
+                            onChange={(e) => { setBrick({ ...getBrick, client_id: e.target.value }) }} >
+                            <option id='default2'>{getPlaceholder}</option>
+                            {getClient.map((row, index) => {
+                                return (
+                                    <option key={index} value={row.id}>{row.name}</option>
+                                )
+                            })}
+
+                        </select>
+                    </div>
+                    {/**ClientType */}
+                    <div className="col-md-4">
+                        <label htmlFor="inputclient_type_id" className="form-label">Name of client type</label>
+                        <select
+                            id='clientType'
+                            className="form-select"
+                            aria-describedby="clientTypeHelp"
+                            onChange={(e) => { setBrick({ ...getBrick, client_type_id: e.target.value }) }} >
+                            <option id='default3'>{getPlaceholder}</option>
+                            {getClientType.map((row, index) => {
+                                return (
+                                    <option key={index} value={row.id}>{row.name}</option>
+                                )
+                            })}
+
+                        </select>
+                    </div>
+                    {/**Submit */}
+                    <div className="col-mb-12">
+                        <button
+                            type="submit"
+                            className="btn btn-primary"
+                            onClick={pushBrick}>Submit</button>
+                    </div>
+                    <div className="col-mb-12"></div>
                 </div>
-
-                <div className="mb-3">
-                    <label for="NameOfMonth" class="form-label">Month</label>
-                    <input
-                        type="text"
-                        list="NameOfMonth"
-                        className="form-control"
-                        aria-describedby="NameOfMonthHelp"
-                        defaultValue={dates.get_month}
-                        onChange={(e) => { setOpenSales({ ...getOpenSales, Month: e.target.value }) }}
-                    />
-                    <datalist id="NameOfMonth">
-                        {dates.name_month.map((name, index) => {
-                            return (<option key={index}>{name}</option>)
-                        })}
-                    </datalist>
-                </div>
-
-
-                <div className="mb-3">
-                    <label for="NameOfAgency" class="form-label">Name of agency</label>
-                    <input
-                        id='placeholder-warning'
-                        type="text"
-                        list="NameOfAgency"
-                        className="form-control"
-                        aria-describedby="NameOfAagencyHelp"
-                        placeholder={getValidate}
-                        onChange={(e) => { setOpenSales({ ...getOpenSales, NameOfAgency: e.target.value }) }}
-                    />
-                    <datalist id="NameOfAgency">
-                        {getAgency.map((row, index) => {
-                            return (
-                                <option key={index}>{row.name_of_agency}</option>
-                            )
-                        })}
-                    </datalist>
-                </div>
-
-                <div className="mb-3">
-                    <label for="NameOfclient" class="form-label">Name of client</label>
-                    <input
-                        id='placeholder-warning'
-                        type="text"
-                        className="form-control"
-                        aria-describedby="NameOfclientHelp"
-                        placeholder={getValidate}
-                        onChange={(e) => { setOpenSales({ ...getOpenSales, NameOfClient: e.target.value }) }}
-                    />
-
-                </div>
-                <div className="mb-3">
-                    <label for="PTT" class="form-label">Potential (PTT)</label>
-                    <input
-                        id='placeholder-warning'
-                        type="text"
-                        className="form-control"
-                        aria-describedby="PTTHelp"
-                        placeholder={getValidate}
-                        onChange={(e) => { setOpenSales({ ...getOpenSales, PTT: e.target.value }) }}
-                    />
-                </div>
-
-                <button
-                    type="submit"
-                    className="btn btn-primary"
-                    onClick={new_opent_sales}>Submit</button>
-
-                <button
-                    style={{ marginLeft: '10px' }}
-                    type="submit" className="btn btn-primary"
-                    onClick={() => { window.location.href = "/sales/view" }}>Close</button>
-
-            </div >
-
+            </div>
         )
     }
 }
 
-export default NewSales 
+export default NewSales
