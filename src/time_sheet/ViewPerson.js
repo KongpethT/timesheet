@@ -36,7 +36,8 @@ const ViewPerson = () => {
             <div >
                 <h1>View person <span className='fs-6 text-primary'>{getAlert}</span></h1>
                 <hr />
-                <div className="table-responsive mb-3">
+                <div className="table-responsive mb-3"
+                    style={{ height: '480px' }}>
                     <table className="table bg-light table-hover text-center table-bordered"
                         style={{
                             tableLayout: 'fixed',

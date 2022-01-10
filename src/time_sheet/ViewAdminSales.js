@@ -87,7 +87,8 @@ const ViewAdminSales = () => {
                         onChange={(e) => { setAgencyName(e.target.value) }}
                         placeholder="Search a name of agency" />
                 </div>
-                <div className="table-responsive">
+                <div className="table-responsive"
+                    style={{height:'480px'}}>
                     <table className="table bg-light table-hover text-center table-bordered"
                         style={{
                             tableLayout: 'fixed',

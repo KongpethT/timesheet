@@ -78,9 +78,9 @@ const NewSales = () => {
                             aria-describedby=" agency_idHelp"
                             onChange={(e) => { setBrick({ ...getBrick, year: e.target.value }) }} >
                             <option value={dates.get_year}>{dates.get_year}</option>
-                            <option value={dates.get_year}>{dates.get_year - 1}</option>
+                            <option value={dates.get_year - 1}>{dates.get_year - 1}</option>
                             <option value={dates.get_year}>{dates.get_year}</option>
-                            <option value={dates.get_year}>{dates.get_year + 1}</option>
+                            <option value={parseInt(dates.get_year) + 1}>{parseInt(dates.get_year) + 1}</option>
                         </select>
                     </div>
                     {/**Agency*/}
