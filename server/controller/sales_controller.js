@@ -1,6 +1,5 @@
 const { config } = require('../configure/env')
-
-// @route   GET api/sales
+// @route   GET api/sales/all/:para
 exports.gets = (req, res) => {
     const brick = JSON.parse(req.params.para)
     const accountId = brick.id.value

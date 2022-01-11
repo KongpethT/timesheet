@@ -8,6 +8,8 @@ SELECT
     client_type.name AS name_of_client_type,
     process.name AS process_name,
     forecast.ptt_weekly_update,
+    forecast.remark,
+    forecast.potential,
     FORMAT(forecast.SGD1, 0) AS SGD1,
     FORMAT(forecast.RCC1, 0) AS RCC1,
     FORMAT(forecast.PTT1, 0) AS PTT1,

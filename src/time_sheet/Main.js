@@ -11,6 +11,7 @@ import ChangePassword from './ChangePassword'
 import ViewSales from './ViewSales'
 import NewSales from './NewSales'
 import ViewAdminSales from './ViewAdminSales'
+import Dashboard from './Dashboard'
 import { storege_exp } from './configure/env'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
@@ -33,7 +34,8 @@ function Main() {
         <Route exact path="/person/changePassword"><ChangePassword /></Route>
         <Route exact path="/sales/view"><ViewSales /></Route>
         <Route exact path="/sales/new"><NewSales /></Route>
-        <Route exact path="/sales/Admin/view"><ViewAdminSales /></Route>
+        <Route exact path="/sales/admin/view"><ViewAdminSales /></Route>
+        <Route exact path="/tools/dashboard"><Dashboard /></Route>
       </Switch>
     </BrowserRouter>
   )

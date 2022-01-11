@@ -29,14 +29,17 @@ export default function SignIn() {
           for (let key in obj) {
             storage(obj[key], key)
           }
-          if (private_id.user_state === 'analyze' | private_id.user_state === 'gm') {
+          if (private_id.user_state === 'gm') {
             window.location.href = '/tools/dashboard'
           }
           if (private_id.user_state === 'admin') {
             window.location.href = '/person/view'
           }
           if (private_id.user_state === 'user') {
-            window.location.href = '/timeline/view'
+            window.location.href = '/sales/view'
+          }
+          if (private_id.user_state === 'analyze') {
+            window.location.href = '/sales/admin/view'
           }
         }
       }))
@@ -45,7 +48,7 @@ export default function SignIn() {
 
 
   if (memory.get_token !== null) {
-    window.location.href = '/timeline/view'
+    (memory.get_state_code === 'user') ? window.location.href = '/timeline/view' : window.location.href = '/tools/dashboard'
   } else {
     return (
       <div style={{
@@ -70,7 +73,7 @@ export default function SignIn() {
           <div className="mb-3">
             <label className="form-label text-light">Username</label>
             <input
-              type="text"
+              type="email"
               className="form-control text-center"
               id="username"
               value={getAccount.username}

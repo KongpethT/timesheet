@@ -41,6 +41,7 @@ app.use('/api/timeline', require('./route/timeline_route'))
 app.use('/api/customer', require('./route/customer_route'))
 app.use('/api/person', require('./route/person_route'))
 app.use('/api/sales', require('./route/sales_route'))
+app.use('/api/dashboard', require('./route/dashboard_route'))
 
 // Custom middleware here
 app.use(notFound);

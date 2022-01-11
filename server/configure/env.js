@@ -3,8 +3,8 @@ const mysql = require("mysql2")
 const CryptoJS = require("crypto-js");
 const sql_connect = {
     host: '58.82.141.196',
-    user: "root",
-    password: "@Ishow2010",
+    user: "timeline",
+    password: "ishow2010",
     database: "timesheet",
     port: "13306",
     waitForConnections: true,

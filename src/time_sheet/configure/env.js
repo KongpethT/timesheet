@@ -15,7 +15,8 @@ const api = {
     change_password: host + "/change_password",
     sales: host + "/api/sales",
     customer: host + "/api/customer",
-    person: host + "/api/person"
+    person: host + "/api/person",
+    dashboard: host + '/api/dashboard'
 }
 
 const memory = {

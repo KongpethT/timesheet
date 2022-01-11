@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import {
-    IoLogIn, IoLogOut, IoLibrary, IoKey, IoBarChart, IoRibbon, IoDuplicate
+    IoLogIn, IoLogOut, IoLibrary, IoBarChart, IoRibbon, IoDuplicate
 } from "react-icons/io5";
-import { FcAssistant, FcBullish, FcPlanner, FcBusinessman, FcServices } from "react-icons/fc";
+import { FcBullish, FcPlanner, FcServices, FcCustomerSupport, FcKey, FcConferenceCall } from "react-icons/fc";
 import { memory } from "./configure/env"
 
 export default function Navbar() {
@@ -23,12 +23,10 @@ export default function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                    <div className="offcanvas-header">
-                        <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Wellcome</h5>
-                        <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
+
                     <div className="offcanvas-body">
                         <ul className="navbar-nav justify-content-start flex-grow-1 pe-3">
+                            {/**login / logout / change password */}
                             {(!memory.get_token) ?
                                 <li className="nav-item fs-5">
                                     <Link to="/" className="nav-link"><IoLogIn /> Sign In</Link>
@@ -37,18 +35,19 @@ export default function Navbar() {
                                 <div>
                                     <li className="nav-item">
                                         <Link to="/#" className="nav-link" onClick={signout}>Sign Out <IoLogOut className="fs-6 text-primary" /></Link>
-                                        <Link to="/person/changePassword" className="nav-link">Change password <IoKey className="fs-6 text-danger" /></Link>
+                                        <Link to="/person/changePassword" className="nav-link">Change password <FcKey className="fs-6 text-danger" /></Link>
                                     </li>
                                 </div>
                             }
+                            {/**dropdown menu */}
                             {(!memory.get_token) ? null :
                                 <li className="nav-item dropdown fs-5">
                                     <Link className="nav-link dropdown-toggle" to="/#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Dropdown-menu
+                                        Dropdown menu
                                     </Link>
                                     <ul className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
                                         {/**timeline */}
-                                        {(userState === 'analyze') ? null :
+                                        {(userState === 'analyze' | userState === 'admin') ? null :
                                             <div>
                                                 <li>
                                                     <FcPlanner className="fs-6" /> Timelines
@@ -58,7 +57,7 @@ export default function Navbar() {
                                             </div>
                                         }
                                         {/**sales activity */}
-                                        {(userState === 'analyze') ? null :
+                                        {(userState === 'analyze' | userState === 'admin') ? null :
                                             <div>
                                                 <li>
                                                     <hr className="dropdown-divider" />
@@ -69,7 +68,7 @@ export default function Navbar() {
                                             </div>
                                         }
                                         {/**sales activity (admin)*/}
-                                        {(userState === 'user') ? null :
+                                        {(userState === 'user' | userState === 'admin') ? null :
                                             <div>
                                                 <li>
                                                     <hr className="dropdown-divider" />
@@ -79,11 +78,11 @@ export default function Navbar() {
                                             </div>
                                         }
                                         {/**Customer */}
-                                        {(userState === 'analyze') ? null :
+                                        {(userState === 'analyze' | userState === 'admin') ? null :
                                             <div>
                                                 <li>
                                                     <hr className="dropdown-divider" />
-                                                    <FcAssistant className="fs-6" /> Customers
+                                                    <FcCustomerSupport className="fs-6" /> Customers
                                                 </li>
                                                 <li><Link to="/customer/newAgency" className="dropdown-item"><IoDuplicate className="fs-6 text-success" /> Create-Agency</Link></li>
                                                 <li><Link to="/customer/newClient" className="dropdown-item"><IoDuplicate className="fs-6 text-success" /> Create-Client</Link></li>
@@ -95,7 +94,7 @@ export default function Navbar() {
                                             <div>
                                                 <li>
                                                     <hr className="dropdown-divider" />
-                                                    <FcBusinessman className="fs-6" /> persons
+                                                    <FcConferenceCall className="fs-5" /> Persons
                                                 </li>
 
                                                 <li><Link to="/person/new" className="dropdown-item"><IoDuplicate className="fs-6 text-success" /> Create</Link></li>
@@ -103,11 +102,15 @@ export default function Navbar() {
                                                 {/*<li><Link to="/person/changePassword" className="dropdown-item"><IoKey className="fs-6 text-warning" /> Change password</Link></li>*/}
                                             </div>
                                         }
-                                        <li>
-                                            <hr className="dropdown-divider" />
-                                            <FcServices className="fs-6" /> Tools
-                                        </li>
-                                        <li><Link to="/tools/dashboard" className="dropdown-item"><IoBarChart className="fs-6 text-success" /> Dashboard</Link></li>
+                                        {(userState === 'user' | userState === 'admin') ? null :
+                                            <div>
+                                                <li>
+                                                    <hr className="dropdown-divider" />
+                                                    <FcServices className="fs-6" /> Tools
+                                                </li>
+                                                <li><Link to="/tools/dashboard" className="dropdown-item"><IoBarChart className="fs-6 text-success" /> Dashboard</Link></li>
+                                            </div>
+                                        }
                                     </ul>
                                 </li>
                             }

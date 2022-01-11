@@ -88,7 +88,7 @@ const ViewAdminSales = () => {
                         placeholder="Search a name of agency" />
                 </div>
                 <div className="table-responsive"
-                    style={{height:'480px'}}>
+                    style={{ height: '480px' }}>
                     <table className="table bg-light table-hover text-center table-bordered"
                         style={{
                             tableLayout: 'fixed',
@@ -109,6 +109,10 @@ const ViewAdminSales = () => {
                                 <th style={{ width: '180px' }}><p>process</p></th>
                                 {/**PTT Weekly Update */}
                                 <th style={{ width: '250px' }}><p>PTT weekly update</p></th>
+                                {/**remark */}
+                                <th style={{ width: '250px' }}><p>remark</p></th>
+                                {/**potential */}
+                                <th style={{ width: '250px' }}><p>potential %</p></th>
                                 {/**januaty */}
                                 <th className="bg-success text-light" style={{ width: '100px' }}>
                                     <span className="badge bg-light text-dark">{getCountPSR.SGD1}</span><br />SGD</th>
@@ -261,6 +265,10 @@ const ViewAdminSales = () => {
                                         <td id='processColumn'>{row.process_name}</td>
                                         {/**PTT Weekly Update */}
                                         <td id='pttWeeklyUpdateColumn'>{row.ptt_weekly_update}</td>
+                                        {/**PTT remark */}
+                                        <td id='pttWeeklyUpdateColumn'>{row.remark}</td>
+                                        {/**potential */}
+                                        <td id='pttWeeklyUpdateColumn'>{row.potential}</td>
                                         {/**january */}
                                         <td>
                                             <input

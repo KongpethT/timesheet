@@ -8,7 +8,8 @@ const {
     postPostAgency,
     getPostsClientType,
     deletePostById,
-    postPostClient
+    postPostClient,
+    getProcess,
 } = require('../controller/customer_controller')
 
 router.route('/')
@@ -29,6 +30,7 @@ router.route('/client/:id')
 router.route('/clientType')
     .get(getPostsClientType)
 
-
+router.route('/process')
+    .get(getProcess)
 
 module.exports = router

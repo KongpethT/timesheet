@@ -7,6 +7,8 @@ const ViewSales = () => {
     const [getID, setID] = useState(null)
     const [getAgencyName, setAgencyName] = useState('')
     const [getDataSales, setDataSales] = useState([])
+    const [getProcess, setProcess] = useState([])
+    const [getClientType, setClientType] = useState([])
     const [getCountPTT, setCountPTT] = useState({
         ptt1: 0, ptt2: 0, ptt3: 0, ptt4: 0, ptt5: 0, ptt6: 0,
         ptt7: 0, ptt8: 0, ptt9: 0, ptt10: 0, ptt11: 0, ptt12: 0
@@ -47,6 +49,26 @@ const ViewSales = () => {
     useEffect(() => {
         pullCountPTT()
     }, [pullCountPTT])
+    /**pull table process */
+    const pullProcess = useCallback(() => {
+        axios.get(`${api.customer}/process`).then((brick) => {
+            setProcess(brick.data)
+        })
+    }, [])
+    useEffect(() => {
+        pullProcess()
+        return () => { }
+    }, [pullProcess])
+    /**pull table client_type */
+    const pullClientType = useCallback(() => {
+        axios.get(`${api.customer}/clientType`).then((brick) => {
+            setClientType(brick.data)
+        })
+    }, [])
+    useEffect(() => {
+        pullClientType()
+        return () => { }
+    }, [pullClientType])
     /**update table forecast*/
     const putForecast = (e) => {
         const lock = document.getElementById(e.currentTarget.id)
@@ -70,16 +92,14 @@ const ViewSales = () => {
             }
         })
     }
+    /**put column clinet_type, process, PTT_weekly_update */
     const putProcess = (e) => {
         const lock = document.getElementById(e.currentTarget.id)
         if (lock.hasAttribute('readOnly')) { lock.removeAttribute('readOnly') }
         lock.setAttribute('readOnly', '')
         axios.put(api.sales, { id: getID, row: e.target.name, value: e.target.value })
             .then((brick) => {
-                const data = brick.data
-                if (data.affectedRows === 1) {
-                    pullCountPTT()
-                }
+                //const data = brick.data
             })
 
         if (e.key === 'Escape') {
@@ -114,11 +134,15 @@ const ViewSales = () => {
                                 {/**client */}
                                 <th style={{ width: '250px' }}><p>name of client</p></th>
                                 {/**client type */}
-                                <th style={{ width: '100px' }}><p>client type</p></th>
+                                <th style={{ width: '120px' }}><p>client type</p></th>
                                 {/**process */}
                                 <th style={{ width: '180px' }}><p>process</p></th>
                                 {/**PTT Weekly Update */}
-                                <th style={{ width: '250px' }}><p>PTT weekly update</p></th>
+                                <th style={{ width: '150px' }}><p>PTT weekly update</p></th>
+                                {/**remark */}
+                                <th style={{ width: '250px' }}><p>remark</p></th>
+                                {/**potential */}
+                                <th style={{ width: '250px' }}><p>potential %</p></th>
                                 {/**januaty */}
                                 <th style={{ width: '100px' }}>
                                     <button type="button" className="btn btn-outline-primary position-relative">
@@ -216,7 +240,21 @@ const ViewSales = () => {
                                         {/**client */}
                                         <td id='clientColumn'>{row.name_of_client}</td>
                                         {/**client type */}
-                                        <td id='clientTypeColumn'>{row.name_of_client_type}</td>
+                                        <td id='clientTypeColumn'>
+                                            <select
+                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                name={`client_type_id`}
+                                                className="form-control form-control-sm form-select form-select-sm mb-3"
+                                                readOnly
+                                                onMouseUp={(e) => { putProcess(e) }}>
+                                                <option value={row.id}>{row.name_of_client_type}</option>
+                                                {getClientType.map((row, index) => {
+                                                    return (
+                                                        <option key={index} value={row.id}>{row.name}</option>
+                                                    )
+                                                })}
+                                            </select>
+                                        </td>
                                         {/**process */}
                                         <td>
                                             <select
@@ -226,24 +264,48 @@ const ViewSales = () => {
                                                 readOnly
                                                 onMouseUp={(e) => { putProcess(e) }}>
                                                 <option value={row.process_id}>{row.process_name}</option>
-                                                <option value='1'>Target</option>
-                                                <option value='2'>Connect</option>
-                                                <option value='3'>Understand</option>
-                                                <option value='4'>Recommend</option>
-                                                <option value='5'>Convince & Close</option>
-                                                <option value='6'>Reassure</option>
-                                                <option value='7'>Capitalize</option>
+                                                {getProcess.map((row, index) => {
+                                                    return (
+                                                        <option key={index} value={row.id}>{row.name}</option>
+                                                    )
+                                                })}
                                             </select>
                                         </td>
                                         {/**PTT Weekly Update */}
                                         <td>
-                                            <input
+                                            <select
                                                 id={`inputId${Math.floor(Math.random() * 1000)}`}
                                                 name={`ptt_weekly_update`}
+                                                className="form-control form-control-sm form-select form-select-sm mb-3"
+                                                readOnly
+                                                onMouseUp={(e) => { putProcess(e) }}>
+                                                <option value={row.process_id}>{row.ptt_weekly_update}</option>
+                                                <option value='W1'>W1</option>
+                                                <option value='W2'>W2</option>
+                                                <option value='W3'>W3</option>
+                                                <option value='W4'>W4</option>
+                                                <option value='W5'>W5</option>
+                                            </select>
+                                        </td>
+                                        {/**remark */}
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                name={`remark`}
                                                 readOnly
                                                 onMouseUp={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.ptt_weekly_update} />
+                                                defaultValue={row.remark} />
+                                        </td>
+                                        {/**potential */}
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                name={`potential`}
+                                                readOnly
+                                                onMouseUp={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={row.potential} />
                                         </td>
                                         {/**january */}
                                         <td>

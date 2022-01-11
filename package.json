@@ -13,6 +13,7 @@
     "react-scripts": "4.0.3",
     "react-table": "^7.7.0",
     "react-token-auth": "^2.3.8",
+    "recharts": "^2.1.8",
     "sweetalert": "^2.1.2",
     "web-vitals": "^1.1.2",
     "yarn": "^1.22.17"
