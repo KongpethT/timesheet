@@ -2,10 +2,10 @@ const fs = require('fs')
 const mysql = require("mysql2")
 const CryptoJS = require("crypto-js");
 const sql_connect = {
-    host: '58.82.141.196',
+    host: '10.180.0.1',
     user: "timeline",
     password: "ishow2010",
-    database: "timesheet",
+    database: "demo_time_sheet",
     port: "13306",
     waitForConnections: true,
     connectionLimit: 100,

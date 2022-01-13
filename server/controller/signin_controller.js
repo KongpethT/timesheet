@@ -11,6 +11,7 @@ exports.getPostById = (req, res) => { }
 // @route   GET api/posts/:user/:password
 exports.getPostByLogin = (req, res) => {//
     const brick = req.body
+    //console.log('workHere');
     const email = brick.email
     const password = brick.password
     const sqlString = `select * from account where email = '${email}'`

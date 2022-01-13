@@ -10,7 +10,7 @@ const cors = require('cors');
 const path = require('path')
 
 const bodyParser = require('body-parser')
-const compression = require('compression')
+//const compression = require('compression')
 
 dotenv.config({ path: './config/.env' });
 
