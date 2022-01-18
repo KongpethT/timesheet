@@ -22,10 +22,14 @@ app.use('/api/person', require('./route/person_route'))
 app.use('/api/sales', require('./route/sales_route'))
 app.use('/api/dashboard', require('./route/dashboard_route'))
 
-
+/*
 const https = require('https')
 const server = https.createServer(config.get_certificate, app)
 server.listen(myPort, '0.0.0.0', () => {
     console.log(`server up and running in ${process.env.NODE_ENV} mode on port https://127.0.0.1:${myPort}`)
+})
+*/
+app.listen(myPort, '0.0.0.0', () => {
+    console.log(`server up and running in ${process.env.NODE_ENV} mode on port http://127.0.0.1:${myPort}`)
 })
 console.log(process.env.NODE_ENV)

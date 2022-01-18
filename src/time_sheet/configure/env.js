@@ -1,5 +1,5 @@
 //const host = 'https://10.180.0.1:3001'
-const host = 'https://localhost:3001'
+const host = 'http://localhost:3001'
 //const host = 'https://58.82.141.196:3001'
 const date = new Date()
 const name_month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
