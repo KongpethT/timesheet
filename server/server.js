@@ -1,39 +1,18 @@
 const { config } = require('./configure/env')
-global.alert_message = null
 
-const express = require("express")
-const https = require('https')
-const dotenv = require('dotenv');
-const colors = require('colors');
-const helmet = require('helmet');
-const cors = require('cors');
-const path = require('path')
-
-const bodyParser = require('body-parser')
-//const compression = require('compression')
-
-dotenv.config({ path: './config/.env' });
-
+const dotenv = require('dotenv')
+dotenv.config()
+const myPort = process.env.PORT;
+const myAppSecret = process.env.APP_SECRET
+const express = require('express')
 const app = express()
-const router = express.Router();
+const morgan = require('morgan')
+const compression = require('compression')
+const cors = require('cors');
 
-if (process.env.NODE_ENV === 'development') {
-    app.use(require('morgan')('dev'))
-} else {
-    app.use(require('compression'))
-}
-
-app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-}))
-app.use(helmet())
-
+(process.env.NODE_ENV === 'development') ? app.use(morgan('dev')) : app.use(compression())
 app.use(cors())
 app.use(express.json())
-
-//middleware
-const notFound = require('./middleware/notFound');
-const errorHandler = require('./middleware/errorHandler');
 
 // All routes here
 app.use('/api/signin', require('./route/signin_route'))
@@ -43,13 +22,10 @@ app.use('/api/person', require('./route/person_route'))
 app.use('/api/sales', require('./route/sales_route'))
 app.use('/api/dashboard', require('./route/dashboard_route'))
 
-// Custom middleware here
-app.use(notFound);
-app.use(errorHandler);
 
-const PORT = process.env.PORT || 3001
+const https = require('https')
 const server = https.createServer(config.get_certificate, app)
-server.listen(PORT, '0.0.0.0', () => {
-    console.log(`server up and running in ${process.env.NODE_ENV} mode on port https://127.0.0.1:${PORT}`.yellow.bold)
+server.listen(myPort, '0.0.0.0', () => {
+    console.log(`server up and running in ${process.env.NODE_ENV} mode on port https://127.0.0.1:${myPort}`)
 })
-
+console.log(process.env.NODE_ENV)

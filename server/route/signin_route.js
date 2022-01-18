@@ -5,7 +5,6 @@ const { getPosts, getPostById, getPostByQuery, getPostByLogin, demo } = require(
 
 router.route('/')
     .get(getPosts)
-   
 
 router.route('/:id')
     .get(getPostById)

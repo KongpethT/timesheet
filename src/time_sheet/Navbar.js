@@ -16,14 +16,17 @@ export default function Navbar() {
     }
 
     return (
-        <nav className="navbar navbar-light bg-light fixed-top">
+        <div className="navbar navbar-light bg-light fixed-top">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/#">Wellcome {account}</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-
+                <div
+                    className="offcanvas offcanvas-end"
+                    tabIndex="-1" id="offcanvasNavbar"
+                    aria-labelledby="offcanvasNavbarLabel"
+                    style={{width:'290px', margin:'60px 10px 10px 10px'}}>
                     <div className="offcanvas-body">
                         <ul className="navbar-nav justify-content-start flex-grow-1 pe-3">
                             {/**login / logout / change password */}
@@ -41,11 +44,11 @@ export default function Navbar() {
                             }
                             {/**dropdown menu */}
                             {(!memory.get_token) ? null :
-                                <li className="nav-item dropdown fs-5">
+                                <div className="nav-item dropdown fs-5">
                                     <Link className="nav-link dropdown-toggle" to="/#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Dropdown menu
                                     </Link>
-                                    <ul className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+                                    <div className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
                                         {/**timeline */}
                                         {(userState === 'analyze' | userState === 'admin') ? null :
                                             <div>
@@ -111,13 +114,13 @@ export default function Navbar() {
                                                 <li><Link to="/tools/dashboard" className="dropdown-item"><IoBarChart className="fs-6 text-success" /> Dashboard</Link></li>
                                             </div>
                                         }
-                                    </ul>
-                                </li>
+                                    </div>
+                                </div>
                             }
                         </ul>
                     </div>
                 </div>
             </div>
-        </nav >
+        </div >
     )
 }
