@@ -1,11 +1,14 @@
 import axios from "axios"
 import { useState, useEffect, useCallback } from "react"
-import { memory, api } from './configure/env'
+import { memory, api, colors } from './configure/env'
 const ViewAdminSales = () => {
     if (memory.get_token === null) { window.location.href = '/' }
+    const columnSizeA = '150px'
+    const columnSizeB = '150px'
+    const columnSizeC = '450px'  
     const [getCount, setCount] = useState(0)
     const [getID, setID] = useState(null)
-    const [getAgencyName, setAgencyName] = useState('')
+    const [getClient, setClinet] = useState('')
     const [getDataSales, setDataSales] = useState([])
     const [getCountPSR, setCountPSR] = useState({
         ptt1: 0, ptt2: 0, ptt3: 0, ptt4: 0, ptt5: 0, ptt6: 0,
@@ -17,12 +20,12 @@ const ViewAdminSales = () => {
     })
     /**pull table v_forecast_all */
     const pullSales = useCallback(() => {
-        const value = { id: JSON.parse(memory.get_account_id), agency: getAgencyName }
+        const value = { id: JSON.parse(memory.get_account_id), agency: getClient }
         axios.get(`${api.sales}/all/${JSON.stringify(value)}`).then((brick) => {
             setDataSales([])
             setDataSales(brick.data)
         })
-    }, [getAgencyName])
+    }, [getClient])
     useEffect(() => {
         pullSales()
     }, [pullSales])
@@ -42,34 +45,38 @@ const ViewAdminSales = () => {
     }, [reloadSales])
     /**pull table forcecast (count all) */
     const pullCountPTT = useCallback(() => {
-        const value = { id: JSON.parse(memory.get_account_id), agency: getAgencyName }
+        const value = { id: JSON.parse(memory.get_account_id), agency: getClient }
         axios.get(`${api.sales}/countAll/${JSON.stringify(value)}`).then((brick) => {
             setCountPSR(brick.data[0])
         })
-    }, [getAgencyName])
+    }, [getClient])
     useEffect(() => {
         pullCountPTT()
     }, [pullCountPTT])
     /**update table forecast*/
     const putForecast = (e) => {
-        const lock = document.getElementById(e.currentTarget.id)
+        const columeName = e.target.name
+        const column = document.getElementById(e.currentTarget.id)
         document.getElementById('agencyColumn').setAttribute('contenteditable', 'false')
         document.getElementById('clientColumn').setAttribute('contenteditable', 'false')
-        if (lock.hasAttribute('readOnly')) { lock.removeAttribute('readOnly') }
-        lock.addEventListener("keyup", (e) => {
+        if (column.hasAttribute('readOnly')) { column.removeAttribute('readOnly') }
+        column.style.backgroundColor = colors.get_column_edit
+        column.addEventListener("keyup", (e) => {
             if (e.key === 'Enter') {
-                lock.setAttribute('readOnly', '')
+                column.setAttribute('readOnly', '')
                 axios.put(api.sales, { id: getID, row: e.target.name, value: e.target.value })
                     .then((brick) => {
                         const data = brick.data
                         if (data.affectedRows === 1) {
+                            column.style.backgroundColor = ''
                             pullCountPTT()
-                            setCount((getCount + 1) % 2)
+                            //console.log(columnName);
+                            //setCount((getCount + 1) % 2)
                         }
                     })
             }
             if (e.key === 'Escape') {
-                lock.setAttribute('readOnly', 'readOnly')
+                column.setAttribute('readOnly', 'readOnly')
             }
         })
     }
@@ -84,8 +91,8 @@ const ViewAdminSales = () => {
                     <input
                         type="text"
                         className="form-control"
-                        onChange={(e) => { setAgencyName(e.target.value) }}
-                        placeholder="Search a name of agency" />
+                        onChange={(e) => { setClinet(e.target.value) }}
+                        placeholder="Search a name of client" />
                 </div>
                 <div className="table-responsive"
                     style={{ height: '480px' }}>
@@ -95,156 +102,133 @@ const ViewAdminSales = () => {
                             marginLeft: 'auto',
                             marginRight: 'auto'
                         }}>
-                        <thead>
+                        <thead style={{
+                            position: 'sticky',
+                            top: '0',
+                            left: '0',
+                        }}
+                            className="bg-warning">
+                            <tr style={{ backgroundColor: 'white' }}>
+                                <td colSpan={8} style={{ width: '1395px', backgroundColor: 'transparent' }}></td>
+                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>January</td>
+                                <td colSpan={3} style={{ width: columnSizeC }}>February</td>
+                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>March</td>
+                                <td colSpan={3} style={{ width: columnSizeC }}>April</td>
+                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>May</td>
+                                <td colSpan={3} style={{ width: columnSizeC }}>June</td>
+                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>July</td>
+                                <td colSpan={3} style={{ width: columnSizeC }}>August</td>
+                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>September</td>
+                                <td colSpan={3} style={{ width: columnSizeC }}>October</td>
+                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>November</td>
+                                <td colSpan={3} style={{ width: columnSizeC }}>December</td>
+                            </tr>
+                            <tr style={{ backgroundColor: 'white' }}>
+                                <td colSpan={8} style={{ width: '1395px', backgroundColor: 'transparent' }}></td>
+                                <td>{getCountPSR.SGD1}</td>
+                                <td>{getCountPSR.RCC1}</td>
+                                <td>{getCountPSR.ptt1}</td>
+                                <td>{getCountPSR.SGD2}</td>
+                                <td>{getCountPSR.RCC2}</td>
+                                <td>{getCountPSR.ptt2}</td>
+                                <td>{getCountPSR.SGD3}</td>
+                                <td>{getCountPSR.RCC3}</td>
+                                <td>{getCountPSR.ptt3}</td>
+                                <td>{getCountPSR.SGD4}</td>
+                                <td>{getCountPSR.RCC4}</td>
+                                <td>{getCountPSR.ptt4}</td>
+                                <td>{getCountPSR.SGD5}</td>
+                                <td>{getCountPSR.RCC5}</td>
+                                <td>{getCountPSR.ptt5}</td>
+                                <td>{getCountPSR.SGD6}</td>
+                                <td>{getCountPSR.RCC6}</td>
+                                <td>{getCountPSR.ptt6}</td>
+                                <td>{getCountPSR.SGD7}</td>
+                                <td>{getCountPSR.RCC7}</td>
+                                <td>{getCountPSR.ptt7}</td>
+                                <td>{getCountPSR.SGD8}</td>
+                                <td>{getCountPSR.RCC8}</td>
+                                <td>{getCountPSR.ptt8}</td>
+                                <td>{getCountPSR.SGD9}</td>
+                                <td>{getCountPSR.RCC9}</td>
+                                <td>{getCountPSR.ptt9}</td>
+                                <td>{getCountPSR.SGD10}</td>
+                                <td>{getCountPSR.RCC10}</td>
+                                <td>{getCountPSR.ptt10}</td>
+                                <td>{getCountPSR.SGD11}</td>
+                                <td>{getCountPSR.RCC11}</td>
+                                <td>{getCountPSR.ptt11}</td>
+                                <td>{getCountPSR.SGD12}</td>
+                                <td>{getCountPSR.RCC2}</td>
+                                <td>{getCountPSR.ptt12}</td>
+                            </tr>
                             <tr>
                                 {/**ae */}
-                                <th style={{ width: '180px' }}><p>name of ae</p></th>
+                                <th style={{ width: '180px' }}>name of ae</th>
                                 {/**agency */}
-                                <th style={{ width: '250px' }}><p>name of agency</p></th>
+                                <th style={{ width: '250px' }}>name of agency</th>
                                 {/**client */}
-                                <th style={{ width: '250px' }}><p>name of client</p></th>
+                                <th className="bg-secondary" style={{ width: '250px', position: 'sticky', left: '0' }}>name of client</th>
                                 {/**client type */}
-                                <th style={{ width: '100px' }}><p>client type</p></th>
+                                <th style={{ width: '100px' }}>client type</th>
                                 {/**process */}
-                                <th style={{ width: '180px' }}><p>process</p></th>
+                                <th style={{ width: '180px' }}>process</th>
                                 {/**PTT Weekly Update */}
-                                <th style={{ width: '250px' }}><p>PTT weekly update</p></th>
+                                <th style={{ width: '250px' }}>PTT weekly update</th>
                                 {/**remark */}
-                                <th style={{ width: '250px' }}><p>remark</p></th>
+                                <th style={{ width: '250px' }}>remark</th>
                                 {/**potential */}
-                                <th style={{ width: '250px' }}><p>potential %</p></th>
+                                <th style={{ width: '250px' }}>potential %</th>
                                 {/**januaty */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD1}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC1}</span><br />RCC</th>
-                                <th style={{ width: '100px' }}>
-                                    <button type="button" className="btn btn-outline-warning position-relative text-primary">
-                                        January <span className="badge bg-warning text-dark">{getCountPSR.ptt1}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+
+
                                 {/**february */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD2}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC2}</span><br />RCC</th>
-                                <th style={{ width: '100px' }}>
-                                    <button type="button" className="btn btn-outline-primary position-relative">
-                                        February <span className="badge bg-warning text-dark">{getCountPSR.ptt2}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
-                                {/**january */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD3}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC3}</span><br />RCC</th>
-                                <th style={{ width: '100px' }}>
-                                    <button type="button" className="btn btn-outline-primary position-relative">
-                                        January <span className="badge bg-warning text-dark">{getCountPSR.ptt3}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                {/**march */}
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
                                 {/**april */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD4}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC4}</span><br />RCC</th>
-                                <th style={{ width: '80px' }}>
-                                    <button type="button" className="btn btn-outline-primary position-relative">
-                                        April <span className="badge bg-warning text-dark">{getCountPSR.ptt4}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
+                                <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
                                 {/**may */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD5}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC5}</span><br />RCC</th>
-                                <th style={{ width: '80px' }}>
-                                    <button type="button" className="btn btn-outline-primary position-relative">
-                                        May <span className="badge bg-warning text-dark">{getCountPSR.ptt5}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
+                                <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
                                 {/**june */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD6}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC6}</span><br />RCC</th>
-                                <th style={{ width: '80px' }}>
-                                    <button type="button" className="btn btn-outline-primary position-relative">
-                                        June <span className="badge bg-warning text-dark">{getCountPSR.ptt6}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
+                                <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
                                 {/**july */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD7}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC7}</span><br />RCC</th>
-                                <th style={{ width: '80px' }}>
-                                    <button type="button" className="btn btn-outline-primary position-relative">
-                                        July <span className="badge bg-warning text-dark">{getCountPSR.ptt7}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
+                                <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
                                 {/**august */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD8}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC8}</span><br />RCC</th>
-                                <th style={{ width: '100px' }}>
-                                    <button type="button" className="btn btn-outline-primary position-relative">
-                                        August <span className="badge bg-warning text-dark">{getCountPSR.ptt8}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
+                                <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
                                 {/**september */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD9}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC9}</span><br />RCC</th>
-                                <th style={{ width: '120px' }}>
-                                    <button type="button" className="btn btn-outline-primary position-relative">
-                                        September <span className="badge bg-warning text-dark">{getCountPSR.ptt9}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
+                                <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
                                 {/**october */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD10}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC10}</span><br />RCC</th>
-                                <th style={{ width: '100px' }}>
-                                    <button type="button" className="btn btn-outline-primary position-relative">
-                                        October <span className="badge bg-warning text-dark">{getCountPSR.ptt10}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
+                                <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
                                 {/**november */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD11}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC11}</span><br />RCC</th>
-                                <th style={{ width: '120px' }}>
-                                    <button type="button" className="btn btn-outline-primary position-relative">
-                                        November <span className="badge bg-warning text-dark">{getCountPSR.ptt11}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
+                                <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
                                 {/**december */}
-                                <th className="bg-success text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.SGD12}</span><br />SGD</th>
-                                <th className="bg-primary text-light" style={{ width: '100px' }}>
-                                    <span className="badge bg-light text-dark">{getCountPSR.RCC12}</span><br />RCC</th>
-                                <th style={{ width: '120px' }}>
-                                    <button type="button" className="btn btn-outline-primary position-relative">
-                                        December <span className="badge bg-warning text-dark">{getCountPSR.ptt12}</span>
-                                    </button>
-                                    <br />PTT<br />
-                                </th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -258,7 +242,7 @@ const ViewAdminSales = () => {
                                         {/**agency contenteditable='false'*/}
                                         <td id='agencyColumn'>{row.name_of_agency}</td>
                                         {/**client */}
-                                        <td id='clientColumn'>{row.name_of_client}</td>
+                                        <td id='clientColumn' className="bg-success" style={{ position: 'sticky', top: 121, left: '0' }}>{row.name_of_client}</td>
                                         {/**client type */}
                                         <td id='clientTypeColumn'>{row.name_of_client_type}</td>
                                         {/**process */}
@@ -272,241 +256,242 @@ const ViewAdminSales = () => {
                                         {/**january */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`SGD1`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD1} />
+                                                //defaultValue={row.SGD1}
+                                                defaultValue={(row.SGD1 === '0') ? '' : row.SGD1} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`RCC1`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC1} />
+                                                defaultValue={(row.RCC1 === '0') ? '' : row.RCC1} />
                                         </td>
                                         <td>{row.PTT1}</td>
                                         {/**february */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`SGD2`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD2} />
+                                                defaultValue={(row.SGD2 === '0') ? '' : row.SGD2} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`RCC2`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC2} />
+                                                defaultValue={(row.RCC2 === '0') ? '' : row.RCC2} />
                                         </td>
                                         <td>{row.PTT2}</td>
-                                        {/**January */}
+                                        {/**March */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`SGD3`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD3} />
+                                                defaultValue={(row.SGD3 === '0') ? '' : row.SGD3} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`RCC3`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC3} />
+                                                defaultValue={(row.RCC3 === '0') ? '' : row.RCC3} />
                                         </td>
                                         <td>{row.PTT3}</td>
                                         {/**April */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
-                                                name={`SGD1`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`SGD4`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD4} />
+                                                defaultValue={(row.SGD4 === '0') ? '' : row.SGD4} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
-                                                name={`RCC1`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`RCC4`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC4} />
+                                                defaultValue={(row.RCC4 === '0') ? '' : row.RCC4} />
                                         </td>
                                         <td>{row.PTT4}</td>
                                         {/**May */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`SGD5`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD5} />
+                                                defaultValue={(row.SGD5 === '0') ? '' : row.SGD5} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`RCC5`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC5} />
+                                                defaultValue={(row.RCC5 === '0') ? '' : row.RCC5} />
                                         </td>
                                         <td>{row.PTT5}</td>
                                         {/**june */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`SGD6`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD6} />
+                                                defaultValue={(row.SGD6 === '0') ? '' : row.SGD6} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`RCC6`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC6} />
+                                                defaultValue={(row.RCC6 === '0') ? '' : row.RCC6} />
                                         </td>
                                         <td>{row.PTT6}</td>
                                         {/**july */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`SGD7`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD7} />
+                                                defaultValue={(row.SGD7 === '0') ? '' : row.SGD7} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`RCC7`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC7} />
+                                                defaultValue={(row.RCC7 === '0') ? '' : row.RCC7} />
                                         </td>
                                         <td>{row.PTT7}</td>
                                         {/**august */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`SGD8`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD8} />
+                                                defaultValue={(row.SGD8 === '') ? '' : row.SGD8} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`RCC8`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC8} />
+                                                defaultValue={(row.RCC8 === '0') ? '' : row.RCC8} />
                                         </td>
                                         <td>{row.PTT8}</td>
                                         {/**september */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`SGD9`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD9} />
+                                                defaultValue={(row.SGD9 === '0') ? '' : row.SGD9} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`RCC9`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC9} />
+                                                defaultValue={(row.RCC9 === '0') ? '' : row.RCC9} />
                                         </td>
                                         <td>{row.PTT9}</td>
                                         {/**october */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`SGD10`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD10} />
+                                                defaultValue={(row.SGD10 === '0') ? '' : row.SGD10} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`RCC10`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC10} />
+                                                defaultValue={(row.RCC10 === '0') ? '' : row.RCC10} />
                                         </td>
                                         <td>{row.PTT10}</td>
                                         {/**november */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`SGD11`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD11} />
+                                                defaultValue={(row.SGD11 === '0') ? '' : row.SGD11} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`RCC11`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC11} />
+                                                defaultValue={(row.RCC11 === '0') ? '' : row.RCC11} />
                                         </td>
                                         <td>{row.PTT11}</td>
                                         {/**december */}
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`SGD12`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.SGD12} />
+                                                defaultValue={(row.SGD12 === '0') ? '' : row.SGD12} />
                                         </td>
                                         <td>
                                             <input
-                                                id={`inputId${Math.floor(Math.random() * 1000)}`}
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
                                                 name={`RCC12`}
                                                 readOnly
-                                                onMouseUp={(e) => { putForecast(e) }}
+                                                onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.RCC12} />
+                                                defaultValue={(row.RCC12 === '0') ? '' : row.RCC12} />
                                         </td>
                                         <td>{row.PTT12}</td>
                                     </tr>

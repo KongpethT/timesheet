@@ -4,7 +4,7 @@ exports.gets = (req, res) => {
     const brick = JSON.parse(req.params.para)
     const accountId = brick.id.value
     const agencyName = brick.agency
-    const sqlString = `SELECT * FROM v_forecast_all where name_of_agency like'${agencyName}%'`
+    const sqlString = `SELECT * FROM v_forecast_all where name_of_client like'${agencyName}%'`
     config.get_connect.query(sqlString, (error, result) => {
         if (error) {
             (process.env.NODE_ENV === 'development') ? console.log(error) : null
@@ -18,7 +18,7 @@ exports.getById = (req, res) => {
     const brick = JSON.parse(req.params.para)
     const accountId = brick.id.value
     const agencyName = brick.agency
-    const sqlString = `SELECT * FROM v_forecast_ptt where account_id = '${accountId}' and name_of_agency like'${agencyName}%'`
+    const sqlString = `SELECT * FROM v_forecast_ptt where account_id = '${accountId}' and name_of_client like'${agencyName}%'`
     config.get_connect.query(sqlString, (error, result) => {
         if (error) {
             (process.env.NODE_ENV === 'development') ? console.log(error) : null
@@ -47,7 +47,7 @@ exports.getCountAll = (req, res) => {
     FORMAT(sum(RCC4),0) as RCC4, FORMAT(sum(RCC5),0) as RCC5, FORMAT(sum(RCC6),0) as RCC6, 
     FORMAT(sum(RCC7),0) as RCC7, FORMAT(sum(RCC8),0) as RCC8, FORMAT(sum(RCC9),0) as RCC9, 
     FORMAT(sum(RCC10),0) as RCC10, FORMAT(sum(RCC11),0) as RCC11, FORMAT(sum(RCC12),0) as RCC12`
-    const sqlString = `SELECT ${countSGD},${countRCC},${countTPP} FROM v_forecast_all_count where name_of_agency like'${agencyName}%'`
+    const sqlString = `SELECT ${countSGD},${countRCC},${countTPP} FROM v_forecast_all_count where name_of_client like'${agencyName}%'`
     config.get_connect.query(sqlString, (error, result) => {
         if (error) {
             (process.env.NODE_ENV === 'development') ? console.log(error) : null
@@ -95,7 +95,7 @@ exports.puts = (req, res) => {
     const row_id = req.body.id
     const row_update = req.body.row
     const value = req.body.value
-    config.get_connect.query(`update forecast set ${row_update} = '${value}' where id='${row_id}'`, (error, result) => {
+    config.get_connect.query(`update forecast set ${row_update} = "${value}" where id='${row_id}'`, (error, result) => {
         if (error) {
             (process.env.NODE_ENV === 'development') ? console.log(error) : null
         } else {

@@ -1,6 +1,5 @@
 //const host = 'https://10.180.0.1:3001'
 const host = 'http://localhost:3001'
-//const host = 'https://58.82.141.196:3001'
 const date = new Date()
 const name_month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
     'August', 'September', 'October', 'November', 'December']
@@ -61,6 +60,13 @@ const dates = {
     get_time_expired: (60000 * 60), // 1 housr
 }
 
+const colors = {
+    get_column_edit: '#c5e075',
+    get_bg_default: '#0f2442',
+    get_bg_SGD:'#70AD47',
+    get_bg_RCC:'#4472C4',
+    get_bg_PTT:'#FFC000',
+}
 const storage = (value, key) => {
     const now = new Date()
     const item = {
@@ -113,4 +119,4 @@ const passwordValidity = (para1, para2) => {
     return isChecked
 }
 
-export { api, memory, keys, forms, dates, storage, storege_exp, passwordValidity, alphabet }
+export { api, memory, keys, forms, dates, storage, storege_exp, passwordValidity, alphabet, colors }

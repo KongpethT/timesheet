@@ -10,6 +10,7 @@ const {
     deletePostById,
     postPostClient,
     getProcess,
+    puts
 } = require('../controller/customer_controller')
 
 router.route('/')
@@ -32,5 +33,8 @@ router.route('/clientType')
 
 router.route('/process')
     .get(getProcess)
+
+router.route('/puts')
+    .put(puts)
 
 module.exports = router

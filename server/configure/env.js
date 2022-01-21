@@ -1,17 +1,19 @@
 const fs = require('fs')
 const mysql = require("mysql2")
 const CryptoJS = require("crypto-js");
+let db = ''
+if (process.env.NODE_ENV === 'development') { db = 'demo_timesheet' } else { db = 'timesheet' }
 const sql_connect = {
     host: '10.180.0.1',
-    user: "timeline",
-    password: "ishow2010",
-    database: "demo_time_sheet",
+    user: "root",
+    password: "@Ishow2010",
+    database: db,
     port: "3306",
     waitForConnections: true,
     connectionLimit: 100,
     queueLimit: 0
 }
-
+console.log('using databast with: ', db)
 const config = {
     get_process_state: 'development',
     get_key_encrypt: '3003003000',

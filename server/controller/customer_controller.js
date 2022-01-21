@@ -84,3 +84,8 @@ exports.getProcess = (req, res) => {
         }
     })
 }
+
+/**@route PUT api/customer/puts */
+exports.puts = (req, res) => {
+    console.log(req.body)
+}

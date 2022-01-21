@@ -10,6 +10,7 @@ export default function Navbar() {
     let userState = ''
     if (memory.get_full_name !== null) { account = JSON.parse(memory.get_full_name).value }
     if (memory.get_state_code !== null) { userState = JSON.parse(memory.get_state_code).value }
+    console.log(process.env.NODE_ENV)
     const signout = () => {
         localStorage.clear()
         window.location.href = "/"
@@ -18,7 +19,7 @@ export default function Navbar() {
     return (
         <div className="navbar navbar-light bg-light fixed-top">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/#">Wellcome {account}</Link>
+                <Link className="navbar-brand" to="/#">Welcome <span className="text-uppercase text-success">{account}</span></Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -26,7 +27,7 @@ export default function Navbar() {
                     className="offcanvas offcanvas-end"
                     tabIndex="-1" id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel"
-                    style={{width:'290px', margin:'60px 10px 10px 10px'}}>
+                    style={{ width: '290px', margin: '60px 10px 10px 10px' }}>
                     <div className="offcanvas-body">
                         <ul className="navbar-nav justify-content-start flex-grow-1 pe-3">
                             {/**login / logout / change password */}

@@ -1,20 +1,18 @@
 import React, { useState } from 'react'
 import logo from '../image/JCDecaux_logo.png'
 import axios from 'axios'
-import { api, memory, storage, forms } from './configure/env'
+import { api, memory, storage } from './configure/env'
 
 export default function SignIn() {
   const [getAccount, setAccount] = useState({ username: '', password: '' })
-  const [getAlert, setAlert] = useState('')
   const isLogged = () => {
     if (!!getAccount.username & !!getAccount.password) {
       axios.post(api.signin, { email: getAccount.username, password: getAccount.password }).then((brick => {
-        const data = brick.data
+        let data = []
+        data = brick.data
+        console.log(data);
         if (data.error === 401) {
-          //console.log('error-----401');
-          setAlert(forms.get_message_login_error1 + '\n' + forms.get_message_login_error2)
           setAccount({ username: '', password: '' })
-          setTimeout(() => { setAlert('') }, 3000)
         } else {
           const private_id = data.values
           const token = data.token
@@ -46,6 +44,12 @@ export default function SignIn() {
     }
   }
 
+  window.addEventListener('keyup', (e) => {
+    const btn_signnIn = document.getElementById('signIn')
+    if (e.key === 'Enter') {
+      btn_signnIn.onclick(isLogged())
+    }
+  })
 
   if (memory.get_token !== null) {
     (memory.get_state_code === 'user') ? window.location.href = '/timeline/view' : window.location.href = '/tools/dashboard'
@@ -65,10 +69,6 @@ export default function SignIn() {
         }}>
           {/**logo */}
           <img src={logo} className="img-fluid" alt="logo" />
-          {/**alert message */}
-          <div className='mb-3'>
-            <div id="usernameHelp" className="form-text text-warning">{getAlert}</div>
-          </div>
           {/**username */}
           <div className="mb-3">
             <label className="form-label text-light">Username</label>
@@ -92,7 +92,7 @@ export default function SignIn() {
               onChange={(e) => { setAccount({ ...getAccount, password: e.target.value }) }}
             />
           </div>
-          <button type="button" className="btn btn-primary" onMouseUp={isLogged} >Login</button>
+          <button id='signIn' type="button" className="btn btn-primary" onMouseUp={isLogged} >Login</button>
 
         </div>
       </div >
