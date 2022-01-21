@@ -16,7 +16,8 @@ const ViewAdminSales = () => {
         SGD1: 0, SGD2: 0, SGD3: 0, SGD4: 0, SGD5: 0, SGD6: 0,
         SGD7: 0, SGD8: 0, SGD9: 0, SGD10: 0, SGD11: 0, SGD12: 0,
         RCC1: 0, RCC2: 0, RCC3: 0, RCC4: 0, RCC5: 0, RCC6: 0,
-        RCC7: 0, RCC8: 0, RCC9: 0, RCC10: 0, RCC11: 0, RCC12: 0
+        RCC7: 0, RCC8: 0, RCC9: 0, RCC10: 0, RCC11: 0, RCC12: 0,
+        total_SGD: 0, total_RCC: 0, total_PTT: 0, total: 0
     })
     /**pull table v_forecast_all */
     const pullSales = useCallback(() => {
@@ -129,6 +130,7 @@ const ViewAdminSales = () => {
                                 <td colSpan={3} style={{ width: columnSizeC }}>October</td>
                                 <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>November</td>
                                 <td colSpan={3} style={{ width: columnSizeC }}>December</td>
+                                <td colSpan={4} style={{ width: '600px', backgroundColor: 'gainsboro' }}>summary of activity</td>
                             </tr>
                             <tr style={{ backgroundColor: 'white' }}>
                                 <td colSpan={8} style={{ width: '1395px', backgroundColor: 'transparent' }}></td>
@@ -168,6 +170,10 @@ const ViewAdminSales = () => {
                                 <td>{getCountPSR.SGD12}</td>
                                 <td>{getCountPSR.RCC2}</td>
                                 <td>{getCountPSR.ptt12}</td>
+                                <td style={{backgroundColor:colors.get_bg_default, color:'white'}}>{getCountPSR.total_SGD}</td>
+                                <td style={{backgroundColor:colors.get_bg_default, color:'white'}}>{getCountPSR.total_RCC}</td>
+                                <td style={{backgroundColor:colors.get_bg_default, color:'white'}}>{getCountPSR.total_PTT}</td>
+                                <td style={{backgroundColor:colors.get_bg_default, color:'white'}}>{getCountPSR.total}</td>
                             </tr>
                             <tr>
                                 {/**ae */}
@@ -190,8 +196,6 @@ const ViewAdminSales = () => {
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
-
-
                                 {/**february */}
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
@@ -236,12 +240,16 @@ const ViewAdminSales = () => {
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                {/**total */}
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>TSGD</th>
+                                <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>TRCC</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>TPTT</th>
+                                <th className="text-light" style={{ width: columnSizeA, backgroundColor: 'gray' }}>total</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             {getDataSales.map((row, index) => {
-
                                 return (
                                     <tr key={index} onMouseEnter={() => { setID(row.id) }}>
                                         {/**agency contenteditable='false'*/}
@@ -501,6 +509,11 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC12 === '0') ? '' : row.RCC12} />
                                         </td>
                                         <td>{row.PTT12}</td>
+                                        {/**summary */}
+                                        <td style={{backgroundColor: 'gainsboro'}}>{row.total_SGD}</td>
+                                        <td style={{backgroundColor: 'gainsboro'}}>{row.total_RCC}</td>
+                                        <td style={{backgroundColor: 'gainsboro'}}>{row.total_PTT}</td>
+                                        <td style={{backgroundColor: 'gainsboro'}}>{row.total}</td>
                                     </tr>
                                 )
                             })}

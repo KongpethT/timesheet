@@ -44,6 +44,10 @@ SELECT
     forecast.PTT10,
     forecast.PTT11,
     forecast.PTT12,
+    forecast.total_SGD,
+    forecast.total_RCC,
+    forecast.total_PTT,
+    forecast.total,
     forecast.year
 FROM
     forecast,

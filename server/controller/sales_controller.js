@@ -47,11 +47,14 @@ exports.getCountAll = (req, res) => {
     FORMAT(sum(RCC4),0) as RCC4, FORMAT(sum(RCC5),0) as RCC5, FORMAT(sum(RCC6),0) as RCC6, 
     FORMAT(sum(RCC7),0) as RCC7, FORMAT(sum(RCC8),0) as RCC8, FORMAT(sum(RCC9),0) as RCC9, 
     FORMAT(sum(RCC10),0) as RCC10, FORMAT(sum(RCC11),0) as RCC11, FORMAT(sum(RCC12),0) as RCC12`
-    const sqlString = `SELECT ${countSGD},${countRCC},${countTPP} FROM v_forecast_all_count where name_of_client like'${agencyName}%'`
+    const summary = `FORMAT(sum(total_SGD), 0) AS total_SGD,FORMAT(sum(total_RCC), 0) AS total_RCC,
+    FORMAT(sum(total_PTT), 0) AS total_PTT,FORMAT(sum(total), 0) AS total`
+    const sqlString = `SELECT ${countSGD},${countRCC},${countTPP},${summary} FROM v_forecast_all_count where name_of_client like'${agencyName}%'`
     config.get_connect.query(sqlString, (error, result) => {
         if (error) {
             (process.env.NODE_ENV === 'development') ? console.log(error) : null
         } else {
+            //console.log(result);
             res.send(result)
         }
     })
