@@ -29,6 +29,13 @@ const ViewPerson = () => {
         }
 
     }
+     /**resize window screen */
+     const [getWidthScreen, setWidthScreen] = useState(window.innerWidth)
+     const [getHightScreen, setHeightScreen] = useState(window.innerHeight)
+     window.addEventListener('resize', () => {
+         setWidthScreen(window.innerWidth)
+         setHeightScreen(window.innerHeight)
+     })
     /**view */
     if (memory.get_token === null) { window.location.href = "/" }
     else {
@@ -37,7 +44,7 @@ const ViewPerson = () => {
                 <h1>View person <span className='fs-6 text-primary'>{getAlert}</span></h1>
                 <hr />
                 <div className="table-responsive mb-3"
-                    style={{ height: '480px' }}>
+                    style={{ height: getHightScreen - 145 }}>
                     <table className="table bg-light table-hover text-center table-bordered"
                         style={{
                             tableLayout: 'fixed',

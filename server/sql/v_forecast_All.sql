@@ -46,6 +46,10 @@ SELECT
     FORMAT(forecast.SGD12, 0) AS SGD12,
     FORMAT(forecast.RCC12, 0) AS RCC12,
     FORMAT(forecast.PTT12, 0) AS PTT12,
+    FORMAT(forecast.total_SGD, 0) AS total_SGD,
+    FORMAT(forecast.total_RCC, 0) AS total_RCC,
+    FORMAT(forecast.total_PTT, 0) AS total_PTT,
+    FORMAT(forecast.total, 0) AS total,
     forecast.year,
     process.id AS process_id
 FROM

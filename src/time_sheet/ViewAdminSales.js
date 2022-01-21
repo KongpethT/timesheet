@@ -5,7 +5,7 @@ const ViewAdminSales = () => {
     if (memory.get_token === null) { window.location.href = '/' }
     const columnSizeA = '150px'
     const columnSizeB = '150px'
-    const columnSizeC = '450px'  
+    const columnSizeC = '450px'
     const [getCount, setCount] = useState(0)
     const [getID, setID] = useState(null)
     const [getClient, setClinet] = useState('')
@@ -80,6 +80,13 @@ const ViewAdminSales = () => {
             }
         })
     }
+    /**resize window screen */
+    const [getWidthScreen, setWidthScreen] = useState(window.innerWidth)
+    const [getHightScreen, setHeightScreen] = useState(window.innerHeight)
+    window.addEventListener('resize', () => {
+        setWidthScreen(window.innerWidth)
+        setHeightScreen(window.innerHeight)
+    })
     /**view */
     if (memory.get_token === null) { window.location.href = '/' }
     else {
@@ -95,7 +102,7 @@ const ViewAdminSales = () => {
                         placeholder="Search a name of client" />
                 </div>
                 <div className="table-responsive"
-                    style={{ height: '480px' }}>
+                    style={{ height: getHightScreen - 190 }}>
                     <table className="table bg-light table-hover text-center table-bordered"
                         style={{
                             tableLayout: 'fixed',

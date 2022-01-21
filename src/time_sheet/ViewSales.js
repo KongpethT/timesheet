@@ -109,7 +109,13 @@ const ViewSales = () => {
             column.setAttribute('readOnly', 'readOnly')
         }
     }
-
+    /**resize window screen */
+    const [getWidthScreen, setWidthScreen] = useState(window.innerWidth)
+    const [getHightScreen, setHeightScreen] = useState(window.innerHeight)
+    window.addEventListener('resize', () => {
+        setWidthScreen(window.innerWidth)
+        setHeightScreen(window.innerHeight)
+    })
     if (memory.get_token === null) { window.location.href = '/' }
     else {
         return (
@@ -124,7 +130,7 @@ const ViewSales = () => {
                         placeholder="Search a name of client" />
                 </div>
                 <div className="table-responsive"
-                    style={{ height: '480px' }}>
+                    style={{ height: getHightScreen - 190 }}>
                     <table className="table bg-light table-hover text-center table-bordered"
                         style={{
                             tableLayout: 'fixed',
