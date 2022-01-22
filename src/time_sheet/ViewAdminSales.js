@@ -32,7 +32,7 @@ const ViewAdminSales = () => {
     }, [pullSales])
     /**reload table sales */
     const reloadSales = useCallback(() => {
-        const value = { id: JSON.parse(memory.get_account_id), agency: '' }
+        const value = { id: JSON.parse(memory.get_account_id), agency: getClient }
         axios.get(`${api.sales}/all/${JSON.stringify(value)}`).then((brick) => {
             setDataSales([])
             setDataSales(brick.data)
@@ -71,8 +71,7 @@ const ViewAdminSales = () => {
                         if (data.affectedRows === 1) {
                             column.style.backgroundColor = ''
                             pullCountPTT()
-                            //console.log(columnName);
-                            //setCount((getCount + 1) % 2)
+                            setCount((getCount + 1) % 2)
                         }
                     })
             }
@@ -170,10 +169,10 @@ const ViewAdminSales = () => {
                                 <td>{getCountPSR.SGD12}</td>
                                 <td>{getCountPSR.RCC2}</td>
                                 <td>{getCountPSR.ptt12}</td>
-                                <td style={{backgroundColor:colors.get_bg_default, color:'white'}}>{getCountPSR.total_SGD}</td>
-                                <td style={{backgroundColor:colors.get_bg_default, color:'white'}}>{getCountPSR.total_RCC}</td>
-                                <td style={{backgroundColor:colors.get_bg_default, color:'white'}}>{getCountPSR.total_PTT}</td>
-                                <td style={{backgroundColor:colors.get_bg_default, color:'white'}}>{getCountPSR.total}</td>
+                                <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPSR.total_SGD}</td>
+                                <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPSR.total_RCC}</td>
+                                <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPSR.total_PTT}</td>
+                                <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPSR.total}</td>
                             </tr>
                             <tr>
                                 {/**ae */}
@@ -288,7 +287,7 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC1 === '0') ? '' : row.RCC1} />
                                         </td>
-                                        <td>{row.PTT1}</td>
+                                        <td>{(row.PTT1 === '0') ? '' : row.PTT1}</td>
                                         {/**february */}
                                         <td>
                                             <input
@@ -308,7 +307,7 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC2 === '0') ? '' : row.RCC2} />
                                         </td>
-                                        <td>{row.PTT2}</td>
+                                        <td>{(row.PTT2 === '0') ? '' : row.PTT2}</td>
                                         {/**March */}
                                         <td>
                                             <input
@@ -328,7 +327,7 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC3 === '0') ? '' : row.RCC3} />
                                         </td>
-                                        <td>{row.PTT3}</td>
+                                        <td>{(row.PTT3 === '0') ? '' : row.PTT3}</td>
                                         {/**April */}
                                         <td>
                                             <input
@@ -348,7 +347,7 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC4 === '0') ? '' : row.RCC4} />
                                         </td>
-                                        <td>{row.PTT4}</td>
+                                        <td>{(row.PTT4 === '0') ? '' : row.PTT4}</td>
                                         {/**May */}
                                         <td>
                                             <input
@@ -368,7 +367,7 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC5 === '0') ? '' : row.RCC5} />
                                         </td>
-                                        <td>{row.PTT5}</td>
+                                        <td>{(row.PTT5 === '0') ? '' : row.PTT5}</td>
                                         {/**june */}
                                         <td>
                                             <input
@@ -388,7 +387,7 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC6 === '0') ? '' : row.RCC6} />
                                         </td>
-                                        <td>{row.PTT6}</td>
+                                        <td>{(row.PTT6 === '0') ? '' : row.PTT6}</td>
                                         {/**july */}
                                         <td>
                                             <input
@@ -408,7 +407,7 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC7 === '0') ? '' : row.RCC7} />
                                         </td>
-                                        <td>{row.PTT7}</td>
+                                        <td>{(row.PTT7 === '0') ? '' : row.PTT7}</td>
                                         {/**august */}
                                         <td>
                                             <input
@@ -428,7 +427,7 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC8 === '0') ? '' : row.RCC8} />
                                         </td>
-                                        <td>{row.PTT8}</td>
+                                        <td>{(row.PTT8 === '0') ? '' : row.PTT8}</td>
                                         {/**september */}
                                         <td>
                                             <input
@@ -448,7 +447,7 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC9 === '0') ? '' : row.RCC9} />
                                         </td>
-                                        <td>{row.PTT9}</td>
+                                        <td>{(row.PTT9 === '0') ? '' : row.PTT9}</td>
                                         {/**october */}
                                         <td>
                                             <input
@@ -468,7 +467,7 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC10 === '0') ? '' : row.RCC10} />
                                         </td>
-                                        <td>{row.PTT10}</td>
+                                        <td>{(row.PTT10 === '0') ? '' : row.PTT10}</td>
                                         {/**november */}
                                         <td>
                                             <input
@@ -488,7 +487,7 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC11 === '0') ? '' : row.RCC11} />
                                         </td>
-                                        <td>{row.PTT11}</td>
+                                        <td>{(row.PTT11 === '0') ? '' : row.PTT11}</td>
                                         {/**december */}
                                         <td>
                                             <input
@@ -508,12 +507,12 @@ const ViewAdminSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.RCC12 === '0') ? '' : row.RCC12} />
                                         </td>
-                                        <td>{row.PTT12}</td>
+                                        <td>{(row.PTT12 === '0') ? '' : row.PTT12}</td>
                                         {/**summary */}
-                                        <td style={{backgroundColor: 'gainsboro'}}>{row.total_SGD}</td>
-                                        <td style={{backgroundColor: 'gainsboro'}}>{row.total_RCC}</td>
-                                        <td style={{backgroundColor: 'gainsboro'}}>{row.total_PTT}</td>
-                                        <td style={{backgroundColor: 'gainsboro'}}>{row.total}</td>
+                                        <td style={{ backgroundColor: 'gainsboro' }}>{row.total_SGD}</td>
+                                        <td style={{ backgroundColor: 'gainsboro' }}>{row.total_RCC}</td>
+                                        <td style={{ backgroundColor: 'gainsboro' }}>{row.total_PTT}</td>
+                                        <td style={{ backgroundColor: 'gainsboro' }}>{row.total}</td>
                                     </tr>
                                 )
                             })}

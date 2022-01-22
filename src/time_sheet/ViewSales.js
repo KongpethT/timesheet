@@ -6,28 +6,28 @@ const ViewSales = () => {
     const columnSizeA = '150px'
     const [getCount, setCount] = useState(0)
     const [getRowId, setRowId] = useState(null)
-    const [getAgencyName, setAgencyName] = useState('')
+    const [getClient, setClient] = useState('')
     const [getDataSales, setDataSales] = useState([])
     const [getProcess, setProcess] = useState([])
     const [getClientType, setClientType] = useState([])
     const [getCountPTT, setCountPTT] = useState({
         ptt1: 0, ptt2: 0, ptt3: 0, ptt4: 0, ptt5: 0, ptt6: 0,
-        ptt7: 0, ptt8: 0, ptt9: 0, ptt10: 0, ptt11: 0, ptt12: 0
+        ptt7: 0, ptt8: 0, ptt9: 0, ptt10: 0, ptt11: 0, ptt12: 0, total: 0
     })
     /**pull table v_forecast_ptt */
     const pullSales = useCallback(() => {
-        const value = { id: JSON.parse(memory.get_account_id), agency: getAgencyName }
+        const value = { id: JSON.parse(memory.get_account_id), agency: getClient }
         axios.get(`${api.sales}/${JSON.stringify(value)}`).then((brick) => {
             setDataSales([])
             setDataSales(brick.data)
         })
-    }, [getAgencyName])
+    }, [getClient])
     useEffect(() => {
         pullSales()
     }, [pullSales])
     /**reload table sales */
     const reloadSales = useCallback(() => {
-        const value = { id: JSON.parse(memory.get_account_id), agency: '' }
+        const value = { id: JSON.parse(memory.get_account_id), agency: getClient }
         axios.get(`${api.sales}/${JSON.stringify(value)}`).then((brick) => {
             setDataSales([])
             setDataSales(brick.data)
@@ -41,11 +41,11 @@ const ViewSales = () => {
     }, [reloadSales])
     /**pull table forcecast (count PTT1-12) */
     const pullCountPTT = useCallback(() => {
-        const value = { id: JSON.parse(memory.get_account_id), agency: getAgencyName }
+        const value = { id: JSON.parse(memory.get_account_id), agency: getClient }
         axios.get(`${api.sales}/count/${JSON.stringify(value)}`).then((brick) => {
             setCountPTT(brick.data[0])
         })
-    }, [getAgencyName])
+    }, [getClient])
     useEffect(() => {
         pullCountPTT()
     }, [pullCountPTT])
@@ -126,7 +126,7 @@ const ViewSales = () => {
                     <input
                         type="text"
                         className="form-control"
-                        onChange={(e) => { setAgencyName(e.target.value) }}
+                        onChange={(e) => { setClient(e.target.value) }}
                         placeholder="Search a name of client" />
                 </div>
                 <div className="table-responsive"
@@ -157,6 +157,7 @@ const ViewSales = () => {
                                 <td colSpan={1} style={{ width: columnSizeA }}>October</td>
                                 <td colSpan={1} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>November</td>
                                 <td colSpan={1} style={{ width: columnSizeA }}>December</td>
+                                <td colSpan={1} style={{ width: '300px', backgroundColor: 'gainsboro' }}>summary of activity</td>
                             </tr>
                             <tr style={{ backgroundColor: 'white' }}>
                                 <td colSpan={7} style={{ width: '1395px', backgroundColor: 'transparent' }}></td>
@@ -172,6 +173,7 @@ const ViewSales = () => {
                                 <td>{getCountPTT.ptt10}</td>
                                 <td>{getCountPTT.ptt11}</td>
                                 <td>{getCountPTT.ptt12}</td>
+                                <td style={{backgroundColor:colors.get_bg_default, color:'white'}}>{getCountPTT.total}</td>
                             </tr>
                             <tr style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>
                                 {/**agency */}
@@ -212,6 +214,8 @@ const ViewSales = () => {
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
                                 {/**december */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                {/**total PTT */}
+                                <th style={{ backgroundColor:'gray', color: 'white' }}>TPTT</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -300,7 +304,7 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT1} />
+                                                defaultValue={(row.PTT1 === '0') ? '' : row.PTT1} />
                                         </td>
                                         {/**february */}
                                         <td>
@@ -310,7 +314,7 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT2} />
+                                                defaultValue={(row.PTT2 === '0') ? '' : row.PTT2} />
                                         </td>
                                         {/**January */}
                                         <td>
@@ -320,7 +324,7 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT3} />
+                                                defaultValue={(row.PTT3 === '0') ? '' : row.PTT3} />
                                         </td>
                                         {/**April */}
                                         <td>
@@ -330,7 +334,7 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT4} />
+                                                defaultValue={(row.PTT4 === '0') ? '' : row.PTT4} />
                                         </td>
                                         {/**May */}
                                         <td>
@@ -340,7 +344,7 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT5} />
+                                                defaultValue={(row.PTT5 === '0') ? '' : row.PTT5} />
                                         </td>
                                         {/**june */}
                                         <td>
@@ -350,7 +354,7 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT6} />
+                                                defaultValue={(row.PTT6 === '0') ? '' : row.PTT6} />
                                         </td>
                                         {/**july */}
                                         <td>
@@ -360,7 +364,7 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT7} />
+                                                defaultValue={(row.PTT7 === '0') ? '' : row.PTT7} />
                                         </td>
                                         {/**august */}
                                         <td>
@@ -370,7 +374,7 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT8} />
+                                                defaultValue={(row.PTT8 === '0') ? '' : row.PTT8} />
                                         </td>
                                         {/**september */}
                                         <td>
@@ -380,7 +384,7 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT9} />
+                                                defaultValue={(row.PTT9 === '0') ? '' : row.PTT9} />
                                         </td>
                                         {/**october */}
                                         <td>
@@ -390,7 +394,7 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT10} />
+                                                defaultValue={(row.PTT10 === '0') ? '' : row.PTT10} />
                                         </td>
                                         {/**november */}
                                         <td>
@@ -400,7 +404,7 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT11} />
+                                                defaultValue={(row.PTT11 === '0') ? '' : row.PTT11} />
                                         </td>
                                         {/**december */}
                                         <td>
@@ -410,7 +414,9 @@ const ViewSales = () => {
                                                 readOnly
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
-                                                defaultValue={row.PTT12} /></td>
+                                                defaultValue={(row.PTT12 === '0') ? '' : row.PTT12} /></td>
+                                        {/**TPTT */}
+                                        <td style={{backgroundColor: 'gainsboro'}}>{row.total_PTT}</td>
                                     </tr>
                                 )
                             })}

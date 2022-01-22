@@ -22,6 +22,7 @@ SELECT
     FORMAT(forecast.PTT10, 0) AS PTT10,
     FORMAT(forecast.PTT11, 0) AS PTT11,
     FORMAT(forecast.PTT12, 0) AS PTT12,
+    FORMAT(forecast.total_PTT, 0) AS total_PTT,
     forecast.year,
     process.id AS process_id
 FROM
