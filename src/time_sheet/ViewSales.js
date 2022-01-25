@@ -21,6 +21,9 @@ const ViewSales = () => {
             setDataSales([])
             setDataSales(brick.data)
         })
+        return () => {
+            getClient()
+        }
     }, [getClient])
     useEffect(() => {
         pullSales()
@@ -32,7 +35,7 @@ const ViewSales = () => {
             setDataSales([])
             setDataSales(brick.data)
             return () => {
-                getCount()
+                //getCount()
             }
         })
     }, [getCount])
@@ -45,6 +48,7 @@ const ViewSales = () => {
         axios.get(`${api.sales}/count/${JSON.stringify(value)}`).then((brick) => {
             setCountPTT(brick.data[0])
         })
+        return () => { getClient() }
     }, [getClient])
     useEffect(() => {
         pullCountPTT()
@@ -110,10 +114,10 @@ const ViewSales = () => {
         }
     }
     /**resize window screen */
-    const [getWidthScreen, setWidthScreen] = useState(window.innerWidth)
+    //const [getWidthScreen, setWidthScreen] = useState(window.innerWidth)
     const [getHightScreen, setHeightScreen] = useState(window.innerHeight)
     window.addEventListener('resize', () => {
-        setWidthScreen(window.innerWidth)
+        //setWidthScreen(window.innerWidth)
         setHeightScreen(window.innerHeight)
     })
     if (memory.get_token === null) { window.location.href = '/' }
@@ -173,7 +177,7 @@ const ViewSales = () => {
                                 <td>{getCountPTT.ptt10}</td>
                                 <td>{getCountPTT.ptt11}</td>
                                 <td>{getCountPTT.ptt12}</td>
-                                <td style={{backgroundColor:colors.get_bg_default, color:'white'}}>{getCountPTT.total}</td>
+                                <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPTT.total}</td>
                             </tr>
                             <tr style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>
                                 {/**agency */}
@@ -215,7 +219,7 @@ const ViewSales = () => {
                                 {/**december */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
                                 {/**total PTT */}
-                                <th style={{ backgroundColor:'gray', color: 'white' }}>TPTT</th>
+                                <th style={{ backgroundColor: 'gray', color: 'white' }}>TPTT</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -416,7 +420,7 @@ const ViewSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT12 === '0') ? '' : row.PTT12} /></td>
                                         {/**TPTT */}
-                                        <td style={{backgroundColor: 'gainsboro'}}>{row.total_PTT}</td>
+                                        <td style={{ backgroundColor: 'gainsboro' }}>{row.total_PTT}</td>
                                     </tr>
                                 )
                             })}
