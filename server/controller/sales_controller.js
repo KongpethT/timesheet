@@ -84,10 +84,14 @@ exports.getCountById = (req, res) => {
 //@route POST api/sale
 exports.posts = (req, res) => {
     const brick = req.body
+    console.log(brick)
     const data = Object.keys(brick).map((key) => {
         return (brick[key])
     })
-    const sqlString = `INSERT INTO forecast (account_id,agency_id,client_id,client_type_id, year) value (?)`
+    const txt1 ='SGD1,RCC1,PTT1,SGD2,RCC2,PTT2,SGD3,RCC3,PTT3,SGD4,RCC4,PTT4'
+    const txt2 ='SGD5,RCC5,PTT5,SGD6,RCC6,PTT6,SGD7,RCC7,PTT7,SGD8,RCC8,PTT8'
+    const txt3 ='SGD9,RCC9,PTT9,SGD10,RCC10,PTT10,SGD11,RCC11,PTT11,SGD12,RCC12,PTT12'
+    const sqlString = `INSERT INTO forecast (account_id,agency_id,client_id,client_type_id, year,${txt1},${txt2},${txt3}) value (?,'0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0')`
     config.get_connect.query(sqlString, [data], (error, result) => {
         if (error) {
             (process.env.NODE_ENV === 'development') ? console.log(error) : null
@@ -98,6 +102,7 @@ exports.posts = (req, res) => {
 }
 //@route PUT api/sales
 exports.puts = (req, res) => {
+    console.log(req.body)
     const row_id = req.body.id
     const row_update = req.body.row
     const value = req.body.value
@@ -105,6 +110,7 @@ exports.puts = (req, res) => {
         if (error) {
             (process.env.NODE_ENV === 'development') ? console.log(error) : null
         } else {
+            console.log('คำตอบ: ', result);
             res.send(result)
         }
     })

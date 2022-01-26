@@ -21,10 +21,10 @@ const NewClient = () => {
     const pushClient = () => {
         if (!!getBrick.agencyId & !!getBrick.client) {
             axios.post(`${api.customer}/client`, { getBrick }).then((brick) => {
+                console.log(brick.status)
                 if (brick.status === 200) {
-                    document.getElementById('defaultSelect').setAttribute('selected', 'selected')
                     setPlaceholder('')
-                    setBrick({ agencyId: '', client: '' })
+                    setBrick({ agencyId: getBrick.agencyId, client: '' })
                     setAlert(forms.get_massage_success)
                     setTimeout(() => {
                         setAlert('')

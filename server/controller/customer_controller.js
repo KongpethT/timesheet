@@ -42,7 +42,7 @@ exports.getPostsClientType = (req, res) => {
 
     })
 }
-// @route   post api/customer/agency
+// @route POST api/customer/agency
 exports.postPostAgency = (req, res) => {
     const brick = req.body.getAddress
     const data = Object.keys(brick).map((key) => {
@@ -57,7 +57,7 @@ exports.postPostAgency = (req, res) => {
         }
     })
 }
-//@route post api/customer/client
+//@route POST api/customer/client
 exports.postPostClient = (req, res) => {
     const brick = req.body
     const data = Object.keys(brick.getBrick).map((key) => {
@@ -85,7 +85,51 @@ exports.getProcess = (req, res) => {
     })
 }
 
-/**@route PUT api/customer/puts */
-exports.puts = (req, res) => {
-    console.log(req.body)
+/**@route PUT api/customer/agency/update */
+exports.agencyUpdate = (req, res) => {
+    const brick = req.body.brick
+    const sqlString = `UPDATE agency set ${brick.name} = '${brick.value}' where id = '${brick.rowId}'`
+    config.get_connect.query(sqlString, (error, result) => {
+        if (error) {
+            (process.env.NODE_ENV === 'development') ? console.log(error) : null
+        } else {
+            res.send(result)
+        }
+    })
+}
+/**@route PUT api/customer/client/update */
+exports.clientUpdate = (req, res) => {
+    const brick = req.body.brick
+    const sqlString = `UPDATE client set ${brick.name} = '${brick.value}' where id = '${brick.rowId}'`
+    config.get_connect.query(sqlString, (error, result) => {
+        if (error) {
+            (process.env.NODE_ENV === 'development') ? console.log(error) : null
+        } else {
+            res.send(result)
+        }
+    })
+}
+/**@route DELETE api/customer/agency/deleted/:id */
+exports.agencyDeleted = (req, res) => {
+    const id = req.params.id
+    const sqlString = `DELETE FROM agency where id = ${id}`
+    config.get_connect.query(sqlString, (error, result) => {
+        if (error) {
+            (process.env.NODE_ENV === 'development') ? console.log(error) : null
+        } else {
+            res.send(result)
+        }
+    })
+}
+/**@route DELETE api/customer/client/delete/:id */
+exports.clientDeleted = (req, res) => {
+    const id = req.params.id
+    const sqlString = `DELETE FROM client where id = ${id}`
+    config.get_connect.query(sqlString, (error, result) => {
+        if (error) {
+            (process.env.NODE_ENV === 'development') ? console.log(error) : null
+        } else {
+            res.send(result)
+        }
+    })
 }

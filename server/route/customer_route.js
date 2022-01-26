@@ -7,10 +7,12 @@ const {
     getPostByIdClient,
     postPostAgency,
     getPostsClientType,
-    deletePostById,
+    agencyDeleted,
     postPostClient,
+    clientDeleted,
     getProcess,
-    puts
+    agencyUpdate,
+    clientUpdate
 } = require('../controller/customer_controller')
 
 router.route('/')
@@ -34,7 +36,14 @@ router.route('/clientType')
 router.route('/process')
     .get(getProcess)
 
-router.route('/puts')
-    .put(puts)
+router.route('/agency/update')
+    .put(agencyUpdate)
+router.route('/client/update')
+    .put(clientUpdate)
 
+router.route('/agency/deleted/:id')
+    .delete(agencyDeleted)
+
+router.route('/client/deleted/:id')
+    .delete(clientDeleted)
 module.exports = router

@@ -99,18 +99,17 @@ const ViewSales = () => {
     }
 
     /**put column clinet_type, process, PTT_weekly_update */
-    const putProcess = (e) => {
-        console.log(getRowId)
-        const column = document.getElementById(e.currentTarget.id)
-        if (column.hasAttribute('readOnly')) { column.removeAttribute('readOnly') }
-        column.setAttribute('readOnly', '')
-        axios.put(api.sales, { id: getRowId, row: e.target.name, value: e.target.value })
-            .then((brick) => {
-                //const data = brick.data
-            })
-
-        if (e.key === 'Escape') {
-            column.setAttribute('readOnly', 'readOnly')
+    const putColumnSelect = (e) => {
+        //const column = document.getElementById(e.currentTarget.id)
+        console.log(getRowId);
+        //if (column.hasAttribute('readOnly')) { column.removeAttribute('readOnly') }
+        //column.setAttribute('readOnly', '')
+        if (getRowId === null) { } else {
+            axios.put(api.sales, { id: getRowId, row: e.target.name, value: e.target.value })
+                .then((brick) => {
+                    setRowId(null)
+                    //const data = brick.data
+                })
         }
     }
     /**resize window screen */
@@ -239,7 +238,7 @@ const ViewSales = () => {
                                                 name={`client_type_id`}
                                                 className="form-control form-control-sm form-select form-select-sm mb-3"
                                                 readOnly
-                                                onClick={(e) => { putProcess(e) }}>
+                                                onMouseUp={(e) => { putColumnSelect(e) }}>
                                                 <option value={row.id}>{row.name_of_client_type}</option>
                                                 {getClientType.map((row, index) => {
                                                     return (
@@ -255,7 +254,7 @@ const ViewSales = () => {
                                                 name={`process_id`}
                                                 className="form-control form-control-sm form-select form-select-sm mb-3"
                                                 readOnly
-                                                onClick={(e) => { putProcess(e) }}>
+                                                onMouseUp={(e) => { putColumnSelect(e) }}>
                                                 <option value={row.process_id}>{row.process_name}</option>
                                                 {getProcess.map((row, index) => {
                                                     return (
@@ -271,7 +270,7 @@ const ViewSales = () => {
                                                 name={`ptt_weekly_update`}
                                                 className="form-control form-control-sm form-select form-select-sm mb-3"
                                                 readOnly
-                                                onClick={(e) => { putProcess(e) }}>
+                                                onMouseUp={(e) => { putColumnSelect(e) }}>
                                                 <option value={row.process_id}>{row.ptt_weekly_update}</option>
                                                 <option value='W1'>W1</option>
                                                 <option value='W2'>W2</option>

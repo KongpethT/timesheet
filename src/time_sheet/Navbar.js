@@ -27,7 +27,7 @@ export default function Navbar() {
                     className="offcanvas offcanvas-end"
                     tabIndex="-1" id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel"
-                    style={{ width: '290px', margin: '60px 10px 10px 10px' }}>
+                    style={{ width: '320px', margin: '60px 10px 10px 10px' }}>
                     <div className="offcanvas-body">
                         <ul className="navbar-nav justify-content-start flex-grow-1 pe-3">
                             {/**login / logout / change password */}
@@ -41,20 +41,18 @@ export default function Navbar() {
                                         <Link to="/#" className="nav-link" onClick={signout}>Sign Out <IoLogOut className="fs-6 text-primary" /></Link>
                                         <Link to="/person/changePassword" className="nav-link">Change password <FcKey className="fs-6 text-danger" /></Link>
                                     </li>
+                                    <hr className="dropdown-divider bg-dark" />
                                 </div>
                             }
                             {/**dropdown menu */}
                             {(!memory.get_token) ? null :
-                                <div className="nav-item dropdown fs-5">
-                                    <Link className="nav-link dropdown-toggle" to="/#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Dropdown menu
-                                    </Link>
-                                    <div className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+                                <div className="nav-item fs-5">
+                                    <div>
                                         {/**timeline */}
-                                        {(userState === 'analyze' | userState === 'admin') ? null :
+                                        {(userState === 'analyze' | userState === 'user') ? null :
                                             <div>
                                                 <li>
-                                                    <FcPlanner className="fs-6" /> Timelines
+                                                    <FcPlanner className="fs-6" /> <label className="text-secondary">Timelines</label>
                                                 </li>
                                                 <li><Link to="/timeline/new" className="dropdown-item"><IoDuplicate className="fs-6 text-success" /> Create</Link></li>
                                                 <li><Link to="/timeline/view" className="dropdown-item"><IoLibrary className="fs-6 text-info" /> View</Link></li>
@@ -64,8 +62,8 @@ export default function Navbar() {
                                         {(userState === 'analyze' | userState === 'admin') ? null :
                                             <div>
                                                 <li>
-                                                    <hr className="dropdown-divider" />
-                                                    <FcBullish className="fs-6" /> sales activity
+                                                    <hr className="dropdown-divider bg-dark" />
+                                                    <FcBullish className="fs-6" /> <label className="text-secondary">sales activity</label>
                                                 </li>
                                                 <li><Link to="/sales/new" className="dropdown-item"><IoDuplicate className="fs-6 text-success" /> Open sales</Link></li>
                                                 <li><Link to="/sales/view" className="dropdown-item"><IoRibbon className="fs-6 text-info" /> View sales activity</Link></li>
@@ -75,8 +73,8 @@ export default function Navbar() {
                                         {(userState === 'user' | userState === 'admin') ? null :
                                             <div>
                                                 <li>
-                                                    <hr className="dropdown-divider" />
-                                                    <FcBullish className="fs-6" /> sales activity (Admin)
+                                                <hr className="dropdown-divider bg-dark" />
+                                                    <FcBullish className="fs-6" /><label className="text-secondary"> sales activity (Admin)</label>
                                                 </li>
                                                 <li><Link to="/sales/admin/view" className="dropdown-item"><IoRibbon className="fs-6 text-info" /> View sales activity (Admin)</Link></li>
                                             </div>
@@ -85,8 +83,8 @@ export default function Navbar() {
                                         {(userState === 'analyze' | userState === 'admin') ? null :
                                             <div>
                                                 <li>
-                                                    <hr className="dropdown-divider" />
-                                                    <FcCustomerSupport className="fs-6" /> Customers
+                                                <hr className="dropdown-divider bg-dark" />
+                                                    <FcCustomerSupport className="fs-6" /><label className="text-secondary"> Customers</label>
                                                 </li>
                                                 <li><Link to="/customer/newAgency" className="dropdown-item"><IoDuplicate className="fs-6 text-success" /> Create-Agency</Link></li>
                                                 <li><Link to="/customer/newClient" className="dropdown-item"><IoDuplicate className="fs-6 text-success" /> Create-Client</Link></li>
@@ -97,8 +95,8 @@ export default function Navbar() {
                                         {(userState === 'user' | userState === 'analyze') ? null :
                                             <div>
                                                 <li>
-                                                    <hr className="dropdown-divider" />
-                                                    <FcConferenceCall className="fs-5" /> Persons
+                                                <hr className="dropdown-divider bg-dark" />
+                                                    <FcConferenceCall className="fs-5" /><label className="text-secondary"> Persons</label>
                                                 </li>
 
                                                 <li><Link to="/person/new" className="dropdown-item"><IoDuplicate className="fs-6 text-success" /> Create</Link></li>
@@ -106,11 +104,11 @@ export default function Navbar() {
                                                 {/*<li><Link to="/person/changePassword" className="dropdown-item"><IoKey className="fs-6 text-warning" /> Change password</Link></li>*/}
                                             </div>
                                         }
-                                        {(userState === 'user' | userState === 'admin') ? null :
+                                        {(userState === 'user' | userState === 'admin' | userState === 'analyze') ? null :
                                             <div>
                                                 <li>
-                                                    <hr className="dropdown-divider" />
-                                                    <FcServices className="fs-6" /> Tools
+                                                <hr className="dropdown-divider bg-dark" />
+                                                    <FcServices className="fs-6" /><label className="text-secondary"> Tools</label>
                                                 </li>
                                                 <li><Link to="/tools/dashboard" className="dropdown-item"><IoBarChart className="fs-6 text-success" /> Dashboard</Link></li>
                                             </div>

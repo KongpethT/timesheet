@@ -12,13 +12,13 @@ const NewAgency = () => {
         })
     /**Create customer */
     const pushCustomer = () => {
-        const agency = document.querySelector('#inputAgency')
-        if (agency.value === '') {
-            agency.setAttribute('placeholder', forms.get_placeholder_warning)
+        const agencyIsNull = document.querySelector('#inputAgency')
+        if (getAddress.agency === '') {
+            agencyIsNull.setAttribute('placeholder', forms.get_placeholder_warning)
         } else {
             axios.post(`${api.customer}/agency`, { getAddress }).then((brick) => {
                 if (brick.status === 200) {
-                    setAddress({ agency: '', email: '', contact: '', address: '', address2: '', city: '', zip: '' })
+                    setAddress({ accountId: JSON.parse(memory.get_account_id).value, agency: '', email: '', contact: '', address: '', address2: '', city: '', state: 'Thailand', zip: '' })
                     setAlert(forms.get_massage_success)
                     setTimeout(() => {
                         setAlert('')
@@ -121,7 +121,7 @@ const NewAgency = () => {
                         <button type="submit" className="btn btn-primary" onClick={pushCustomer}>Submit</button>
                     </div>
                 </div>
-                
+
             </div>
         )
     }
