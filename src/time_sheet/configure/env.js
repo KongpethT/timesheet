@@ -66,6 +66,7 @@ const colors = {
     get_bg_SGD:'#70AD47',
     get_bg_RCC:'#4472C4',
     get_bg_PTT:'#FFC000',
+    get_bg_PRO:'#e9edf5'
 }
 const storage = (value, key) => {
     const now = new Date()

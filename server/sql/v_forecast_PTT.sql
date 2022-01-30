@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v_forecast_PTT AS 
+CREATE OR REPLACE VIEW v_forecast_PTT AS
 SELECT
     forecast.id,
     forecast.account_id,
@@ -11,20 +11,34 @@ SELECT
     forecast.remark,
     forecast.potential,
     FORMAT(forecast.PTT1, 0) AS PTT1,
+    FORMAT(forecast.PRO1, 0) AS PRO1,
     FORMAT(forecast.PTT2, 0) AS PTT2,
+    FORMAT(forecast.PRO2, 0) AS PRO2,
     FORMAT(forecast.PTT3, 0) AS PTT3,
+    FORMAT(forecast.PRO3, 0) AS PRO3,
     FORMAT(forecast.PTT4, 0) AS PTT4,
+    FORMAT(forecast.PRO4, 0) AS PRO4,
     FORMAT(forecast.PTT5, 0) AS PTT5,
+    FORMAT(forecast.PRO5, 0) AS PRO5,
     FORMAT(forecast.PTT6, 0) AS PTT6,
+    FORMAT(forecast.PRO6, 0) AS PRO6,
     FORMAT(forecast.PTT7, 0) AS PTT7,
+    FORMAT(forecast.PRO7, 0) AS PRO7,
     FORMAT(forecast.PTT8, 0) AS PTT8,
+    FORMAT(forecast.PRO8, 0) AS PRO8,
     FORMAT(forecast.PTT9, 0) AS PTT9,
+    FORMAT(forecast.PRO9, 0) AS PRO9,
     FORMAT(forecast.PTT10, 0) AS PTT10,
+    FORMAT(forecast.PRO10, 0) AS PRO10,
     FORMAT(forecast.PTT11, 0) AS PTT11,
+    FORMAT(forecast.PRO11, 0) AS PRO11,
     FORMAT(forecast.PTT12, 0) AS PTT12,
+    FORMAT(forecast.PRO12, 0) AS PRO12,
     FORMAT(forecast.total_PTT, 0) AS total_PTT,
+    FORMAT(forecast.total_PRO, 0) AS total_PRO,
     forecast.year,
-    process.id AS process_id
+    process.id AS process_id,
+    forecast.update_timestamp
 FROM
     forecast,
     ACCOUNT,

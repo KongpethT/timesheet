@@ -99,18 +99,12 @@ const ViewSales = () => {
     }
 
     /**put column clinet_type, process, PTT_weekly_update */
-    const putColumnSelect = (e) => {
-        //const column = document.getElementById(e.currentTarget.id)
-        console.log(getRowId);
-        //if (column.hasAttribute('readOnly')) { column.removeAttribute('readOnly') }
-        //column.setAttribute('readOnly', '')
-        if (getRowId === null) { } else {
-            axios.put(api.sales, { id: getRowId, row: e.target.name, value: e.target.value })
-                .then((brick) => {
-                    setRowId(null)
-                    //const data = brick.data
-                })
-        }
+    const putColumnSelect = (e, rowId) => {
+        axios.put(api.sales, { id: rowId, row: e.target.name, value: e.target.value })
+            .then((brick) => {
+                setRowId(null)
+            })
+
     }
     /**resize window screen */
     //const [getWidthScreen, setWidthScreen] = useState(window.innerWidth)
@@ -148,35 +142,48 @@ const ViewSales = () => {
                             className="bg-warning">
                             <tr style={{ backgroundColor: 'white' }}>
                                 <td colSpan={7} style={{ width: '1395px', backgroundColor: 'transparent' }}></td>
-                                <td colSpan={1} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>January</td>
-                                <td colSpan={1} style={{ width: columnSizeA }}>February</td>
-                                <td colSpan={1} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>March</td>
-                                <td colSpan={1} style={{ width: columnSizeA }}>April</td>
-                                <td colSpan={1} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>May</td>
-                                <td colSpan={1} style={{ width: columnSizeA }}>June</td>
-                                <td colSpan={1} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>July</td>
-                                <td colSpan={1} style={{ width: columnSizeA }}>August</td>
-                                <td colSpan={1} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>September</td>
-                                <td colSpan={1} style={{ width: columnSizeA }}>October</td>
-                                <td colSpan={1} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>November</td>
-                                <td colSpan={1} style={{ width: columnSizeA }}>December</td>
-                                <td colSpan={1} style={{ width: '300px', backgroundColor: 'gainsboro' }}>summary of activity</td>
+                                <td colSpan={2} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>January</td>
+                                <td colSpan={2} style={{ width: columnSizeA }}>February</td>
+                                <td colSpan={2} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>March</td>
+                                <td colSpan={2} style={{ width: columnSizeA }}>April</td>
+                                <td colSpan={2} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>May</td>
+                                <td colSpan={2} style={{ width: columnSizeA }}>June</td>
+                                <td colSpan={2} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>July</td>
+                                <td colSpan={2} style={{ width: columnSizeA }}>August</td>
+                                <td colSpan={2} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>September</td>
+                                <td colSpan={2} style={{ width: columnSizeA }}>October</td>
+                                <td colSpan={2} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>November</td>
+                                <td colSpan={2} style={{ width: columnSizeA }}>December</td>
+                                <td colSpan={2} style={{ width: '300px', backgroundColor: 'gainsboro' }}>summary of activity</td>
                             </tr>
                             <tr style={{ backgroundColor: 'white' }}>
                                 <td colSpan={7} style={{ width: '1395px', backgroundColor: 'transparent' }}></td>
                                 <td>{getCountPTT.ptt1}</td>
+                                <td>{getCountPTT.PRO1}</td>
                                 <td>{getCountPTT.ptt2}</td>
+                                <td>{getCountPTT.PRO2}</td>
                                 <td>{getCountPTT.ptt3}</td>
+                                <td>{getCountPTT.PRO3}</td>
                                 <td>{getCountPTT.ptt4}</td>
+                                <td>{getCountPTT.PRO4}</td>
                                 <td>{getCountPTT.ptt5}</td>
+                                <td>{getCountPTT.PRO5}</td>
                                 <td>{getCountPTT.ptt6}</td>
+                                <td>{getCountPTT.PRO6}</td>
                                 <td>{getCountPTT.ptt7}</td>
+                                <td>{getCountPTT.PRO7}</td>
                                 <td>{getCountPTT.ptt8}</td>
+                                <td>{getCountPTT.PRO8}</td>
                                 <td>{getCountPTT.ptt9}</td>
+                                <td>{getCountPTT.PRO9}</td>
                                 <td>{getCountPTT.ptt10}</td>
+                                <td>{getCountPTT.PRO10}</td>
                                 <td>{getCountPTT.ptt11}</td>
+                                <td>{getCountPTT.PRO11}</td>
                                 <td>{getCountPTT.ptt12}</td>
-                                <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPTT.total}</td>
+                                <td>{getCountPTT.PRO12}</td>
+                                <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPTT.total_PTT}</td>
+                                <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPTT.total_PRO}</td>
                             </tr>
                             <tr style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>
                                 {/**agency */}
@@ -195,30 +202,43 @@ const ViewSales = () => {
                                 <th style={{ width: '250px' }}>potential %</th>
                                 {/**januaty */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**february */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**March */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**april */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**may */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**june */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**july */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**august */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**september */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**october */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**november */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**december */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
+                                <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>
                                 {/**total PTT */}
                                 <th style={{ backgroundColor: 'gray', color: 'white' }}>TPTT</th>
+                                <th style={{ backgroundColor: 'gray', color: 'white' }}>TPRO</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -238,7 +258,7 @@ const ViewSales = () => {
                                                 name={`client_type_id`}
                                                 className="form-control form-control-sm form-select form-select-sm mb-3"
                                                 readOnly
-                                                onMouseUp={(e) => { putColumnSelect(e) }}>
+                                                onClick={(e) => { putColumnSelect(e, row.id) }}>
                                                 <option value={row.id}>{row.name_of_client_type}</option>
                                                 {getClientType.map((row, index) => {
                                                     return (
@@ -254,7 +274,7 @@ const ViewSales = () => {
                                                 name={`process_id`}
                                                 className="form-control form-control-sm form-select form-select-sm mb-3"
                                                 readOnly
-                                                onMouseUp={(e) => { putColumnSelect(e) }}>
+                                                onClick={(e) => { putColumnSelect(e, row.id) }}>
                                                 <option value={row.process_id}>{row.process_name}</option>
                                                 {getProcess.map((row, index) => {
                                                     return (
@@ -270,7 +290,7 @@ const ViewSales = () => {
                                                 name={`ptt_weekly_update`}
                                                 className="form-control form-control-sm form-select form-select-sm mb-3"
                                                 readOnly
-                                                onMouseUp={(e) => { putColumnSelect(e) }}>
+                                                onClick={(e) => { putColumnSelect(e, row.id) }}>
                                                 <option value={row.process_id}>{row.ptt_weekly_update}</option>
                                                 <option value='W1'>W1</option>
                                                 <option value='W2'>W2</option>
@@ -309,6 +329,15 @@ const ViewSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT1 === '0') ? '' : row.PTT1} />
                                         </td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO1`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO1 === '0') ? '' : row.PRO1} />
+                                        </td>
                                         {/**february */}
                                         <td>
                                             <input
@@ -318,6 +347,15 @@ const ViewSales = () => {
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT2 === '0') ? '' : row.PTT2} />
+                                        </td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO2`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO2 === '0') ? '' : row.PRO2} />
                                         </td>
                                         {/**January */}
                                         <td>
@@ -329,6 +367,15 @@ const ViewSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT3 === '0') ? '' : row.PTT3} />
                                         </td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO3`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO3 === '0') ? '' : row.PRO3} />
+                                        </td>
                                         {/**April */}
                                         <td>
                                             <input
@@ -338,6 +385,15 @@ const ViewSales = () => {
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT4 === '0') ? '' : row.PTT4} />
+                                        </td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO4`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO4 === '0') ? '' : row.PRO4} />
                                         </td>
                                         {/**May */}
                                         <td>
@@ -349,6 +405,15 @@ const ViewSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT5 === '0') ? '' : row.PTT5} />
                                         </td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO5`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO5 === '0') ? '' : row.PRO5} />
+                                        </td>
                                         {/**june */}
                                         <td>
                                             <input
@@ -358,6 +423,15 @@ const ViewSales = () => {
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT6 === '0') ? '' : row.PTT6} />
+                                        </td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO6`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO6 === '0') ? '' : row.PRO6} />
                                         </td>
                                         {/**july */}
                                         <td>
@@ -369,6 +443,15 @@ const ViewSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT7 === '0') ? '' : row.PTT7} />
                                         </td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO7`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO7 === '0') ? '' : row.PRO7} />
+                                        </td>
                                         {/**august */}
                                         <td>
                                             <input
@@ -378,6 +461,15 @@ const ViewSales = () => {
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT8 === '0') ? '' : row.PTT8} />
+                                        </td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO8`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO8 === '0') ? '' : row.PRO8} />
                                         </td>
                                         {/**september */}
                                         <td>
@@ -389,6 +481,15 @@ const ViewSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT9 === '0') ? '' : row.PTT9} />
                                         </td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO9`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO9 === '0') ? '' : row.PRO9} />
+                                        </td>
                                         {/**october */}
                                         <td>
                                             <input
@@ -398,6 +499,15 @@ const ViewSales = () => {
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT10 === '0') ? '' : row.PTT10} />
+                                        </td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO10`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO10 === '0') ? '' : row.PRO10} />
                                         </td>
                                         {/**november */}
                                         <td>
@@ -409,6 +519,15 @@ const ViewSales = () => {
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT11 === '0') ? '' : row.PTT11} />
                                         </td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO11`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO11 === '0') ? '' : row.PRO11} />
+                                        </td>
                                         {/**december */}
                                         <td>
                                             <input
@@ -418,8 +537,18 @@ const ViewSales = () => {
                                                 onDoubleClick={(e) => { putForecast(e) }}
                                                 className="form-control form-control-sm"
                                                 defaultValue={(row.PTT12 === '0') ? '' : row.PTT12} /></td>
+                                        <td>
+                                            <input
+                                                id={`inputId${Math.floor(Math.random() * 1000000)}`}
+                                                name={`PRO12`}
+                                                readOnly
+                                                onDoubleClick={(e) => { putForecast(e) }}
+                                                className="form-control form-control-sm"
+                                                defaultValue={(row.PRO12 === '0') ? '' : row.PRO12} />
+                                        </td>
                                         {/**TPTT */}
-                                        <td style={{ backgroundColor: 'gainsboro' }}>{row.total_PTT}</td>
+                                        <td style={{ backgroundColor: 'gainsboro' }}>{(row.total_PTT === '0') ? '' : row.total_PTT}</td>
+                                        <td style={{ backgroundColor: 'white' }}>{(row.total_PRO === '0') ? '' : row.total_PRO}</td>
                                     </tr>
                                 )
                             })}
