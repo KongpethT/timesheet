@@ -1,5 +1,6 @@
-//const host = 'http://10.180.0.1:3001'
-const host = 'http://localhost:3001'
+const host_prod = 'http://10.180.0.1:3001'
+const host_dev = 'http://localhost:3001'
+const host = (process.env.NODE_ENV === 'development') ? host_dev : host_prod
 const date = new Date()
 const name_month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
     'August', 'September', 'October', 'November', 'December']
@@ -63,10 +64,10 @@ const dates = {
 const colors = {
     get_column_edit: '#c5e075',
     get_bg_default: '#0f2442',
-    get_bg_SGD:'#70AD47',
-    get_bg_RCC:'#4472C4',
-    get_bg_PTT:'#FFC000',
-    get_bg_PRO:'#e9edf5'
+    get_bg_SGD: '#70AD47',
+    get_bg_RCC: '#4472C4',
+    get_bg_PTT: '#FFC000',
+    get_bg_PRO: '#e9edf5'
 }
 const storage = (value, key) => {
     const now = new Date()
