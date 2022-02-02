@@ -17,7 +17,9 @@ const ViewAdminSales = () => {
         SGD7: 0, SGD8: 0, SGD9: 0, SGD10: 0, SGD11: 0, SGD12: 0,
         RCC1: 0, RCC2: 0, RCC3: 0, RCC4: 0, RCC5: 0, RCC6: 0,
         RCC7: 0, RCC8: 0, RCC9: 0, RCC10: 0, RCC11: 0, RCC12: 0,
-        total_SGD: 0, total_RCC: 0, total_PTT: 0, total: 0
+        PRO1: 0, PRO2: 0, PRO3: 0, PRO4: 0, PRO5: 0, PRO6: 0,
+        PRO7: 0, PRO8: 0, PRO9: 0, PRO10: 0, PRO11: 0, PRO12: 0,
+        total_SGD: 0, total_RCC: 0, total_PTT: 0, total_PRO: 0, total: 0
     })
     /**pull table v_forecast_all */
     const pullSales = useCallback(() => {
@@ -117,61 +119,74 @@ const ViewAdminSales = () => {
                             className="bg-warning">
                             <tr style={{ backgroundColor: 'white' }}>
                                 <td colSpan={8} style={{ width: '1395px', backgroundColor: 'transparent' }}></td>
-                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>January</td>
-                                <td colSpan={3} style={{ width: columnSizeC }}>February</td>
-                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>March</td>
-                                <td colSpan={3} style={{ width: columnSizeC }}>April</td>
-                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>May</td>
-                                <td colSpan={3} style={{ width: columnSizeC }}>June</td>
-                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>July</td>
-                                <td colSpan={3} style={{ width: columnSizeC }}>August</td>
-                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>September</td>
-                                <td colSpan={3} style={{ width: columnSizeC }}>October</td>
-                                <td colSpan={3} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>November</td>
-                                <td colSpan={3} style={{ width: columnSizeC }}>December</td>
-                                <td colSpan={4} style={{ width: '600px', backgroundColor: 'gainsboro' }}>summary of activity</td>
+                                <td colSpan={4} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>January</td>
+                                <td colSpan={4} style={{ width: columnSizeC }}>February</td>
+                                <td colSpan={4} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>March</td>
+                                <td colSpan={4} style={{ width: columnSizeC }}>April</td>
+                                <td colSpan={4} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>May</td>
+                                <td colSpan={4} style={{ width: columnSizeC }}>June</td>
+                                <td colSpan={4} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>July</td>
+                                <td colSpan={4} style={{ width: columnSizeC }}>August</td>
+                                <td colSpan={4} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>September</td>
+                                <td colSpan={4} style={{ width: columnSizeC }}>October</td>
+                                <td colSpan={4} style={{ width: columnSizeC, backgroundColor: colors.get_bg_default, color: 'white' }}>November</td>
+                                <td colSpan={4} style={{ width: columnSizeC }}>December</td>
+                                <td colSpan={5} style={{ width: '600px', backgroundColor: 'gainsboro' }}>summary of activity</td>
                             </tr>
                             <tr style={{ backgroundColor: 'white' }}>
                                 <td colSpan={8} style={{ width: '1395px', backgroundColor: 'transparent' }}></td>
                                 <td>{getCountPSR.SGD1}</td>
                                 <td>{getCountPSR.RCC1}</td>
                                 <td>{getCountPSR.ptt1}</td>
+                                <td>{getCountPSR.PRO1}</td>
                                 <td>{getCountPSR.SGD2}</td>
                                 <td>{getCountPSR.RCC2}</td>
                                 <td>{getCountPSR.ptt2}</td>
+                                <td>{getCountPSR.PRO2}</td>
                                 <td>{getCountPSR.SGD3}</td>
                                 <td>{getCountPSR.RCC3}</td>
                                 <td>{getCountPSR.ptt3}</td>
+                                <td>{getCountPSR.PRO3}</td>
                                 <td>{getCountPSR.SGD4}</td>
                                 <td>{getCountPSR.RCC4}</td>
                                 <td>{getCountPSR.ptt4}</td>
+                                <td>{getCountPSR.PRO4}</td>
                                 <td>{getCountPSR.SGD5}</td>
                                 <td>{getCountPSR.RCC5}</td>
                                 <td>{getCountPSR.ptt5}</td>
+                                <td>{getCountPSR.PRO5}</td>
                                 <td>{getCountPSR.SGD6}</td>
                                 <td>{getCountPSR.RCC6}</td>
                                 <td>{getCountPSR.ptt6}</td>
+                                <td>{getCountPSR.PRO6}</td>
                                 <td>{getCountPSR.SGD7}</td>
                                 <td>{getCountPSR.RCC7}</td>
                                 <td>{getCountPSR.ptt7}</td>
+                                <td>{getCountPSR.PRO7}</td>
                                 <td>{getCountPSR.SGD8}</td>
                                 <td>{getCountPSR.RCC8}</td>
                                 <td>{getCountPSR.ptt8}</td>
+                                <td>{getCountPSR.PRO8}</td>
                                 <td>{getCountPSR.SGD9}</td>
                                 <td>{getCountPSR.RCC9}</td>
                                 <td>{getCountPSR.ptt9}</td>
+                                <td>{getCountPSR.PRO9}</td>
                                 <td>{getCountPSR.SGD10}</td>
                                 <td>{getCountPSR.RCC10}</td>
                                 <td>{getCountPSR.ptt10}</td>
+                                <td>{getCountPSR.PRO10}</td>
                                 <td>{getCountPSR.SGD11}</td>
                                 <td>{getCountPSR.RCC11}</td>
                                 <td>{getCountPSR.ptt11}</td>
+                                <td>{getCountPSR.PRO11}</td>
                                 <td>{getCountPSR.SGD12}</td>
                                 <td>{getCountPSR.RCC2}</td>
                                 <td>{getCountPSR.ptt12}</td>
+                                <td>{getCountPSR.PRO12}</td>
                                 <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPSR.total_SGD}</td>
                                 <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPSR.total_RCC}</td>
                                 <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPSR.total_PTT}</td>
+                                <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPSR.total_PRO}</td>
                                 <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPSR.total}</td>
                             </tr>
                             <tr>
@@ -195,54 +210,67 @@ const ViewAdminSales = () => {
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**february */}
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**march */}
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**april */}
                                 <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**may */}
                                 <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**june */}
                                 <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**july */}
                                 <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**august */}
                                 <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**september */}
                                 <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**october */}
                                 <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**november */}
                                 <th className=" text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**december */}
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>SGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>RCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>PTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>PRO</th>
                                 {/**total */}
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#70AD47' }}>TSGD</th>
                                 <th className="text-light" style={{ width: columnSizeB, backgroundColor: '#4472C4' }}>TRCC</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: '#FFC000' }}>TPTT</th>
+                                <th style={{ width: columnSizeA, backgroundColor: 'white', color: 'black' }}>TPRO</th>
                                 <th className="text-light" style={{ width: columnSizeA, backgroundColor: 'gray' }}>total</th>
                             </tr>
                         </thead>
@@ -288,6 +316,7 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC1 === '0') ? '' : row.RCC1} />
                                         </td>
                                         <td>{(row.PTT1 === '0') ? '' : row.PTT1}</td>
+                                        <td>{(row.PRO1 === '0') ? '' : row.PRO1}</td>
                                         {/**february */}
                                         <td>
                                             <input
@@ -308,6 +337,7 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC2 === '0') ? '' : row.RCC2} />
                                         </td>
                                         <td>{(row.PTT2 === '0') ? '' : row.PTT2}</td>
+                                        <td>{(row.PRO2 === '0') ? '' : row.PRO2}</td>
                                         {/**March */}
                                         <td>
                                             <input
@@ -328,6 +358,7 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC3 === '0') ? '' : row.RCC3} />
                                         </td>
                                         <td>{(row.PTT3 === '0') ? '' : row.PTT3}</td>
+                                        <td>{(row.PRO3 === '0') ? '' : row.PRO3}</td>
                                         {/**April */}
                                         <td>
                                             <input
@@ -348,6 +379,7 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC4 === '0') ? '' : row.RCC4} />
                                         </td>
                                         <td>{(row.PTT4 === '0') ? '' : row.PTT4}</td>
+                                        <td>{(row.PRO4 === '0') ? '' : row.PRO4}</td>
                                         {/**May */}
                                         <td>
                                             <input
@@ -368,6 +400,7 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC5 === '0') ? '' : row.RCC5} />
                                         </td>
                                         <td>{(row.PTT5 === '0') ? '' : row.PTT5}</td>
+                                        <td>{(row.PRO5 === '0') ? '' : row.PRO5}</td>
                                         {/**june */}
                                         <td>
                                             <input
@@ -388,6 +421,7 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC6 === '0') ? '' : row.RCC6} />
                                         </td>
                                         <td>{(row.PTT6 === '0') ? '' : row.PTT6}</td>
+                                        <td>{(row.PRO6 === '0') ? '' : row.PRO6}</td>
                                         {/**july */}
                                         <td>
                                             <input
@@ -408,6 +442,7 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC7 === '0') ? '' : row.RCC7} />
                                         </td>
                                         <td>{(row.PTT7 === '0') ? '' : row.PTT7}</td>
+                                        <td>{(row.PRO7 === '0') ? '' : row.PRO7}</td>
                                         {/**august */}
                                         <td>
                                             <input
@@ -428,6 +463,7 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC8 === '0') ? '' : row.RCC8} />
                                         </td>
                                         <td>{(row.PTT8 === '0') ? '' : row.PTT8}</td>
+                                        <td>{(row.PRO8 === '0') ? '' : row.PRO8}</td>
                                         {/**september */}
                                         <td>
                                             <input
@@ -448,6 +484,7 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC9 === '0') ? '' : row.RCC9} />
                                         </td>
                                         <td>{(row.PTT9 === '0') ? '' : row.PTT9}</td>
+                                        <td>{(row.PRO9 === '0') ? '' : row.PRO9}</td>
                                         {/**october */}
                                         <td>
                                             <input
@@ -468,6 +505,7 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC10 === '0') ? '' : row.RCC10} />
                                         </td>
                                         <td>{(row.PTT10 === '0') ? '' : row.PTT10}</td>
+                                        <td>{(row.PRO10 === '0') ? '' : row.PRO10}</td>
                                         {/**november */}
                                         <td>
                                             <input
@@ -488,6 +526,7 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC11 === '0') ? '' : row.RCC11} />
                                         </td>
                                         <td>{(row.PTT11 === '0') ? '' : row.PTT11}</td>
+                                        <td>{(row.PRO11 === '0') ? '' : row.PRO11}</td>
                                         {/**december */}
                                         <td>
                                             <input
@@ -508,10 +547,12 @@ const ViewAdminSales = () => {
                                                 defaultValue={(row.RCC12 === '0') ? '' : row.RCC12} />
                                         </td>
                                         <td>{(row.PTT12 === '0') ? '' : row.PTT12}</td>
+                                        <td>{(row.PRO12 === '0') ? '' : row.PRO12}</td>
                                         {/**summary */}
                                         <td style={{ backgroundColor: 'gainsboro' }}>{row.total_SGD}</td>
                                         <td style={{ backgroundColor: 'gainsboro' }}>{row.total_RCC}</td>
                                         <td style={{ backgroundColor: 'gainsboro' }}>{row.total_PTT}</td>
+                                        <td style={{ backgroundColor: 'gainsboro' }}>{row.total_PRO}</td>
                                         <td style={{ backgroundColor: 'gainsboro' }}>{row.total}</td>
                                     </tr>
                                 )

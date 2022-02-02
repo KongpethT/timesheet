@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react"
 import { memory, api, colors } from './configure/env'
 const ViewSales = () => {
     if (memory.get_token === null) { window.location.href = '/' }
-    const columnSizeA = '150px'
+    const columnSizeA = '250px'
     const [getCount, setCount] = useState(0)
     const [getRowId, setRowId] = useState(null)
     const [getClient, setClient] = useState('')
@@ -141,7 +141,7 @@ const ViewSales = () => {
                         }}
                             className="bg-warning">
                             <tr style={{ backgroundColor: 'white' }}>
-                                <td colSpan={7} style={{ width: '1395px', backgroundColor: 'transparent' }}></td>
+                                <td colSpan={7} style={{ width: '1400px', backgroundColor: 'transparent' }}></td>
                                 <td colSpan={2} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>January</td>
                                 <td colSpan={2} style={{ width: columnSizeA }}>February</td>
                                 <td colSpan={2} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>March</td>
@@ -187,19 +187,19 @@ const ViewSales = () => {
                             </tr>
                             <tr style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>
                                 {/**agency */}
-                                <th style={{ width: '250px' }}>name of agency</th>
+                                <th>name of agency</th>
                                 {/**client */}
-                                <th className="bg-secondary" style={{ width: '250px', position: 'sticky', left: '0', color: 'black' }}>name of client</th>
+                                <th className="bg-secondary" style={{ position: 'sticky', left: '0', color: 'black' }}>name of client</th>
                                 {/**client type */}
-                                <th style={{ width: '120px' }}>client type</th>
+                                <th>client type</th>
                                 {/**process */}
-                                <th style={{ width: '180px' }}>process</th>
+                                <th>process</th>
                                 {/**PTT Weekly Update */}
-                                <th style={{ width: '150px' }}>PTT weekly update</th>
+                                <th>PTT weekly update</th>
                                 {/**remark */}
-                                <th style={{ width: '250px' }}>remark</th>
+                                <th>remark</th>
                                 {/**potential */}
-                                <th style={{ width: '250px' }}>potential %</th>
+                                <th>potential %</th>
                                 {/**januaty */}
                                 <th style={{ backgroundColor: colors.get_bg_PTT, color: 'black' }}>PTT</th>
                                 <th style={{ backgroundColor: colors.get_bg_PRO, color: 'black' }}>PRO</th>

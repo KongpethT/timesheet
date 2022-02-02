@@ -19,7 +19,8 @@ export default function Navbar() {
     return (
         <div className="navbar navbar-light bg-light fixed-top">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/#">Welcome <span className="text-uppercase text-success">{account}</span></Link>
+                <Link className="navbar-brand" to="/#">Welcome <span className="text-uppercase text-success">{account}
+                </span><span className="text-danger text-success"> {(process.env.NODE_ENV === 'development') ? process.env.NODE_ENV : null}</span></Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -73,7 +74,7 @@ export default function Navbar() {
                                         {(userState === 'user' | userState === 'admin') ? null :
                                             <div>
                                                 <li>
-                                                <hr className="dropdown-divider bg-dark" />
+                                                    <hr className="dropdown-divider bg-dark" />
                                                     <FcBullish className="fs-6" /><label className="text-secondary"> sales activity (Admin)</label>
                                                 </li>
                                                 <li><Link to="/sales/admin/view" className="dropdown-item"><IoRibbon className="fs-6 text-info" /> View sales activity (Admin)</Link></li>
@@ -83,7 +84,7 @@ export default function Navbar() {
                                         {(userState === 'analyze' | userState === 'admin') ? null :
                                             <div>
                                                 <li>
-                                                <hr className="dropdown-divider bg-dark" />
+                                                    <hr className="dropdown-divider bg-dark" />
                                                     <FcCustomerSupport className="fs-6" /><label className="text-secondary"> Customers</label>
                                                 </li>
                                                 <li><Link to="/customer/newAgency" className="dropdown-item"><IoDuplicate className="fs-6 text-success" /> Create-Agency</Link></li>
@@ -95,7 +96,7 @@ export default function Navbar() {
                                         {(userState === 'user' | userState === 'analyze') ? null :
                                             <div>
                                                 <li>
-                                                <hr className="dropdown-divider bg-dark" />
+                                                    <hr className="dropdown-divider bg-dark" />
                                                     <FcConferenceCall className="fs-5" /><label className="text-secondary"> Persons</label>
                                                 </li>
 
@@ -107,7 +108,7 @@ export default function Navbar() {
                                         {(userState === 'user' | userState === 'admin' | userState === 'analyze') ? null :
                                             <div>
                                                 <li>
-                                                <hr className="dropdown-divider bg-dark" />
+                                                    <hr className="dropdown-divider bg-dark" />
                                                     <FcServices className="fs-6" /><label className="text-secondary"> Tools</label>
                                                 </li>
                                                 <li><Link to="/tools/dashboard" className="dropdown-item"><IoBarChart className="fs-6 text-success" /> Dashboard</Link></li>
