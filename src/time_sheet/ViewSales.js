@@ -14,6 +14,10 @@ const ViewSales = () => {
         ptt1: 0, ptt2: 0, ptt3: 0, ptt4: 0, ptt5: 0, ptt6: 0,
         ptt7: 0, ptt8: 0, ptt9: 0, ptt10: 0, ptt11: 0, ptt12: 0, total: 0
     })
+    const weekly = []
+    for (let i = 1; i <= 52; i++) {
+        weekly.push(`W${i}`)
+    }
     /**pull table v_forecast_ptt */
     const pullSales = useCallback(() => {
         const value = { id: JSON.parse(memory.get_account_id), agency: getClient }
@@ -292,11 +296,11 @@ const ViewSales = () => {
                                                 readOnly
                                                 onClick={(e) => { putColumnSelect(e, row.id) }}>
                                                 <option value={row.process_id}>{row.ptt_weekly_update}</option>
-                                                <option value='W1'>W1</option>
-                                                <option value='W2'>W2</option>
-                                                <option value='W3'>W3</option>
-                                                <option value='W4'>W4</option>
-                                                <option value='W5'>W5</option>
+                                                {weekly.map((value,index)=>{
+                                                    return(
+                                                        <option key= {index} value={value}>{value}</option>
+                                                    )
+                                                })}
                                             </select>
                                         </td>
                                         {/**remark */}
