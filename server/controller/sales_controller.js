@@ -21,7 +21,7 @@ exports.getById = (req, res) => {
     const sqlString = `SELECT * FROM v_forecast_ptt where account_id = '${accountId}' and name_of_client like'${agencyName}%' order by update_timestamp DESC`
     config.get_connect.query(sqlString, (error, result) => {
         if (error) {
-          (process.env.NODE_ENV === 'development') ? console.log(error) : null
+            (process.env.NODE_ENV === 'development') ? console.log(error) : null
         } else {
             res.send(result)
         }
@@ -54,7 +54,7 @@ exports.getCountAll = (req, res) => {
         if (error) {
             (process.env.NODE_ENV === 'development') ? console.log(error) : null
         } else {
-           res.send(result)
+            res.send(result)
         }
     })
 }
@@ -81,11 +81,11 @@ exports.getCountById = (req, res) => {
         } else {
             res.send(result)
         }
-    }) 
+    })
 }
 //@route POST api/sale
 exports.posts = (req, res) => {
-    
+
     const brick = req.body
     const data = Object.keys(brick).map((key) => {
         return (brick[key])
@@ -104,7 +104,7 @@ exports.posts = (req, res) => {
             res.send(result)
         }
     })
-    
+
 }
 //@route PUT api/sales
 exports.puts = (req, res) => {
@@ -115,6 +115,19 @@ exports.puts = (req, res) => {
         if (error) {
             (process.env.NODE_ENV === 'development') ? console.log(error) : null
         } else {
+            res.send(result)
+        }
+    })
+}
+//@route DELETED api/sales
+exports.deleted = (req, res) => {
+    const id = req.params.id
+    const sqlString = `DELETE FROM forecast where id=${id}`
+    config.get_connect.query(sqlString, (error, result) => {
+        if (error) {
+            (process.env.NODE_ENV === 'development') ? console.log(error) : null
+        } else {
+            //console.log(result.affectedRows)
             res.send(result)
         }
     })

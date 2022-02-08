@@ -155,7 +155,7 @@ const ViewCustomer = () => {
                                             className='bg-light'
                                             data-toggle="tooltip"
                                             data-placement="right"
-                                            title="delete button"
+                                            title="delete row"
                                             style={{ cursor: 'pointer' }}>
                                             <FcDeleteRow style={{ fontSize: '21px' }} /></td>
                                         <td
@@ -281,7 +281,7 @@ const ViewCustomer = () => {
                                             style={{ cursor: 'pointer' }}
                                             data-toggle="tooltip"
                                             data-placement="right"
-                                            title="delete button">
+                                            title="delete row">
                                             <FcDeleteRow style={{ fontSize: '21px' }} />
                                         </td>
                                         {/**client name */}

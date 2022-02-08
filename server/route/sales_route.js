@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const { gets, getById, getCountById,getCountAll, posts, puts } = require('../controller/sales_controller')
+const { gets, getById, getCountById, getCountAll, posts, puts, deleted } = require('../controller/sales_controller')
 
 router.route('/all/:para')
     .get(gets)
@@ -20,4 +20,6 @@ router.route('/')
 
 router.route('/')
     .put(puts)
+router.route('/deleted/:id')
+    .delete(deleted)
 module.exports = router

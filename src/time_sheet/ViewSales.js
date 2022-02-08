@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState, useEffect, useCallback } from "react"
 import { memory, api, colors } from './configure/env'
+import { FcServices, FcDeleteRow, FcViewDetails } from "react-icons/fc"
 const ViewSales = () => {
     if (memory.get_token === null) { window.location.href = '/' }
     const columnSizeA = '250px'
@@ -14,6 +15,7 @@ const ViewSales = () => {
         ptt1: 0, ptt2: 0, ptt3: 0, ptt4: 0, ptt5: 0, ptt6: 0,
         ptt7: 0, ptt8: 0, ptt9: 0, ptt10: 0, ptt11: 0, ptt12: 0, total: 0
     })
+    const [getAlert, setAlert] = useState('')
     const weekly = []
     for (let i = 1; i <= 52; i++) {
         weekly.push(`W${i}`)
@@ -110,6 +112,23 @@ const ViewSales = () => {
             })
 
     }
+    /**deleted row */
+    const deletedRow = (rowId) => {
+        let txt = prompt(`Please Enter word " confirm " in field to delete Agency`);
+        if (txt === 'confirm') {
+            setAlert('Unsuccessfully, Agency neet to do not client')
+            const id = rowId
+            axios.delete(`${api.sales}/deleted/${id}`).then((brick) => {
+                const data = brick.data
+                if (data.affectedRows === 1) {
+                    pullCountPTT()
+                    setCount((getCount + 1) % 2)
+                    setAlert('successfully')
+                }
+            })
+        }
+        setTimeout(() => { setAlert(null) }, 3000)
+    }
     /**resize window screen */
     //const [getWidthScreen, setWidthScreen] = useState(window.innerWidth)
     const [getHightScreen, setHeightScreen] = useState(window.innerHeight)
@@ -121,7 +140,7 @@ const ViewSales = () => {
     else {
         return (
             <div>
-                <h1>View sales activity</h1>
+                <h1>View sales activity <span className='fs-5 text-success'>{getAlert}</span></h1>
                 <hr />
                 <div className="mb-3">
                     <input
@@ -145,6 +164,7 @@ const ViewSales = () => {
                         }}
                             className="bg-warning">
                             <tr style={{ backgroundColor: 'white' }}>
+                                <th colSpan={1} style={{ width: '50px' }}></th>
                                 <td colSpan={7} style={{ width: '1400px', backgroundColor: 'transparent' }}></td>
                                 <td colSpan={2} style={{ width: columnSizeA, backgroundColor: colors.get_bg_default, color: 'white' }}>January</td>
                                 <td colSpan={2} style={{ width: columnSizeA }}>February</td>
@@ -161,6 +181,7 @@ const ViewSales = () => {
                                 <td colSpan={2} style={{ width: '300px', backgroundColor: 'gainsboro' }}>summary of activity</td>
                             </tr>
                             <tr style={{ backgroundColor: 'white' }}>
+                                <th colSpan={1}></th>
                                 <td colSpan={7} style={{ width: '1395px', backgroundColor: 'transparent' }}></td>
                                 <td>{getCountPTT.ptt1}</td>
                                 <td>{getCountPTT.PRO1}</td>
@@ -190,6 +211,8 @@ const ViewSales = () => {
                                 <td style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>{getCountPTT.total_PRO}</td>
                             </tr>
                             <tr style={{ backgroundColor: colors.get_bg_default, color: 'white' }}>
+                                {/**delete row */}
+                                <th colSpan={1} className='bg-dark' style={{ width: '80px' }}><FcServices /></th>
                                 {/**agency */}
                                 <th>name of agency</th>
                                 {/**client */}
@@ -251,6 +274,16 @@ const ViewSales = () => {
 
                                 return (
                                     <tr key={index} onClick={() => { setRowId(row.id) }}>
+                                        {/**delete row */}
+                                        <td
+                                            onClick={() => { deletedRow(row.id) }}
+                                            className='bg-light'
+                                            style={{ cursor: 'pointer' }}
+                                            data-toggle="tooltip"
+                                            data-placement="right"
+                                            title="delete row">
+                                            <FcDeleteRow style={{ fontSize: '21px' }} />
+                                        </td>
                                         {/**agency contenteditable='false'*/}
                                         <td id='agencyColumn'>{row.name_of_agency}</td>
                                         {/**client */}
@@ -296,9 +329,9 @@ const ViewSales = () => {
                                                 readOnly
                                                 onClick={(e) => { putColumnSelect(e, row.id) }}>
                                                 <option value={row.process_id}>{row.ptt_weekly_update}</option>
-                                                {weekly.map((value,index)=>{
-                                                    return(
-                                                        <option key= {index} value={value}>{value}</option>
+                                                {weekly.map((value, index) => {
+                                                    return (
+                                                        <option key={index} value={value}>{value}</option>
                                                     )
                                                 })}
                                             </select>
